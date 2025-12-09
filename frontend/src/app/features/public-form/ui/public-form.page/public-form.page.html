@@ -1,0 +1,10 @@
+
+<div class="w-full h-full">
+    <app-card size="xl" class="md:w-full flex items-center justify-center" >
+        <app-dynamic-form
+            [schema]="schema"
+            (submitted)="onSubmit($event)"
+        ></app-dynamic-form>
+        
+    </app-card>
+</div>

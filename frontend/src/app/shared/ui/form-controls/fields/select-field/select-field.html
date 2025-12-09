@@ -1,0 +1,31 @@
+<div class="field-base select-field" [class.has-error]="hasError">
+  <label [attr.for]="config.id">
+    {{ config.label }} <span *ngIf="config.required">*</span>
+  </label>
+
+  <div class="select-wrapper">
+    <select
+      [id]="config.id"
+      [formControl]="control"
+    >
+      <option value="">
+        {{ config.placeholder || 'Seleccione una opción' }}
+      </option>
+      <option *ngFor="let opt of config.options" [value]="opt.value">
+        {{ opt.label }}
+      </option>
+    </select>
+
+    <!-- Ícono personalizado -->
+    <img
+      src="assets/icons/icon-select-red.svg"
+      alt=""
+      class="select-icon"
+      aria-hidden="true"
+    />
+  </div>
+
+  <div class="error-messages" *ngIf="hasError">
+    <small *ngIf="control.hasError('required')">Campo obligatorio.</small>
+  </div>
+</div>

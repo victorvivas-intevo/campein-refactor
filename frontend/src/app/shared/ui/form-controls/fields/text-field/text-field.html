@@ -1,0 +1,28 @@
+<div class="field-base" [class.has-error]="hasError">
+  <label [attr.for]="config.id">
+    {{ config.label }} <span *ngIf="config.required">*</span>
+  </label>
+
+  <input
+    [id]="config.id"
+    [attr.type]="config.inputType || 'text'"
+    [attr.inputmode]="config.inputMode || null"
+    [placeholder]="config.placeholder"
+    [formControl]="control"
+    [appInputRestriction]="config.restriction"
+  />
+
+  <div class="error-messages" *ngIf="hasError">
+    <small *ngIf="control.hasError('required')">
+      Campo obligatorio.
+    </small>
+
+    <small *ngIf="control.hasError('email')">
+      Ingrese un correo válido.
+    </small>
+
+    <small *ngIf="control.hasError('pattern')">
+      {{ patternErrorMessage || 'Formato inválido.' }}
+    </small>
+  </div>
+</div>

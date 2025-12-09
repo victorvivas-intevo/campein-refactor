@@ -1,0 +1,17 @@
+<!-- date-field.html -->
+<div class="field-base date-field" [class.has-error]="hasError">
+  <label [attr.for]="config.id">
+    {{ config.label }} <span *ngIf="config.required">*</span>
+  </label>
+
+  <input
+    [id]="config.id"
+    type="date"
+    [placeholder]="config.placeholder"
+    [formControl]="control"
+  />
+
+  <div class="error-messages" *ngIf="hasError">
+    <small *ngIf="control.hasError('required')">Campo obligatorio.</small>
+  </div>
+</div>
