@@ -1,0 +1,1 @@
+import{Ma as n,Na as o,Wa as i,wa as a}from"./chunk-FIOCDCZP.js";var g=["class","page"],s=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=a({type:t,selectors:[["app-login",8,"page"]],attrs:g,decls:2,vars:0,template:function(e,c){e&1&&(n(0,"p"),i(1,"login.page works!"),o())},encapsulation:2})};export{s as LoginPage};
