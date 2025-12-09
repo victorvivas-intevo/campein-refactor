@@ -17,8 +17,7 @@ export class Card {
   @Input() class = '';
 
   get baseClasses(): string {
-    const base =`rounded-card-0 bg-white shadow-card-0 w-full
-      backdrop-blur transition-all duration-200`;
+    const base =`rounded-card-0 bg-white shadow-card-0 w-full transition-all duration-200`;
 
     const variants: Record<CardVariant, string> = {
       default: '',

@@ -157,11 +157,43 @@
       "column": 2,
       "order": 13,
       "options": [
-        { "label": "Juventud", "value": "youth" },
-        { "label": "Mujeres", "value": "women" },
-        { "label": "Adulto mayor", "value": "senior" },
-        { "label": "Comunidad LGBTIQ+", "value": "lgbt" },
-        { "label": "Líder social", "value": "social_leader" }
+        { "label": "Cambio climático", "value": "Cambio climático" },
+        { "label": "Corrupción", "value": "Corrupción" },
+        { "label": "Educación", "value": "Educación" },
+        { "label": "Empleo", "value": "Empleo" },
+        { "label": "Infraestrutura", "value": "Infraestrutura" },
+        { "label": "Seguridad", "value": "Seguridad" }
+      ]
+    },
+    {
+      "id": "locality",
+      "type": "select",
+      "label": "Localidad",
+      "placeholder": "Seleccione una localidad",
+      "required": true,
+      "column": 2,
+      "order": 14,
+      "options": [
+        { "label": "Antonio Nariño", "value": "Antonio Nariño" },
+        { "label": "Barrios Unidos", "value": "Barrios Unidos" },
+        { "label": "Bosa", "value": "Bosa" },
+        { "label": "Ciudad Bolívar", "value": "Ciudad Bolívar" },
+        { "label": "Chapinero", "value": "Chapinero" },
+        { "label": "Engativá", "value": "Engativá" },
+        { "label": "Fontibón", "value": "Fontibón" },
+        { "label": "Kennedy", "value": "Kennedy" },
+        { "label": "La Candelaria", "value": "La Candelaria" },
+        { "label": "Los Mártires", "value": "Los Mártires" },
+        { "label": "Puente Aranda", "value": "Puente Aranda" },
+        { "label": "Rafael Uribe Uribe", "value": "Rafael Uribe Uribe" },
+        { "label": "San Cristóbal", "value": "San Cristóbal" },
+        { "label": "Santa Fe", "value": "Santa Fe" },
+        { "label": "Suba", "value": "Suba" },
+        { "label": "Sumapaz", "value": "Sumapaz" },
+        { "label": "Teusaquillo", "value": "Teusaquillo" },
+        { "label": "Tunjuelito", "value": "Tunjuelito" },
+        { "label": "Usaquén", "value": "Usaquén" },
+        { "label": "Usme", "value": "Usme" }
       ]
     },
     {
@@ -171,7 +203,7 @@
       "placeholder": "Seleccione un puesto de votación",
       "required": false,
       "column": 1,
-      "order": 14,
+      "order": 15,
       "options": [
         { "label": "11 de Noviembre", "value": "11 de Noviembre" },
         { "label": "12 de Octubre", "value": "12 de Octubre" },
@@ -1203,35 +1235,13 @@
       ]
     },
     {
-      "id": "locality",
-      "type": "select",
-      "label": "Localidad",
-      "placeholder": "Seleccione una localidad",
-      "required": true,
-      "column": 2,
-      "order": 15,
-      "options": [
-        { "label": "Antonio Nariño", "value": "Antonio Nariño" },
-        { "label": "Barrios Unidos", "value": "Barrios Unidos" },
-        { "label": "Bosa", "value": "Bosa" },
-        { "label": "Ciudad Bolívar", "value": "Ciudad Bolívar" },
-        { "label": "Chapinero", "value": "Chapinero" },
-        { "label": "Engativá", "value": "Engativá" },
-        { "label": "Fontibón", "value": "Fontibón" },
-        { "label": "Kennedy", "value": "Kennedy" },
-        { "label": "La Candelaria", "value": "La Candelaria" },
-        { "label": "Los Mártires", "value": "Los Mártires" },
-        { "label": "Puente Aranda", "value": "Puente Aranda" },
-        { "label": "Rafael Uribe Uribe", "value": "Rafael Uribe Uribe" },
-        { "label": "San Cristóbal", "value": "San Cristóbal" },
-        { "label": "Santa Fe", "value": "Santa Fe" },
-        { "label": "Suba", "value": "Suba" },
-        { "label": "Sumapaz", "value": "Sumapaz" },
-        { "label": "Teusaquillo", "value": "Teusaquillo" },
-        { "label": "Tunjuelito", "value": "Tunjuelito" },
-        { "label": "Usaquén", "value": "Usaquén" },
-        { "label": "Usme", "value": "Usme" }
-      ]
+      "id": "comments",
+      "type": "text",
+      "label": "Comentarios",
+      "placeholder": "Ingrese su comentario",
+      "required": false,
+      "column": 1,
+      "order": 16
     }
   ]
 }

@@ -1,6 +1,8 @@
 
 <div class="w-full h-full">
-    <app-card size="xl" class="md:w-full flex items-center justify-center" >
+    <app-card size="xl" class="md:w-full flex flex-col items-center justify-center gap-10" >
+
+        <img src="/assets/logos/logo-campein-red-x2.png" alt="Campein" srcset="" class="w-48 h-auto">
         <app-dynamic-form
             [schema]="schema"
             (submitted)="onSubmit($event)"
