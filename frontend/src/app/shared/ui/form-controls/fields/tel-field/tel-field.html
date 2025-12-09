@@ -1,0 +1,24 @@
+<div class="field-base tel-field" [class.has-error]="hasError">
+  <label [attr.for]="config.id">
+    {{ config.label }} <span *ngIf="config.required">*</span>
+  </label>
+
+  <input
+    [id]="config.id"
+    type="tel"
+    inputmode="tel"
+    [placeholder]="config.placeholder"
+    [formControl]="control"
+    [appInputRestriction]="config.restriction"
+  />
+
+  <div class="error-messages" *ngIf="hasError">
+    <small *ngIf="control.hasError('required')">
+      Campo obligatorio.
+    </small>
+
+    <small *ngIf="control.hasError('pattern')">
+      {{ patternErrorMessage || 'Formato inválido.' }}
+    </small>
+  </div>
+</div>

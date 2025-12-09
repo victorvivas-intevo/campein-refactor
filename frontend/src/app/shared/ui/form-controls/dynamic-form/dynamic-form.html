@@ -1,0 +1,62 @@
+<form class="flex flex-col justify-center items-center gap-5" [formGroup]="form" (ngSubmit)="onSubmit()">
+  @if(schema.title){
+    <h2 class="text-primary-red-600 font-bold text-2xl">{{ schema.title }}</h2>
+  }
+
+
+  <div class="flex gap-5 flex-wrap 
+    [&>*]:basis-full
+    md:[&>*]:basis-[48.89%]">
+    <ng-container *ngFor="let field of schema.fields">
+      <ng-container [ngSwitch]="field.type">
+        <app-text-field
+          *ngSwitchCase="'text'"
+          [config]="field"
+          [control]="getControl(field.id)"
+          
+        ></app-text-field>
+
+        <app-select-field
+          *ngSwitchCase="'select'"
+          [config]="field"
+          [control]="getControl(field.id)"
+          
+        ></app-select-field>
+
+        <app-date-field
+          *ngSwitchCase="'date'"
+          [config]="field"
+          [control]="getControl(field.id)"
+          
+        ></app-date-field>
+
+        <app-tel-field
+          *ngSwitchCase="'tel'"
+          [config]="field"
+          [control]="getControl(field.id)"
+          
+        ></app-tel-field>
+
+        <app-checkbox-field
+          *ngSwitchCase="'checkbox'"
+          [config]="field"
+          [control]="getControl(field.id)"
+          class="w-full"
+        ></app-checkbox-field>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <div class="w-1/2">
+    <app-button
+      variant="primary"
+      size="lg"
+      (clicked)="onSubmit()"
+      [fullWidth]="true"
+      [disabled]="isSubmitDisabled"
+      class="max-w-1/2"
+    >
+      Enviar
+    </app-button>
+  </div>
+</form>
