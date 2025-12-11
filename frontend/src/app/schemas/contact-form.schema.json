@@ -1,0 +1,169 @@
+{
+  "formId": "public-contact-form",
+  "title": "Registro de posibles votantes",
+  "fields": [
+    {
+      "id": "documentType",
+      "type": "select",
+      "label": "Tipo de documento",
+      "placeholder": "Seleccione tipo de documento",
+      "required": true,
+      "column": 1,
+      "order": 1,
+      "options": [
+        { "label": "Cédula de ciudadanía", "value": "CC" },
+        { "label": "Cédula de extranjería", "value": "CE" },
+        { "label": "Otro", "value": "OTRO" }
+      ]
+    },
+    {
+      "id": "documentNumber",
+      "type": "text",
+      "label": "Número de documento",
+      "placeholder": "Ingrese número de documento",
+      "required": true,
+      "column": 2,
+      "order": 2,
+      "validators": [
+        { "type": "pattern", "value": "^[0-9]+$", "message": "Solo se permiten dígitos" }
+      ],
+      "inputType": "text",
+      "inputMode": "numeric",
+      "restriction": "digits"
+    },
+    {
+      "id": "firstName",
+      "type": "text",
+      "label": "Primer Nombre",
+      "placeholder": "Ingrese su primer nombre",
+      "required": true,
+      "column": 1,
+      "order": 3,
+      "restriction": "textNoSpecials"
+    },
+    {
+      "id": "secondName",
+      "type": "text",
+      "label": "Segundo Nombre",
+      "placeholder": "Ingrese su segundo nombre",
+      "required": false,
+      "column": 2,
+      "order": 4,
+      "restriction": "textNoSpecials"
+    },
+    {
+      "id": "firstLastName",
+      "type": "text",
+      "label": "Primer Apellido",
+      "placeholder": "Ingrese su primer apellido",
+      "required": true,
+      "column": 1,
+      "order": 5,
+      "restriction": "textNoSpecials"
+    },
+    {
+      "id": "secondLastName",
+      "type": "text",
+      "label": "Segundo Apellido",
+      "placeholder": "Ingrese su segundo apellido",
+      "required": false,
+      "column": 2,
+      "order": 6,
+      "restriction": "textNoSpecials"
+    },
+    {
+      "id": "ageRange",
+      "type": "select",
+      "label": "Rango de edad",
+      "placeholder": "Seleccione rango de edad",
+      "required": true,
+      "column": 1,
+      "order": 7,
+      "options": [
+        { "label": "18-25 años", "value": "18_25" },
+        { "label": "26-35 años", "value": "26_35" },
+        { "label": "36-45 años", "value": "36_45" },
+        { "label": "46-60 años", "value": "46_60" },
+        { "label": "61-80 años", "value": "61_80" },
+        { "label": "Más de 80 años", "value": "80_plus" }
+      ]
+    },
+    {
+      "id": "genderIdentity",
+      "type": "select",
+      "label": "Identidad de Género",
+      "placeholder": "Seleccione identidad de género",
+      "required": true,
+      "column": 2,
+      "order": 8,
+      "options": [
+        { "label": "Mujer", "value": "female" },
+        { "label": "Hombre", "value": "male" },
+        { "label": "No binario", "value": "non_binary" },
+        { "label": "LGTBIQ+", "value": "lgbtiq+" },
+        { "label": "Otro", "value": "other" },
+        { "label": "Prefiere no decirlo", "value": "prefer_not_to_say" }
+      ]
+    },
+    {
+      "id": "email",
+      "type": "text",
+      "label": "Correo electrónico",
+      "placeholder": "Ingrese su correo electrónico",
+      "required": true,
+      "column": 1,
+      "order": 9,
+      "validators": [{ "type": "email", "message": "Ingrese un correo válido" }],
+      "inputType": "email"
+    },
+    {
+      "id": "cellphone",
+      "type": "tel",
+      "label": "Celular",
+      "placeholder": "Ingrese su número celular",
+      "required": true,
+      "column": 2,
+      "order": 10,
+      "validators": [
+        { "type": "pattern", "value": "^[0-9]{7,15}$", "message": "Ingrese un celular válido" }
+      ],
+      "restriction": "digits"
+    },
+    {
+      "id": "phone",
+      "type": "tel",
+      "label": "Teléfono",
+      "placeholder": "Ingrese número de teléfono",
+      "required": false,
+      "column": 1,
+      "order": 11,
+      "restriction": "digits"
+    },
+    {
+      "id": "address",
+      "type": "text",
+      "label": "Dirección",
+      "placeholder": "Ingrese su dirección",
+      "required": false,
+      "column": 1,
+      "order": 12
+    },
+    {
+      "id": "interestGroup",
+      "type": "select",
+      "label": "Tema de interés",
+      "placeholder": "Seleccione un grupo de interés",
+      "required": true,
+      "column": 2,
+      "order": 13,
+      "options": [
+        { "label": "Cambio climático", "value": "Cambio climático" },
+        { "label": "Corrupción", "value": "Corrupción" },
+        { "label": "Educación", "value": "Educación" },
+        { "label": "Empleo", "value": "Empleo" },
+        { "label": "Infraestructura", "value": "Infraestructura" },
+        { "label": "Seguridad", "value": "Seguridad" }
+      ]
+    }
+  ]
+}

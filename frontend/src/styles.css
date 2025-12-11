@@ -146,5 +146,48 @@
   .select-wrapper:focus-within .select-icon {
     @apply -translate-y-1/2 rotate-180;
   }
+
+  /* Autocomplete field */
+  .autocomplete-wrapper {
+    @apply relative;
+  }
+
+  .autocomplete-input {
+    @apply w-full text-placeholder-input-900 text-lg font-normal bg-white
+           px-5 py-3.5 border border-border-input shadow-inset-input
+           focus:outline-0 rounded-xl;
+    padding-right: 3rem; /* espacio para el icono */
+  }
+
+  .field-base.has-error .autocomplete-input {
+    @apply border border-red-500;
+  }
+
+  .select-icon {
+    @apply absolute right-5 top-1/2 -translate-y-1/2
+           w-5 h-5 pointer-events-auto
+           transition-transform duration-200 ease-out;
+  }
+
+  .autocomplete-wrapper:focus-within .select-icon {
+    @apply -translate-y-1/2 rotate-180;
+  }
+
+  .autocomplete-panel {
+    @apply absolute left-0 right-0 mt-1 max-h-60 overflow-auto
+           bg-white border border-border-input rounded-xl shadow-lg z-10;
+  }
+
+  .autocomplete-panel ul {
+    @apply list-none m-0 p-1;
+  }
+
+  .autocomplete-panel li {
+    @apply px-4 py-2 cursor-pointer text-base text-placeholder-input-900;
+  }
+
+  .autocomplete-panel li:hover {
+    @apply bg-gray-100;
+  }
 }
 

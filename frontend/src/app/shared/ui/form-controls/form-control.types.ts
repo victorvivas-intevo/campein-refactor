@@ -1,4 +1,4 @@
-export type FieldType = 'text' | 'select' | 'checkbox' | 'date' | 'tel';
+export type FieldType = 'text' | 'select' | 'autocomplete' | 'checkbox' | 'date' | 'tel';
 
 export type ValidatorType =
   | 'required'

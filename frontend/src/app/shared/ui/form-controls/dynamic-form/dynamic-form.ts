@@ -9,6 +9,7 @@ import { SelectField } from '../fields/select-field/select-field';
 import { TelField } from '../fields/tel-field/tel-field';
 import { TextField } from '../fields/text-field/text-field';
 import { Button } from '../../components/button/button';
+import { AutocompleteField } from '../fields/autocomplete-field/autocomplete-field';
 
 @Component({
   standalone: true,
@@ -21,6 +22,7 @@ import { Button } from '../../components/button/button';
     CheckboxField,
     DateField,
     SelectField,
+    AutocompleteField,
     TelField,
     TextField,
     Button

@@ -198,7 +198,7 @@
     },
     {
       "id": "votingPlace",
-      "type": "select",
+      "type": "autocomplete",
       "label": "Puesto de votación",
       "placeholder": "Seleccione un puesto de votación",
       "required": false,
