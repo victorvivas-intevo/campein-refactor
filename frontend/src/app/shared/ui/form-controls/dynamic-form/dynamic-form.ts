@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { FormSchema, FormFieldConfig, FieldValidatorConfig } from '../form-control.types';
+import { FormSchema, FormFieldConfig, FieldValidatorConfig, FieldLabelActionConfig } from '../form-control.types';
 import { CheckboxField } from '../fields/checkbox-field/checkbox-field';
 import { DateField } from '../fields/date-field/date-field';
 import { SelectField } from '../fields/select-field/select-field';
@@ -31,6 +31,11 @@ import { AutocompleteField } from '../fields/autocomplete-field/autocomplete-fie
 export class DynamicForm implements OnChanges {
   @Input() schema!: FormSchema;
   @Output() submitted = new EventEmitter<Record<string, any>>();
+  @Output() fieldLabelAction = new EventEmitter<FieldLabelActionConfig>();
+
+  onFieldLabelAction(action: FieldLabelActionConfig): void {
+    this.fieldLabelAction.emit(action);
+  }
 
   form!: FormGroup;
 
@@ -119,5 +124,12 @@ export class DynamicForm implements OnChanges {
   get isSubmitDisabled(): boolean {
     if (!this.form) return true;
     return this.form.invalid || this.form.pending;
+  }
+
+  resetForm(): void {
+    if (!this.form) return;
+    this.form.reset();
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
   }
 }

@@ -14,10 +14,10 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'public-form',
+        redirectTo: 'public-form/voluntario-publico',
       },
       {
-        path: 'public-form',
+        path: 'public-form/:code',
         loadComponent: () =>
           import('@/features/public-form/ui/public-form.page/public-form.page').then(
             (m) => m.PublicFormPage,
@@ -56,6 +56,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'features/public-form',
+    redirectTo: 'public-form/voluntario-publico',
   },
 ];

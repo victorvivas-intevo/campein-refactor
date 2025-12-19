@@ -189,5 +189,32 @@
   .autocomplete-panel li:hover {
     @apply bg-gray-100;
   }
+
+  /* Modal */
+  /* src/app/shared/ui/components/modal/modal.css */
+  .modal-root {
+    @apply fixed inset-0 z-50;
+  }
+
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black/40 backdrop-blur-sm;
+  }
+
+  .modal-container {
+    @apply fixed inset-0 flex items-center justify-center p-4;
+  }
+
+  .modal-panel {
+    @apply relative w-full bg-white rounded-2xl shadow-xl p-6 max-h-[90vh] overflow-y-auto;
+  }
+
+  .modal-content {
+    @apply w-full;
+  }
+
+  .modal-close-btn {
+    @apply absolute top-4 right-4 text-slate-400 hover:text-slate-700 transition-colors;
+  }
+
 }
 
