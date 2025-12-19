@@ -1,0 +1,121 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+/**
+ * Tabla: tenants
+ */
+model Tenant {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  forms Form[]
+
+  users User[]
+
+  @@map("tenants")
+}
+
+/**
+ * Tabla: forms
+ */
+model Form {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId    String   @map("tenant_id") @db.Uuid
+  code        String   @db.Text
+  name        String   @db.Text
+  description String?  @db.Text
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  // relaciones
+  tenant      Tenant           @relation(fields: [tenantId], references: [id])
+  versions    FormVersion[]    @relation("FormToFormVersions")
+  submissions FormSubmission[] @relation("FormToFormSubmissions")
+
+  @@map("forms")
+}
+
+/**
+ * Tabla: users
+ */
+model User {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String   @map("tenant_id") @db.Uuid
+  email     String
+  password  String // hash bcrypt
+  fullName  String?
+  role      String   @default("user")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+
+  sessions UserSession[]
+
+  // Para que un email pueda repetirse en otro tenant,
+  // pero sea único dentro del mismo tenant:
+  @@unique([tenantId, email])
+  @@index([tenantId])
+  @@map("users")
+}
+
+/**
+ * Tabla: form_versions
+ */
+model FormVersion {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  formId    String   @map("form_id") @db.Uuid
+  version   Int
+  schema    Json     @db.JsonB
+  isActive  Boolean  @default(false) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  // relaciones
+  form        Form             @relation("FormToFormVersions", fields: [formId], references: [id])
+  submissions FormSubmission[] @relation("FormVersionToSubmissions")
+
+  @@unique([formId, version])
+  @@map("form_versions")
+}
+
+/**
+ * Tabla: form_submissions
+ */
+model FormSubmission {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  formId        String   @map("form_id") @db.Uuid
+  formVersionId String   @map("form_version_id") @db.Uuid
+  submittedAt   DateTime @default(now()) @map("submitted_at") @db.Timestamptz
+  submittedBy   String?  @map("submitted_by") @db.Text
+  payload       Json     @db.JsonB
+  metadata      Json?    @db.JsonB
+
+  // relaciones
+  form        Form        @relation("FormToFormSubmissions", fields: [formId], references: [id])
+  formVersion FormVersion @relation("FormVersionToSubmissions", fields: [formVersionId], references: [id])
+
+  @@map("form_submissions")
+}
+
+model UserSession {
+  id               String    @id @default(cuid())
+  userId           String    @db.Uuid
+  tenantId         String
+  refreshTokenHash String
+  userAgent        String?
+  ip               String?
+  revokedAt        DateTime?
+  expiresAt        DateTime
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([tenantId])
+  @@map("user_sessions")
+}
