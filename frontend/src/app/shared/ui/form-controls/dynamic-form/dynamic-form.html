@@ -41,6 +41,7 @@
           *ngSwitchCase="'checkbox'"
           [config]="field"
           [control]="getControl(field.id)"
+          (labelAction)="onFieldLabelAction($event)"
           class="w-full"
         ></app-checkbox-field>
       </ng-container>
