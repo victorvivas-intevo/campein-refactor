@@ -1,8 +1,8 @@
 
 import { Component, Input } from '@angular/core';
 
-type CardVariant = 'default'; // Definir aca las variantes posibles
-type CardSize = 'sm' | 'md' | 'lg' | 'xl'; // Definir aca las variaciones de padding
+type CardVariant = 'default'; // Definir las variantes posibles
+type CardSize = 'sm' | 'md' | 'lg' | 'xl' | 'login'; // Definir las variaciones de padding
 
 @Component({
   selector: 'app-card',
@@ -28,6 +28,7 @@ export class Card {
       md: 'p-6',
       lg: 'p-8',
       xl: 'p-10',
+      login: 'px-21 pt-23 pb-11.5'
     };
 
     const clickableClass = this.clickable

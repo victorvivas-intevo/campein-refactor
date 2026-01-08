@@ -24,7 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: any) {
     const sessionId = payload.sessionId as string | undefined;
-    const userId = payload.sub as string | undefined;
+    const userId = payload.id as string | undefined;
 
     if (!sessionId || !userId)
       throw new UnauthorizedException('Token inválido.');

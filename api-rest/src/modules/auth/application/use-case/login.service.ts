@@ -20,13 +20,14 @@ export class LoginService {
     private readonly jwt: JwtService,
   ) {}
 
-  private async signAccessToken(user: { id: string; tenantId: string; email: string; role: string, sessionId: string }) {
+  private async signAccessToken(user: { id: string; tenantId: string; email: string; role: string, sessionId: string, exp?: Date | number, fullName?: string }): Promise<string> {
     return this.jwt.signAsync({
-      sub: user.id,
+      id: user.id,
       tenantId: user.tenantId,
       email: user.email,
       role: user.role,
       sessionId: user.sessionId,
+      fullName: user.fullName || undefined,
     });
   }
 
@@ -61,6 +62,7 @@ export class LoginService {
         tenantId: user.tenantId,
         email: user.email,
         role: user.role,
+        fullName: user.fullName ? user.fullName : undefined,
         sessionId: sessionId.id
       }
     );
