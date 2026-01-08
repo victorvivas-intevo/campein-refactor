@@ -5,6 +5,11 @@ import { Auth as AuthLayoutComponent } from '@/shared/ui/layout/auth/auth';
 import { Private as PrivateLayoutComponent } from '@/shared/ui/layout/private/private';
 import { Public as PublicLayoutComponent } from '@/shared/ui/layout/public/public';
 
+import { authRoutes } from '@/features/auth/presentation/routes/auth.routes';
+import { authGuard } from './features/auth/presentation/guards/auth.guard';
+import { formsRoutes } from './features/forms/presentation/routes/forms.routes';
+import { dashboardRoutes } from './features/dashboard/presentation/routes/dashboard.routes';
+
 export const routes: Routes = [
   {
     // Layout público por defecto
@@ -29,30 +34,15 @@ export const routes: Routes = [
     // Layout de autenticación
     path: 'auth',
     component: AuthLayoutComponent,
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'login',
-      },
-      {
-        path: 'login',
-        loadComponent: () =>
-          import('@/features/auth/ui/login.page/login.page').then(
-            (m) => m.LoginPage,
-          ),
-      },
-      // Más rutas de auth en el futuro: reset-password, email-verified, etc.
-    ],
+    children: authRoutes
   },
   {
     // Layout privado (ya autenticado)
     path: 'app',
     component: PrivateLayoutComponent,
-    children: [
-      // Aquí irán dashboard, módulos, etc.
-      // { path: 'dashboard', loadComponent: () => import(...).then(m => m.DashboardPageComponent) }
-    ],
+    canActivate: [authGuard],
+    children: [...formsRoutes, ...dashboardRoutes],
+    pathMatch: 'prefix',
   },
   {
     path: '**',
