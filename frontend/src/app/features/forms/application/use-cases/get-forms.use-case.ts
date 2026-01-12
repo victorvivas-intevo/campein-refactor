@@ -9,7 +9,6 @@ export class GetFormsUseCase {
   constructor(private readonly gateway: FormsGatewayInterface) {}
 
   execute(): Observable<GetFormDTO[]> {
-    console.log('GetFormsUseCase execute method called');
     const tenantId = this.sessionStore.getTenantId();
     return this.gateway.getFormsByTenantId(tenantId);
   }

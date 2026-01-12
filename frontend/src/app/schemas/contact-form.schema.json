@@ -164,6 +164,23 @@
         { "label": "Infraestructura", "value": "Infraestructura" },
         { "label": "Seguridad", "value": "Seguridad" }
       ]
+    },
+    {
+      "id": "interestGroup",
+      "type": "select",
+      "label": "Tema de interés",
+      "placeholder": "Seleccione un grupo de interés",
+      "required": true,
+      "column": 2,
+      "order": 13,
+      "options": [
+        { "label": "Cambio climático", "value": "Cambio climático" },
+        { "label": "Corrupción", "value": "Corrupción" },
+        { "label": "Educación", "value": "Educación" },
+        { "label": "Empleo", "value": "Empleo" },
+        { "label": "Infraestructura", "value": "Infraestructura" },
+        { "label": "Seguridad", "value": "Seguridad" }
+      ]
     }
   ]
 }

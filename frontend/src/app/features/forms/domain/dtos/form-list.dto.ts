@@ -8,8 +8,9 @@ export interface GetFormDTO {
   code: string;
   name: string;
   description?: string;
-  versions: GetFormVersionDTO[];
-  createdAt: Date;
+  versions?: GetFormVersionDTO[];
+  submissionCount?: number;
+  createdAt?: Date;
 }
 
 export interface GetFormVersionDTO {
