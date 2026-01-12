@@ -1,1 +1,99 @@
-<p>table works!</p>
+<div [class]="styles + ` w-full overflow-hidden`">
+  <table class="w-full table-auto border-collapse">
+    <thead class="">
+      <tr class="border-b border-gray-200 cursor-pointer">
+        <th
+          *ngFor="let col of columns"
+          class="text-center p-2 font-semibold"
+          [class.sortable]="isSortable(col)"
+          (click)="onHeaderClick(col)"
+        >
+          <div class="flex gap-2 items-center">
+            <span>{{ col.header }}</span>
+
+            <!-- Icono de orden con Font Awesome -->
+            @if(isSortable(col)){
+            <i class="" [ngClass]="getSortIconClass(col)"></i>
+            }
+          </div>
+        </th>
+
+        @if(rowActions.length){
+        <th class="text-center p-2">Acciones</th>
+        }
+      </tr>
+    </thead>
+
+    <tbody>
+      @for(row of displayRows; track $index){
+      <tr 
+        class="border-b border-slate-200 "
+        [ngClass]="{
+          'hover:bg-primary-green-50 odd:bg-gray-100 even:bg-white': !isSelected(row),
+          'bg-primary-red-300 ring-1 ring-primary-green-300': isSelected(row)
+        }"
+      >
+        @for(col of columns; track $index){
+        <td class="p-2 font-normal bg-transparent" [ngClass]="getCellAlignClass(col)">
+          @if(col.type == 'date'){
+            {{getCellValue(row, col) | date:'yyyy-MM-dd' }} 
+          }
+          @else{
+            {{ getCellValue(row, col) }}
+          }
+        </td>
+        } @if(rowActions.length){
+        <td>
+          <div class="w-full flex gap-2 justify-center">
+            @for (action of rowActions; track $index) { @if(shouldShowAction(action, row)){
+            <button
+              type="button"
+              [class]=" action.variant?.classList + ` cursor-pointer px-1.5 py-1 rounded-full transition-colors ease-in-out duration-100`"
+              (click)="onRowActionClick(action, row, $event)"
+            >
+              @if(action.iconClass){
+              <i class="action-icon" [ngClass]="action.iconClass" aria-hidden="true"></i>
+              }
+            </button>
+            } }
+          </div>
+        </td>
+        }
+      </tr>
+      } @if(!displayRows.length){
+      <tr>
+        <td
+          class="text-center text-gray-500 py-6"
+          [attr.colspan]="columns.length + (rowActions.length ? 1 : 0)"
+        >
+          No hay registros para mostrar.
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  @if(config.pagination?.enabled && totalPages > 1){
+    <div class="pagination-wrapper">
+      <button
+        type="button"
+        class="pagination-btn"
+        (click)="prevPage()"
+        [disabled]="currentPage === 1"
+      >
+        Anterior
+      </button>
+  
+      <span class="pagination-info"> Página {{ currentPage }} de {{ totalPages }} </span>
+  
+      <button
+        type="button"
+        class="pagination-btn"
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+      >
+        Siguiente
+      </button>
+    </div>
+  }
+</div>

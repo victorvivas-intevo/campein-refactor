@@ -8,37 +8,40 @@ import { FORM_QUERY_REPOSITORY } from '../tokens';
 export class GetFormsService {
   constructor(
     @Inject(FORM_QUERY_REPOSITORY)
-    private readonly formQueryRepository: FormQueryService
+    private readonly formQueryRepository: FormQueryService,
   ) {}
 
   async getFormsByTenant(
     tenantId: string,
   ): Promise<PublicFormSchemaResponseDto[]> {
-    const forms =
-      await this.formQueryRepository.findByTenant(tenantId);
+    let response = await this.formQueryRepository.findByTenant(tenantId);
+
+    if(!response) throw new NotFoundException(`Error al traer los formularios`);
+    const forms = response.map((f) => ({
+      ...f,
+      submissionCount: f.versions.reduce(
+        (acc, v) => acc + v._count!.submissions,
+        0,
+      ),
+    }));
 
     if (!forms) {
-      throw new NotFoundException(
-        `Error al traer los formularios`,
-      );
+      throw new NotFoundException(`Error al traer los formularios`);
     }
 
-    return forms
+    return forms;
   }
 
   async getFormSchemaById(
     schemaId: string,
   ): Promise<PublicFormSchemaResponseDto> {
-    const form =
-      await this.formQueryRepository.findSchemaById(schemaId);
+    const form = await this.formQueryRepository.findSchemaById(schemaId);
 
     if (!form) {
-      throw new NotFoundException(
-        `Error al traer el formulario`,
-      );
+      throw new NotFoundException(`Error al traer el formulario`);
     }
 
-    return form
+    return form;
   }
 
   async getSubmissionBySchemaId(
@@ -53,7 +56,6 @@ export class GetFormsService {
       );
     }
 
-    return form
+    return form;
   }
-  
 }

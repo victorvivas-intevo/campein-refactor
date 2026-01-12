@@ -33,6 +33,11 @@ export class FormRepository implements FormQueryService {
             id: true,
             version: true,
             isActive: true,
+            _count: {
+              select: {
+                submissions: true,
+              },
+            },
           },
         },
         id: true,
