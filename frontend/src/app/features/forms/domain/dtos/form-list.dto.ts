@@ -19,7 +19,9 @@ export interface GetFormVersionDTO {
   isActive: boolean;
   schema?: JSON;
   submissions?: GetFormSubmissionDTO[];
-  _count?: number;
+  _count?: {submissions: number};
+  createdAt?: Date;
+  formId: string;
 }
 
 export interface GetFormSubmissionDTO {

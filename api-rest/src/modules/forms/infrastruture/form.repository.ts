@@ -33,6 +33,7 @@ export class FormRepository implements FormQueryService {
             id: true,
             version: true,
             isActive: true,
+            createdAt: true,
             _count: {
               select: {
                 submissions: true,
@@ -52,9 +53,33 @@ export class FormRepository implements FormQueryService {
     });
   }
 
+  async findById(formId: string): Promise<any | null> {
+    return this.prisma.form.findFirst({
+      select: {
+        id: true,
+        code: true,
+        createdAt: true,
+        description: true,
+        isPublic: true,
+        versions: true,
+        submissions: true,
+        name: true,
+        _count: {
+          select: {
+            submissions: true,
+          },
+        },
+      },
+      where: {
+        id: formId,
+      },
+    });
+  }
+
   async findSchemaById(schemaId: string): Promise<any | null> {
     return this.prisma.formVersion.findFirst({
       select: {
+        formId: true,
         schema: true,
         id: true,
         version: true,

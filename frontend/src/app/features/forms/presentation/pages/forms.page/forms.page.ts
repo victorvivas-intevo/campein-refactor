@@ -10,6 +10,7 @@ import {
 import { GetFormDTO } from '@/features/forms/domain/dtos/form-list.dto';
 import { Card } from "@/shared/ui/components/card/card";
 import { DetailsListPage } from "../../components/details-list-page/details-list-page";
+import { ListVersion } from "../../components/list-version/list-version";
 
 // interface UserRow {
 //   id: string;
@@ -21,7 +22,7 @@ import { DetailsListPage } from "../../components/details-list-page/details-list
 
 @Component({
   selector: 'app-forms.page',
-  imports: [Table, Card, DetailsListPage],
+  imports: [Table, Card, DetailsListPage, ListVersion],
   templateUrl: './forms.page.html',
   styles: ``,
 })
@@ -43,7 +44,7 @@ export class FormsPage implements OnInit {
   columns: TableColumn<GetFormDTO>[] = [
     { id: 'name', header: 'Nombre', sortable: true, type: 'text' },
     { id: 'code', header: 'Codigo', sortable: true, type: 'text' },
-    { id: 'description', header: 'Descripción', sortable: true, type: 'text' },
+    { id: 'description', header: 'Descripción', sortable: false, type: 'text' },
     { id: 'submissionCount', header: 'Envíos', sortable: true, type: 'text' },
     { id: 'createdAt', header: 'Fecha de creación', sortable: true, type: 'date' },
   ];

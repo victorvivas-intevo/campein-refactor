@@ -32,6 +32,14 @@ export class GetFormsService {
     return forms;
   }
 
+  async getFormById(
+    formId: string,
+  ): Promise<PublicFormSchemaResponseDto> {
+    const forms = await this.formQueryRepository.findById(formId);
+    if(!forms) throw new NotFoundException(`Error al traer el formulario`);
+    return forms;
+  }
+
   async getFormSchemaById(
     schemaId: string,
   ): Promise<PublicFormSchemaResponseDto> {
