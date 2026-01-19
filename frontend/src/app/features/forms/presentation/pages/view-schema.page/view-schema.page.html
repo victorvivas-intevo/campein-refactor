@@ -1,1 +1,14 @@
-<p>view-detail.page works!</p>
+<div class="w-full flex gap-5">
+  <!-- <app-card class="h-full w-1/5">Versiones</app-card> -->
+  <app-card class="w-1/4" size="sm">
+    @if (form$(); as f) {
+      @if(f.versions?.length && idVersion){
+      <app-view-version-list [versionActive]="idVersion" [versions]="getVersions"></app-view-version-list>
+      }
+    }
+  </app-card>
+  <div class="w-full flex flex-col gap-5">
+    <app-card class="w-full"> Datos del formulario y Schema </app-card>
+    <app-card class="w-full"> Envíos del formulario </app-card>
+  </div>
+</div>

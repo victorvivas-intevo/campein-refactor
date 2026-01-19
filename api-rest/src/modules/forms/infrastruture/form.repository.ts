@@ -61,7 +61,11 @@ export class FormRepository implements FormQueryService {
         createdAt: true,
         description: true,
         isPublic: true,
-        versions: true,
+        versions: {
+          orderBy: {
+            createdAt: 'asc',
+          },
+        },
         submissions: true,
         name: true,
         _count: {

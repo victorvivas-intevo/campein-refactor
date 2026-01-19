@@ -20,6 +20,6 @@
   <app-card class="w-1/3 flex flex-col gap-2">
     <h2 class="text-xl font-semibold">Datos del formulario</h2>
     <app-details-list-page [row]="itemView"></app-details-list-page>
-    <app-list-version [versions]="itemView?.versions"></app-list-version>
+    <app-list-version [idForm]="itemView?.id" [versions]="itemView?.versions"></app-list-version>
   </app-card>
 </div>
