@@ -36,7 +36,7 @@ export class ViewSchemaPage implements OnInit {
       label: 'Previsualización',
       iconClass: 'fa-solid fa-newspaper',
       component: PreviewForm,
-      inputs: { schema: this.versionForm }, // Pasas datos al componente hijo
+      inputs: { schema: null }, // Pasas datos al componente hijo
     },
     {
       id: 'log',
@@ -73,6 +73,7 @@ export class ViewSchemaPage implements OnInit {
     this.fecade.loadOne({ id: this.idForm }).then((e) => {
       this.form = this.fecade.current() || undefined;
       this.versionForm = this.form?.versions?.find((v) => v.id === this.idVersion) || undefined;
+      this.updateTabsData();
       console.log(this.getVersions);
     });
     // await this.fecade.loadOne({id: this.idForm}).then(e =>{
@@ -90,9 +91,25 @@ export class ViewSchemaPage implements OnInit {
   onVersionSelected(version: GetFormVersionDTO): void {
     this.idVersion = version.id;
     this.versionForm = this.form?.versions?.find((v) => v.id === this.idVersion);
+    this.updateTabsData();
     this.router.navigate(['../', version.id], { 
       relativeTo: this.route, // Indica que partimos de la ruta actual
       replaceUrl: true        // Opcional: reemplaza el historial para que el botón "atrás" no sea infinito
+    });
+  }
+
+  private updateTabsData() {
+    const schemaData = this.versionForm?.schema || this.versionForm; 
+
+    this.formTabs = this.formTabs.map(tab => {
+      if (tab.id === 'preview') {
+        return { ...tab, inputs: { schema: schemaData } };
+      }
+      // Actualizamos también el ID para los otros tabs si es necesario
+      if (['log', 'users', 'stats'].includes(tab.id)) {
+        return { ...tab, inputs: { formId: this.idForm } };
+      }
+      return tab;
     });
   }
 }
