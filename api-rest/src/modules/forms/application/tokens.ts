@@ -1,0 +1,1 @@
+export const FORM_QUERY_REPOSITORY = Symbol('FORM_QUERY_REPOSITORY');

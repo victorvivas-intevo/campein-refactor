@@ -1,0 +1,43 @@
+<div class="field-base autocomplete-field" [class.has-error]="hasError">
+  <label [attr.for]="config.id">
+    {{ config.label }} <span *ngIf="config.required">*</span>
+  </label>
+
+  <div class="autocomplete-wrapper">
+    <input
+      class="autocomplete-input"
+      [id]="config.id"
+      type="text"
+      [placeholder]="config.placeholder || 'Seleccione una opción'"
+      [value]="searchTerm || displayValue"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      (input)="onInput($any($event.target).value)"
+    />
+
+    <!-- Icono de desplegable (puede ser el mismo del select) -->
+    <img
+      src="assets/icons/icon-select-red.svg"
+      alt=""
+      class="select-icon"
+      aria-hidden="true"
+      (mousedown)="$event.preventDefault(); isOpen = !isOpen"
+    />
+
+    <!-- Dropdown de opciones -->
+    <div class="autocomplete-panel" *ngIf="isOpen && filteredOptions.length > 0">
+      <ul>
+        <li
+          *ngFor="let opt of filteredOptions"
+          (mousedown)="selectOption(opt)"
+        >
+          {{ opt.label }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="error-messages" *ngIf="hasError">
+    <small *ngIf="control.hasError('required')">Campo obligatorio.</small>
+  </div>
+</div>

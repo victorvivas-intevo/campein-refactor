@@ -2,8 +2,6 @@
   @if(schema.title){
     <h2 class="text-primary-red-600 font-bold text-2xl">{{ schema.title }}</h2>
   }
-
-
   <div class="flex gap-5 flex-wrap 
     [&>*]:basis-full
     md:[&>*]:basis-[48.89%]">
@@ -13,34 +11,37 @@
           *ngSwitchCase="'text'"
           [config]="field"
           [control]="getControl(field.id)"
-          
         ></app-text-field>
 
         <app-select-field
           *ngSwitchCase="'select'"
           [config]="field"
           [control]="getControl(field.id)"
-          
         ></app-select-field>
+
+        <app-autocomplete-field
+          *ngSwitchCase="'autocomplete'"
+          [config]="field"
+          [control]="getControl(field.id)"
+        ></app-autocomplete-field>
 
         <app-date-field
           *ngSwitchCase="'date'"
           [config]="field"
           [control]="getControl(field.id)"
-          
         ></app-date-field>
 
         <app-tel-field
           *ngSwitchCase="'tel'"
           [config]="field"
           [control]="getControl(field.id)"
-          
         ></app-tel-field>
 
         <app-checkbox-field
           *ngSwitchCase="'checkbox'"
           [config]="field"
           [control]="getControl(field.id)"
+          (labelAction)="onFieldLabelAction($event)"
           class="w-full"
         ></app-checkbox-field>
       </ng-container>

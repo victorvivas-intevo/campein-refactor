@@ -1,11 +1,6 @@
-export type FieldType = 'text' | 'select' | 'checkbox' | 'date' | 'tel';
+export type FieldType = 'text' | 'select' | 'autocomplete' | 'checkbox' | 'date' | 'tel';
 
-export type ValidatorType =
-  | 'required'
-  | 'email'
-  | 'minLength'
-  | 'maxLength'
-  | 'pattern';
+export type ValidatorType = 'required' | 'email' | 'minLength' | 'maxLength' | 'pattern';
 
 export interface FieldValidatorConfig {
   type: ValidatorType;
@@ -20,10 +15,23 @@ export interface FieldOption {
 
 export type InputRestriction = 'digits' | 'textNoSpecials';
 
+export type FieldLabelActionType = 'openModal';
+
+export interface FieldLabelActionConfig {
+  type: FieldLabelActionType;
+  modalId: string;
+  text: string;
+}
+
+export interface FieldLabelConfig {
+  text: string;
+  actions?: FieldLabelActionConfig[];
+}
+
 export interface FormFieldConfig {
   id: string;
   type: FieldType;
-  label: string;
+  label: string | FieldLabelConfig;
   placeholder?: string;
   required?: boolean;
   column?: 1 | 2;

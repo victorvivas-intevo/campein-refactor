@@ -1,7 +1,56 @@
 <!-- checkbox-field.html -->
-<div class="field-base checkbox-field">
+<!-- <div class="field-base checkbox-field">
   <label>
     <input type="checkbox" [formControl]="control" />
     {{ config.label }}
   </label>
+</div> -->
+
+<!-- checkbox-field.html -->
+<div class="field-base checkbox-field" [class.has-error]="hasError">
+  <label [attr.for]="config.id" class="flex items-start gap-2 cursor-pointer">
+    <!-- El input -->
+    <input
+      type="checkbox"
+      [id]="config.id"
+      [formControl]="control"
+      class="mt-1"
+    />
+
+    <!-- El contenido del label -->
+    <ng-container *ngIf="isSimpleLabel(config.label); else richLabel">
+      <span>
+        {{ config.label }}
+        <span *ngIf="config.required">*</span>
+      </span>
+    </ng-container>
+
+    <ng-template #richLabel>
+      <ng-container [ngTemplateOutlet]="richLabelTpl"
+                    [ngTemplateOutletContext]="{ cfg: asLabelConfig(config.label) }">
+      </ng-container>
+    </ng-template>
+  </label>
+
+  <div class="error-messages" *ngIf="hasError">
+    <small *ngIf="control.hasError('required')">
+      Campo obligatorio.
+    </small>
+  </div>
+
+  <ng-template #richLabelTpl let-cfg="cfg">
+    <span>
+      {{ cfg.text }}
+      <span *ngIf="config.required">*</span>
+      <button
+        *ngFor="let action of cfg.actions"
+        type="button"
+        class="ml-1 underline text-primary-red-600 cursor-pointer"
+        (click)="onLabelActionClick(action)"
+      >
+        {{ action.text }}
+      </button>
+    </span>
+  </ng-template>
 </div>
+

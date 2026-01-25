@@ -1,4 +1,17 @@
-<p>private works!</p>
+<div
+  class="h-dvh w-screen bg-[url('/assets/images/background-red.png')] bg-no-repeat bg-center bg-cover bg-custom-bg-100 overflow-hidden"
+>
+  <div class="w-full h-full flex py-2.5">
+    <!-- Menu sidebar -->
+    <app-side-bar class="h-full w-1/5 max-w-100" />
+    <div class="w-full px-5 pt-7.5">
+      <!-- Top bar -->
+      <app-top-bar />
 
-
-<router-outlet></router-outlet>
+      <!-- Content -->
+      <div class="w-full">
+        <router-outlet />
+      </div>
+    </div>
+  </div>
+</div>

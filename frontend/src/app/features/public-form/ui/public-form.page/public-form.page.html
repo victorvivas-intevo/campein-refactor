@@ -1,10 +1,85 @@
-
 <div class="w-full h-full">
-    <app-card size="xl" class="md:w-full flex items-center justify-center" >
+  <app-card size="xl" class="md:w-full flex flex-col items-center justify-center gap-10">
+    
+    <div #pageTop></div>
+    
+    <!-- Loading -->
+    <div *ngIf="loading(); else loaded">
+      <p>Cargando formulario...</p>
+    </div>
+
+    <ng-template #loaded>
+      <!-- Error -->
+      <div *ngIf="error(); else formContent" class="text-red-500">
+        {{ error() }}
+      </div>
+
+      <!-- Formulario -->
+      <ng-template #formContent>
+        <img
+          src="/assets/logos/logo-campein-red-x2.png"
+          alt="Campein"
+          srcset=""
+          class="w-48 h-auto"
+        />
+
+        <!-- Mensaje de éxito del envío -->
+        <div
+          *ngIf="submitSuccess()"
+          class="mb-4 rounded-xl border border-green-500 bg-green-50 px-4 py-3 text-green-700"
+        >
+          ¡Gracias! Tu registro fue enviado correctamente.
+        </div>
+
         <app-dynamic-form
-            [schema]="schema"
-            (submitted)="onSubmit($event)"
+          *ngIf="formSchema() as schema"
+          [schema]="schema"
+          (submitted)="onSubmit($event)"
+          (fieldLabelAction)="onFieldLabelAction($event)"
         ></app-dynamic-form>
-        
-    </app-card>
+        <!-- Mensaje de error del envío -->
+        <div
+          *ngIf="submitError()"
+          class="mb-4 rounded-xl border border-red-500 bg-red-50 px-4 py-3 text-red-700"
+        >
+          {{ submitError() }}
+        </div>
+      </ng-template>
+    </ng-template>
+  </app-card>
 </div>
+
+
+<!-- Modal dinámico -->
+<app-modal
+  [isOpen]="dataPolicyModalOpen()"
+  (closed)="closeDataPolicy()"
+  size="md"
+>
+  <h2 class="text-xl font-semibold mb-4">
+    Política de tratamiento de datos
+  </h2>
+
+  <p class="text-sm leading-relaxed mb-4">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vitae augue leo. Quisque lacinia velit lectus, eget sodales metus congue in. Morbi vulputate sodales augue vitae lobortis. Donec sed urna ipsum. Mauris dignissim pretium dui, ut rutrum libero eleifend sed. Nunc a arcu feugiat magna sagittis posuere. Duis ultrices odio ac sapien venenatis egestas. Sed id leo at erat lacinia imperdiet eu ut neque. Nunc magna metus, bibendum non lorem quis, laoreet luctus dui. Nunc rutrum dignissim tincidunt. In eu erat varius, feugiat leo vitae, tincidunt turpis.
+    <br><br>
+    Aliquam tempor nec sapien vel aliquam. Aenean diam nisi, posuere in tortor ac, lobortis facilisis turpis. Mauris placerat diam molestie augue pulvinar vestibulum. Duis quis maximus lacus, consectetur pharetra neque. Proin sed dignissim nunc. Integer egestas nisi vitae pulvinar ultrices. Fusce cursus suscipit vehicula. Proin vel metus in purus eleifend congue ac eu dui. Pellentesque ut arcu dui.
+    <br><br>
+    Ut at risus sollicitudin, suscipit quam eget, vestibulum justo. Praesent tincidunt ligula in leo consectetur, vitae pellentesque lectus sagittis. Nullam gravida feugiat eleifend. Praesent tincidunt pulvinar nunc, vel tincidunt lacus porta sed. Cras non vehicula dui. Quisque ante velit, porta quis arcu in, aliquam sollicitudin ante. Donec iaculis placerat purus sed dignissim. Nam cursus magna lacinia, rhoncus augue ac, maximus augue. Nullam et quam nec velit auctor fermentum at quis mauris. Ut eleifend nisl eu enim auctor tempus.
+    <br><br>
+    Fusce elementum augue id commodo posuere. Duis lacinia sapien auctor massa vestibulum, vel interdum sapien efficitur. Morbi nec tellus rutrum, posuere dui eget, euismod tortor. In tempor porta iaculis. Donec accumsan viverra arcu quis porta. Etiam pellentesque blandit facilisis. Pellentesque vulputate, ante a porta hendrerit, diam nisl elementum massa, eget consectetur sapien eros at velit. Duis eget ipsum a mi sollicitudin ornare eget vitae mauris. Curabitur interdum sagittis nisl ut interdum. Donec facilisis dolor quam, ultrices congue urna fringilla quis.
+    <br><br>
+    Vivamus vitae felis ligula. Phasellus laoreet, magna quis dapibus elementum, velit diam egestas ex, sed gravida odio lectus vitae dolor. Ut pulvinar cursus mi, sit amet faucibus nibh faucibus quis. Pellentesque nec malesuada ante, ut vulputate sapien. Ut dapibus egestas felis, id eleifend dolor tempor ac. Donec maximus, odio eu rutrum ultrices, massa dui pharetra ipsum, in ullamcorper risus augue sed diam. In feugiat rhoncus sapien vel feugiat.
+  </p>
+
+  <div class="flex justify-end mt-4">
+    <button
+      type="button"
+      class="px-4 py-2 rounded-xl border border-slate-300 text-slate-700"
+      (click)="closeDataPolicy()"
+    >
+      Cerrar
+    </button>
+  </div>
+</app-modal>
+

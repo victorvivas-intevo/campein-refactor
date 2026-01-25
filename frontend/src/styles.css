@@ -1,108 +1,129 @@
 /* You can add global styles to this file, and also import other style files */
-
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import 'tailwindcss';
 
 @theme {
+  /* Variaciones color background */
+  --color-custom-bg-50: #f7f7fb;
+  --color-custom-bg-100: #f0f0f7; /* background base */
+  --color-custom-bg-200: #e3e3f1;
+  --color-custom-bg-300: #cdcde5;
+  --color-custom-bg-400: #b2b0d5;
+  --color-custom-bg-500: #958fc3;
+  --color-custom-bg-600: #8176b1;
+  --color-custom-bg-700: #6f639e;
+  --color-custom-bg-800: #5d5384;
+  --color-custom-bg-900: #4d456d;
+  --color-custom-bg-950: #302c49;
 
-/* Variaciones color background */
---color-custom-bg-50: #f7f7fb;
---color-custom-bg-100: #f0f0f7; /* background base */
---color-custom-bg-200: #e3e3f1;
---color-custom-bg-300: #cdcde5;
---color-custom-bg-400: #b2b0d5;
---color-custom-bg-500: #958fc3;
---color-custom-bg-600: #8176b1;
---color-custom-bg-700: #6f639e;
---color-custom-bg-800: #5d5384;
---color-custom-bg-900: #4d456d;
---color-custom-bg-950: #302c49;
+  /* Variaciones color primary-red */
+  --color-primary-red-50: #fdf2f7;
+  --color-primary-red-100: #fce7f1;
+  --color-primary-red-200: #fad0e4;
+  --color-primary-red-300: #f8a9cc;
+  --color-primary-red-400: #f274a9;
+  --color-primary-red-500: #ea4a88;
+  --color-primary-red-600: #db356d; /* base */
+  --color-primary-red-700: #bc1a4c;
+  --color-primary-red-800: #9b193f;
+  --color-primary-red-900: #821938;
+  --color-primary-red-950: #4f081c;
 
-/* Variaciones color primary-red */
---color-primary-red-50: #fdf2f7;
---color-primary-red-100: #fce7f1;
---color-primary-red-200: #fad0e4;
---color-primary-red-300: #f8a9cc;
---color-primary-red-400: #f274a9;
---color-primary-red-500: #ea4a88;
---color-primary-red-600: #db356d; /* base */
---color-primary-red-700: #bc1a4c;
---color-primary-red-800: #9b193f;
---color-primary-red-900: #821938;
---color-primary-red-950: #4f081c;
+  /* Variaciones color primary-green */
+  --color-primary-green-50: #edfefe;
+  --color-primary-green-100: #d1fafc;
+  --color-primary-green-200: #a9f3f8;
+  --color-primary-green-300: #6ee8f2;
+  --color-primary-green-400: #2cd3e4;
+  --color-primary-green-500: #10b6ca;
+  --color-primary-green-600: #1092aa;
+  --color-primary-green-700: #147489; /* base */
+  --color-primary-green-800: #1a5f70;
+  --color-primary-green-900: #1a4e5f;
+  --color-primary-green-950: #0b3441;
 
-/* Variaciones color primary-green */
---color-primary-green-50: #edfefe;
---color-primary-green-100: #d1fafc;
---color-primary-green-200: #a9f3f8;
---color-primary-green-300: #6ee8f2;
---color-primary-green-400: #2cd3e4;
---color-primary-green-500: #10b6ca;
---color-primary-green-600: #1092aa;
---color-primary-green-700: #147489; /* base */
---color-primary-green-800: #1a5f70;
---color-primary-green-900: #1a4e5f;
---color-primary-green-950: #0b3441;
+  /* Variaciones color secondary red */
+  --color-secondary-red-50: #ebfef5;
+  --color-secondary-red-100: #cffce6;
+  --color-secondary-red-200: #a4f6d2;
+  --color-secondary-red-300: #69ecbb;
+  --color-secondary-red-400: #2dda9f;
+  --color-secondary-red-500: #08b580;
+  --color-secondary-red-600: #009c6f;
+  --color-secondary-red-700: #007d5c;
+  --color-secondary-red-800: #02634a;
+  --color-secondary-red-900: #03513f;
+  --color-secondary-red-950: #002e24;
 
-/* Variaciones color secondary red */
---color-secondary-red-50: #ebfef5;
---color-secondary-red-100: #cffce6;
---color-secondary-red-200: #a4f6d2;
---color-secondary-red-300: #69ecbb;
---color-secondary-red-400: #2dda9f;
---color-secondary-red-500: #08b580;
---color-secondary-red-600: #009c6f;
---color-secondary-red-700: #007d5c;
---color-secondary-red-800: #02634a;
---color-secondary-red-900: #03513f;
---color-secondary-red-950: #002e24;
-
-/* Variaciones color gris placeholders inputs */
---color-placeholder-input-50: #f5f6f9;
---color-placeholder-input-100: #e8e9f1;
---color-placeholder-input-200: #d6d9e7;
---color-placeholder-input-300: #babfd6;
---color-placeholder-input-400: #999fc1;
---color-placeholder-input-500: #8084b1;
---color-placeholder-input-600: #6e6fa2;
---color-placeholder-input-700: #646293;
---color-placeholder-input-800: #56537a;
---color-placeholder-input-900: #43425d; /* base */
---color-placeholder-input-950: #2e2d3e;
-
---color-border-input: #E2E2E2;
+  /* Color base menu (sujeto a cambios) */
+  --color-purple-heart-50: #f5f3ff;
+  --color-purple-heart-100: #eee9fe;
+  --color-purple-heart-200: #ddd5ff;
+  --color-purple-heart-300: #c5b4fe;
+  --color-purple-heart-400: #a989fc;
+  --color-purple-heart-500: #8f59f9;
+  --color-purple-heart-600: #8136f1;
+  --color-purple-heart-700: #7224dd;
+  --color-purple-heart-800: #5f1eb9; /* base */
+  --color-purple-heart-900: #4f1b97;
+  --color-purple-heart-950: #300e67;
 
 
 
+  /* Variaciones color gris placeholders inputs */
+  --color-placeholder-input-50: #f5f6f9;
+  --color-placeholder-input-100: #e8e9f1;
+  --color-placeholder-input-200: #d6d9e7;
+  --color-placeholder-input-300: #babfd6;
+  --color-placeholder-input-400: #999fc1;
+  --color-placeholder-input-500: #8084b1;
+  --color-placeholder-input-600: #6e6fa2;
+  --color-placeholder-input-700: #646293;
+  --color-placeholder-input-800: #56537a;
+  --color-placeholder-input-900: #43425d; /* base */
+  --color-placeholder-input-950: #2e2d3e;
 
+  --color-border-input: #e2e2e2;
 
-/* Bordes redondeados */
---radius-card-0: 20px; 
+  --color-head-table-bg: #F0F0F7;
 
-/* Shadows */
-/* shadow-card-login */
---shadow-card-0: 0 3px 6px #00000029; 
-/* shadow-card-login */
---shadow-inset-input: inset 0 3px 6px #00000029; 
+  /* Bordes redondeados */
+  --radius-card-0: 20px;
 
+  /* Shadows */
+  /* shadow-card-login */
+  --shadow-card-0: 0 3px 6px #00000029;
+  /* shadow-card-login */
+  --shadow-inset-input: inset 0 3px 6px #00000029;
+
+  /* Custom fonts */
+  --font-montserrat: 'Montserrat', sans-serif;
+}
+
+@layer base {
+  * {
+    @apply font-montserrat;
+  }
 }
 
 @layer components {
+  /* inputs dinamic forms */
   .field-base {
     @apply flex flex-col gap-1;
   }
 
   .field-base label {
-    @apply text-primary-red-600 font-semibold text-lg;
+    @apply text-primary-red-600 font-semibold text-lg ml-2;
   }
 
   .field-base input {
-    @apply text-placeholder-input-900 text-lg font-normal bg-white px-5 py-3.5 border border-border-input shadow-inset-input focus:outline-0 rounded-xl;
+    @apply text-placeholder-input-900 text-lg font-medium bg-white px-5 py-3.5 border border-border-input shadow-inset-input focus:outline-0 rounded-xl;
   }
 
   .field-base.has-error input {
     @apply border border-red-500;
   }
-  
+
   .field-base select {
     @apply text-placeholder-input-900 text-lg font-normal bg-white px-5 py-3.5 border border-border-input shadow-inset-input focus:outline-0 rounded-xl;
   }
@@ -133,18 +154,117 @@
     padding-right: 3rem;
   }
 
-  /* .field-base.has-error .select-wrapper select {
-    @apply border border-red-500;
-  } */
-
   .select-icon {
     @apply absolute right-5 top-1/2 -translate-y-1/2
            w-5 h-5 pointer-events-none
            transition-transform duration-200 ease-out;
   }
-  
+
   .select-wrapper:focus-within .select-icon {
     @apply -translate-y-1/2 rotate-180;
   }
-}
 
+  /* Autocomplete field */
+  .autocomplete-wrapper {
+    @apply relative;
+  }
+
+  .autocomplete-input {
+    @apply w-full text-placeholder-input-900 text-lg font-normal bg-white
+           px-5 py-3.5 border border-border-input shadow-inset-input
+           focus:outline-0 rounded-xl;
+    padding-right: 3rem; /* espacio para el icono */
+  }
+
+  .field-base.has-error .autocomplete-input {
+    @apply border border-red-500;
+  }
+
+  .select-icon {
+    @apply absolute right-5 top-1/2 -translate-y-1/2
+           w-5 h-5 pointer-events-auto
+           transition-transform duration-200 ease-out;
+  }
+
+  .autocomplete-wrapper:focus-within .select-icon {
+    @apply -translate-y-1/2 rotate-180;
+  }
+
+  .autocomplete-panel {
+    @apply absolute left-0 right-0 mt-1 max-h-60 overflow-auto
+           bg-white border border-border-input rounded-xl shadow-lg z-10;
+  }
+
+  .autocomplete-panel ul {
+    @apply list-none m-0 p-1;
+  }
+
+  .autocomplete-panel li {
+    @apply px-4 py-2 cursor-pointer text-base text-placeholder-input-900;
+  }
+
+  .autocomplete-panel li:hover {
+    @apply bg-gray-100;
+  }
+
+  /* Modal */
+  /* src/app/shared/ui/components/modal/modal.css */
+  .modal-root {
+    @apply fixed inset-0 z-50;
+  }
+
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black/40 backdrop-blur-sm;
+  }
+
+  .modal-container {
+    @apply fixed inset-0 flex items-center justify-center p-4;
+  }
+
+  .modal-panel {
+    @apply relative w-full bg-white rounded-2xl shadow-xl p-6 max-h-[90vh] overflow-y-auto;
+  }
+
+  .modal-content {
+    @apply w-full;
+  }
+
+  .modal-close-btn {
+    @apply absolute top-4 right-4 text-slate-400 hover:text-slate-700 transition-colors;
+  }
+
+  /* fields forms private layout and auth layout */
+  .field-form-admin {
+    @apply flex flex-col gap-3;
+  }
+
+  .field-form-admin label {
+    @apply text-placeholder-input-900 font-semibold text-lg ml-2;
+  }
+
+  .field-form-admin input {
+    @apply text-placeholder-input-900 text-lg font-medium bg-white px-5 py-3.5 border border-border-input shadow-inset-input focus:outline-0 rounded-xl;
+  }
+
+  .field-form-admin.has-error input {
+    @apply border border-red-500;
+  }
+
+  .input-radio {
+    @apply flex gap-2;
+  }
+
+  .input-radio label {
+    @apply text-primary-red-600 font-normal text-sm;
+  }
+
+  /* .input-radio input {
+    @apply appearance-none rounded-full w-3 h-3 border-2 border-gray-400
+         checked:bg-primary-red-600 checked:border-primary-red-600
+         outline-none ring-1 ring-gray-400
+         cursor-pointer;
+  } */
+
+
+  /* end fields forms private layout and auth layout */
+}

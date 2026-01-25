@@ -1,0 +1,49 @@
+<div class="w-full h-full">
+  <div class="md:w-full flex flex-col items-center justify-center gap-10">
+    
+    <div #pageTop></div>
+    
+    <!-- Loading -->
+    <!-- <div *ngIf="loading(); else loaded"> -->
+    <div>
+        <p>Cargando formulario...</p>
+    </div>
+
+    <ng-template #loaded>
+      <!-- Error -->
+      <!-- <div *ngIf="error(); else formContent" class="text-red-500">
+        {{ error() }}
+      </div> -->
+
+      <!-- Formulario -->
+      <ng-template #formContent>
+        <img
+          src="/assets/logos/logo-campein-red-x2.png"
+          alt="Campein"
+          srcset=""
+          class="w-48 h-auto"
+        />
+
+        <!-- Mensaje de éxito del envío -->
+        <!-- <div
+          *ngIf="submitSuccess()"
+          class="mb-4 rounded-xl border border-green-500 bg-green-50 px-4 py-3 text-green-700"
+        >
+          ¡Gracias! Tu registro fue enviado correctamente.
+        </div> -->
+
+        <app-dynamic-form
+          *ngIf="formSchema() as schema"
+          [schema]="schema"
+        ></app-dynamic-form>
+        <!-- Mensaje de error del envío -->
+        <!-- <div
+          *ngIf="submitError()"
+          class="mb-4 rounded-xl border border-red-500 bg-red-50 px-4 py-3 text-red-700"
+        >
+          {{ submitError() }}
+        </div> -->
+      </ng-template>
+    </ng-template>
+  </div>
+</div>

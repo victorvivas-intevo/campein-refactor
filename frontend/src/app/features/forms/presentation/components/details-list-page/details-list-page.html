@@ -1,0 +1,48 @@
+@if(!row){
+  <div>
+    Selecciona un registro para ver la información y versiones más al detalle
+  </div>
+} @else {
+  <div>
+    <div class="flex flex-col gap-px">
+      <div class="inline">
+        <span class="font-semibold mr-1">Nombre:</span>
+        {{row.name}}
+      </div>
+      <div class="inline">
+        <span class="font-semibold mr-1">Codigo:</span>
+        {{row.code}}
+      </div>
+      <div class="inline">
+        <span class="font-semibold mr-1">Versión activa:</span>
+        {{ versionActive?.version || 'No hay alguna versión seleccionada' }}
+      </div>
+      <div class="inline">
+        <span class="font-semibold mr-1">Numero de versiones:</span>
+        {{ row.versions?.length }}
+      </div>
+      <div class="inline">
+        <span class="font-semibold mr-1">Envíos:</span>
+        {{row.submissionCount}}
+      </div>
+    </div>
+  </div>
+
+  @if(row.versions){
+    @if(row.versions.length > 0){
+      <div class="w-full">
+        <app-table
+          styles=""
+          [columns]="columns"
+          [data]="row.versions"
+          [config]="tableConfig"
+          [rowActions]="rowActions"
+          (rowAction)="onRowAction($event)"
+        />
+      </div>
+    }@else {
+      <!-- TODO: Design and implement loading, error, and no data components -->
+    }
+
+  }
+}

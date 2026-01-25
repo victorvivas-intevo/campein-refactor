@@ -1,0 +1,14 @@
+<div class="w-full flex justify-center">
+  <app-card size="login" class="max-w-xl w-full flex flex-col items-center justify-center gap-10">
+    <img src="/assets/logos/logo-campein-red-x2.png" alt="Campein" srcset="" class="w-48 h-auto" />
+    <!-- Formulario de login -->
+    <app-login-form 
+      [disabled]="auth.loading()" 
+      (login)="onLogin($event)"
+      class="w-full" 
+    />
+    @if(error){
+    <p style="color: red">{{ error }}</p>
+    }
+  </app-card>
+</div>
