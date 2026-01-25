@@ -11,6 +11,8 @@ export interface GetFormDTO {
   versions?: GetFormVersionDTO[];
   submissionCount?: number;
   createdAt?: Date;
+  isActive: boolean;
+  isPublic: boolean;
 }
 
 export interface GetFormVersionDTO {
@@ -19,7 +21,10 @@ export interface GetFormVersionDTO {
   isActive: boolean;
   schema?: JSON;
   submissions?: GetFormSubmissionDTO[];
-  _count?: number;
+  _count?: {submissions: number};
+  createdAt?: Date;
+  submissionCount?: number;
+  formId: string;
 }
 
 export interface GetFormSubmissionDTO {

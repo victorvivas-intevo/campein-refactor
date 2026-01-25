@@ -7,9 +7,9 @@ export const formsRoutes: Routes = [
       import('@/features/forms/presentation/pages/forms.page/forms.page').then((m) => m.FormsPage),
   },
   {
-    path: 'forms/view-detail/:code',
+    path: 'forms/view-schema/:codeForm/:codeVersion',
     loadComponent: () =>
-      import('@/features/forms/presentation/pages/view-detail.page/view-detail.page').then((m) => m.ViewDetailPage),
+      import('@/features/forms/presentation/pages/view-schema.page/view-schema.page').then((m) => m.ViewSchemaPage),
   },
   {
     path: 'forms/create-form',

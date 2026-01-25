@@ -1,38 +1,44 @@
 import {
-  ConflictException,
+  // ConflictException,
   Injectable,
-  NotFoundException,
-  BadRequestException,
+  // NotFoundException,
+  // BadRequestException,
 } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 
-import type { Prisma } from '@prisma/client';
-import {
-  PrismaClientKnownRequestError,
-  PrismaClientUnknownRequestError,
-} from '@prisma/client/runtime/client';
+// import type { Prisma } from '@prisma/client';
+// import {
+//   PrismaClientKnownRequestError,
+//   PrismaClientUnknownRequestError,
+// } from '@prisma/client/runtime/client';
 
-import * as bcrypt from 'bcryptjs';
+// import * as bcrypt from 'bcryptjs';
 
-import { PublicFormSchemaResponseDto } from '../application/dtos/forms.dto';
+// import { PublicFormSchemaResponseDto } from '../application/dtos/forms.dto';
 // import { FormManagementService } from './interfaces/form-management.repository';
 import { FormQueryService } from './interfaces/form-query.repository';
+import { PublicFormSchemaResponseDto } from '../application/dtos/forms.dto';
 
 @Injectable()
 export class FormRepository implements FormQueryService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findByTenant(tenantId: string): Promise<any[] | null> {
+  async findByTenant(
+    tenantId: string,
+  ): Promise<PublicFormSchemaResponseDto[] | null> {
     return this.prisma.form.findMany({
       select: {
         code: true,
         name: true,
         description: true,
+        isPublic: true,
+        isActive: true,
         versions: {
           select: {
             id: true,
             version: true,
             isActive: true,
+            createdAt: true,
             _count: {
               select: {
                 submissions: true,
@@ -52,9 +58,40 @@ export class FormRepository implements FormQueryService {
     });
   }
 
-  async findSchemaById(schemaId: string): Promise<any | null> {
+  async findById(formId: string): Promise<PublicFormSchemaResponseDto | null> {
+    return this.prisma.form.findFirst({
+      select: {
+        id: true,
+        code: true,
+        createdAt: true,
+        description: true,
+        isPublic: true,
+        isActive: true,
+        versions: {
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
+        submissions: true,
+        name: true,
+        _count: {
+          select: {
+            submissions: true,
+          },
+        },
+      },
+      where: {
+        id: formId,
+      },
+    });
+  }
+
+  async findSchemaById(
+    schemaId: string,
+  ): Promise<PublicFormSchemaResponseDto | null> {
     return this.prisma.formVersion.findFirst({
       select: {
+        formId: true,
         schema: true,
         id: true,
         version: true,
@@ -71,7 +108,9 @@ export class FormRepository implements FormQueryService {
     });
   }
 
-  async findSubmissionBySchemaId(schemaId: string): Promise<any | null> {
+  async findSubmissionBySchemaId(
+    schemaId: string,
+  ): Promise<PublicFormSchemaResponseDto | null> {
     return this.prisma.formVersion.findFirst({
       select: {
         schema: true,
@@ -88,6 +127,4 @@ export class FormRepository implements FormQueryService {
       },
     });
   }
-
-
 }

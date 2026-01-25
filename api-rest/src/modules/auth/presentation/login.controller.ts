@@ -1,12 +1,10 @@
-import {
-  Body,
-  Controller,
-  Post,
-  Req,
-  Res,
-} from '@nestjs/common';
+import { Body, Controller, Post, Req, Res } from '@nestjs/common';
 import type { Request, Response } from 'express';
-import type { LoginDto, LoginResponseDto, RefreshTokenDto } from '../application/dtos/login.dto';
+import type {
+  LoginDto,
+  LoginResponseDto,
+  RefreshTokenDto,
+} from '../application/dtos/login.dto';
 import { LoginService } from '../application/use-case/login.service';
 import { LogoutService } from '../application/use-case/logout.service';
 import { Public } from 'src/common/decorators/public.decorator';
@@ -25,8 +23,9 @@ export class LoginController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ): Promise<LoginResponseDto> {
-    
-    const result: LoginResponseDto = await this.loginService.execute(dto).then(res => res);
+    const result: LoginResponseDto = await this.loginService
+      .execute(dto)
+      .then((res) => res);
     res.cookie('refresh_token', result.refresh_token, {
       httpOnly: true,
       secure: false, // cambiar a true en producción (certificado SSL)
@@ -40,7 +39,7 @@ export class LoginController {
   @Post('logout')
   logout(@Req() req: any, @Res({ passthrough: true }) res: Response) {
     const sessionId = req.user?.sessionId;
-    if(sessionId) this.logoutService.execute(sessionId);
+    if (sessionId) this.logoutService.execute(sessionId);
     res.clearCookie('refresh_token', { path: '/auth/refresh' });
   }
 

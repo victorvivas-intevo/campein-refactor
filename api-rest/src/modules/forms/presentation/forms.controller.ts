@@ -19,13 +19,20 @@ export class FormsController {
     return this.getFormsService.getFormsByTenant(tenantId);
   }
 
+  @Get('byId/:formId')
+  async getFormsById(@Param('formId') tenantId: string): Promise<any> {
+    return this.getFormsService.getFormById(tenantId);
+  }
+
   @Get('getSchema/:schemaId')
   async getSchemaById(@Param('schemaId') schemaId: string): Promise<any> {
-    return this.getFormsService.getFormSchemaById(schemaId)
+    return this.getFormsService.getFormSchemaById(schemaId);
   }
-  
+
   @Get('getSubmissions/:schemaId')
-  async getSubmissionBySchemaId(@Param('schemaId') schemaId: string): Promise<any> {
-    return this.getFormsService.getSubmissionBySchemaId(schemaId)
+  async getSubmissionBySchemaId(
+    @Param('schemaId') schemaId: string,
+  ): Promise<any> {
+    return this.getFormsService.getSubmissionBySchemaId(schemaId);
   }
 }

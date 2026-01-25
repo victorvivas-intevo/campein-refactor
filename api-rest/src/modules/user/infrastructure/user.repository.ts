@@ -1,12 +1,24 @@
-import { ConflictException, Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 
 import type { Prisma } from '@prisma/client';
-import { PrismaClientKnownRequestError, PrismaClientUnknownRequestError } from '@prisma/client/runtime/client';
+import {
+  PrismaClientKnownRequestError,
+  PrismaClientUnknownRequestError,
+} from '@prisma/client/runtime/client';
 
 import * as bcrypt from 'bcryptjs';
 
-import { CreateUserDto, UpdateUserDto, UserResponseDto } from '../application/dtos/user.dto';
+import {
+  CreateUserDto,
+  UpdateUserDto,
+  UserResponseDto,
+} from '../application/dtos/user.dto';
 import { UserManagementService } from './interfaces/user-management.repository';
 import { UserQueryService } from './interfaces/user-query.repository';
 
@@ -28,7 +40,6 @@ export class UserRepository implements UserQueryService, UserManagementService {
       },
     },
   } as const;
-
 
   async findUsersByTenant(tenantId: string): Promise<UserResponseDto[] | null> {
     return this.prisma.user.findMany({
@@ -70,14 +81,14 @@ export class UserRepository implements UserQueryService, UserManagementService {
       },
       where: {
         id: userId,
-      }
+      },
     });
   }
 
   /**
    * Busca todos los usuarios .
    */
-  async findAllUsers(): Promise<(UserResponseDto[]) | null> {
+  async findAllUsers(): Promise<UserResponseDto[] | null> {
     return this.prisma.user.findMany({
       select: {
         id: true,
@@ -87,15 +98,15 @@ export class UserRepository implements UserQueryService, UserManagementService {
         role: true,
         createdAt: true,
         password: false,
-        tenant: true
+        tenant: true,
       },
       orderBy: {
         fullName: 'asc',
-      }
+      },
     });
   }
 
- /**
+  /**
    * Crear usuario individual
    */
   async createUser(userDto: CreateUserDto): Promise<UserResponseDto> {
@@ -130,7 +141,10 @@ export class UserRepository implements UserQueryService, UserManagementService {
   /**
    * Actualizar usuario individual
    */
-  async updateUser(userId: string, userDto: UpdateUserDto): Promise<UserResponseDto> {
+  async updateUser(
+    userId: string,
+    userDto: UpdateUserDto,
+  ): Promise<UserResponseDto> {
     try {
       // arma el data sin tocar password si no viene
       const data: Prisma.UserUpdateInput = {

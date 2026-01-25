@@ -28,10 +28,13 @@ export class FormsApiClient {
     return this.http.get<GetFormDTO>(`${this.baseUrl}/forms/byCode/${code}`);
   };
   
-  // Get submissions
+  // Get Schema
   getFormSchema(formId: string): Observable<GetFormVersionDTO>{
-    return this.http.get<GetFormVersionDTO>(`${this.baseUrl}/forms/${formId}/getSubmissions`);
+    return this.http.get<GetFormVersionDTO>(`${this.baseUrl}/forms/getSchema/${formId}`);
   };
+  // getFormSchema(formId: string): Observable<GetFormVersionDTO>{
+  //   return this.http.get<GetFormVersionDTO>(`${this.baseUrl}/forms/${formId}/getSubmissions`);
+  // };
   
   getFormSubmissionById(formId: string, submissionId: string): Observable<GetFormSubmissionDTO>{
     return this.http.get<GetFormSubmissionDTO>(`${this.baseUrl}/forms/${formId}/getSubmissions/${submissionId}`);

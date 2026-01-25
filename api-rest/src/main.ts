@@ -7,11 +7,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
   app.enableCors({
-   origin: ['http://localhost:4200', 'http://192.168.0.4:4200'], // o un array de orígenes si necesitas más
-   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-   credentials: true,
- });
+    origin: ['http://localhost:4200', 'http://192.168.0.4:4200'], // o un array de orígenes si necesitas más
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
   await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
-
 }
 bootstrap();

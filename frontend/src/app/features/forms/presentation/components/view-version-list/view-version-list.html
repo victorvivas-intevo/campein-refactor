@@ -1,0 +1,40 @@
+<div class="flex flex-col gap-3">
+  <h1 class="font-semibold text-lg text-primary-red-500">Historial de versiones</h1>
+  <p class="text-black text-sm">Acá podras ver el historico de versiones.<br>Selecciona una versión para visualizar el esquema del formulario de este entonces</p>
+  @for (version of versions; track $index) {
+    <div
+      class="flex items-center justify-between px-3 py-3 rounded-lg transition-colors cursor-pointer group"
+      [ngClass]="
+        isActive(version)
+          ? 'bg-primary-red-500/10 border border-primary-red-500'
+          : 'bg-white hover:bg-gray-100'
+      "
+      (click)="viewVersion(version)"
+    >
+      <div class="flex items-center gap-1">
+        <i
+          class="text-lg transition-colors"
+          [ngClass]="
+            isActive(version)
+              ? 'text-primary-red-500 fa-solid fa-circle-check'
+              : `text-gray-400 group-hover:text-gray-600 fa-solid ${version.isActive ? 'fa-calendar-check' : 'fa-clock-rotate-left'}`
+          "
+        ></i>
+        <div>
+          <p class="text-black text-sm font-medium leading-none">
+            v{{ version.version }} - {{ version.isActive ? 'Activa' : 'Archivada' }}
+          </p>
+          <span class="text-[11px] text-gray-400">{{
+            version.createdAt | date: 'yyyy-MM-dd'
+          }}</span>
+        </div>
+      </div>
+      @if (isLastVersion(version)) {
+        <span
+          class="text-xs font-bold text-primary-green-700 bg-primary-green-300/20 px-1.5 py-0.5 rounded"
+          >Ultima</span
+        >
+      }
+    </div>
+  }
+</div>

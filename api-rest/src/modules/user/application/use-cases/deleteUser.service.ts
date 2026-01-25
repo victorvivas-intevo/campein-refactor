@@ -7,10 +7,10 @@ import { USER_COMMAND_REPOSITORY } from '../tokens';
 export class DeleteUserService {
   constructor(
     @Inject(USER_COMMAND_REPOSITORY)
-    private readonly userManagementService: UserManagementService
+    private readonly userManagementService: UserManagementService,
   ) {}
 
-    async execute(id: string): Promise<void> {
-      await this.userManagementService.deleteUser(id);
-    }
+  async execute(id: string): Promise<void> {
+    await this.userManagementService.deleteUser(id);
+  }
 }

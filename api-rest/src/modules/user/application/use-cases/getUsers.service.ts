@@ -8,49 +8,36 @@ import { USER_QUERY_REPOSITORY } from '../tokens';
 export class GetUserService {
   constructor(
     @Inject(USER_QUERY_REPOSITORY)
-    private readonly userQueryRepository: UserQueryService
+    private readonly userQueryRepository: UserQueryService,
   ) {}
 
-  async getUsersByTenant(
-    tenantId: string,
-  ): Promise<UserResponseDto[]> {
-    const users =
-      await this.userQueryRepository.findUsersByTenant(tenantId);
+  async getUsersByTenant(tenantId: string): Promise<UserResponseDto[]> {
+    const users = await this.userQueryRepository.findUsersByTenant(tenantId);
 
     if (!users) {
-      throw new NotFoundException(
-        `Error al traer los usuarios`,
-      );
+      throw new NotFoundException(`Error al traer los usuarios`);
     }
 
-    return users
+    return users;
   }
 
-  async getUserById(
-    userId: string,
-  ): Promise<UserResponseDto> {
-    const user =
-      await this.userQueryRepository.findUserById(userId);
+  async getUserById(userId: string): Promise<UserResponseDto> {
+    const user = await this.userQueryRepository.findUserById(userId);
 
     if (!user) {
-      throw new NotFoundException(
-        `Error al traer los usuarios`,
-      );
+      throw new NotFoundException(`Error al traer los usuarios`);
     }
 
-    return user
+    return user;
   }
 
   async getAllUsers(): Promise<UserResponseDto[]> {
     const users = await this.userQueryRepository.findAllUsers();
 
     if (!users) {
-      throw new NotFoundException(
-        `Error al traer los usuarios`,
-      );
+      throw new NotFoundException(`Error al traer los usuarios`);
     }
 
-    return users
+    return users;
   }
-  
 }
