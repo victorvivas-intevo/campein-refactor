@@ -9,7 +9,10 @@ import * as bcrypt from 'bcryptjs';
 import type { LoginRepositoryInterface } from '../../infrastructure/interfaces/login-interface.repository';
 import { LOGIN_REPOSITORY } from '../tokens';
 import { LoginDto, LoginResponseDto } from '../dtos/login.dto';
-import { generateRefreshToken, hashToken } from 'src/common/utils/generate-token';
+import {
+  generateRefreshToken,
+  hashToken,
+} from 'src/common/utils/generate-token';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -20,7 +23,15 @@ export class LoginService {
     private readonly jwt: JwtService,
   ) {}
 
-  private async signAccessToken(user: { id: string; tenantId: string; email: string; role: string, sessionId: string, exp?: Date | number, fullName?: string }): Promise<string> {
+  private async signAccessToken(user: {
+    id: string;
+    tenantId: string;
+    email: string;
+    role: string;
+    sessionId: string;
+    exp?: Date | number;
+    fullName?: string;
+  }): Promise<string> {
     return this.jwt.signAsync({
       id: user.id,
       tenantId: user.tenantId,
@@ -30,7 +41,6 @@ export class LoginService {
       fullName: user.fullName || undefined,
     });
   }
-
 
   async execute(dto: LoginDto): Promise<LoginResponseDto> {
     if (!dto.email || !dto.password) {
@@ -50,24 +60,27 @@ export class LoginService {
     const refresh = generateRefreshToken();
     const refreshHash = hashToken(refresh);
 
-    
     const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30); // 30 días
 
-    const sessionId = await this.service.saveAccessToken(user, refreshHash, expiresAt);
-    console.log('Before await this.service.saveAccessToken(user, refreshHash, expiresAt);');
-    
-    const accessToken = await this.signAccessToken(
-      {
-        id: user.id,
-        tenantId: user.tenantId,
-        email: user.email,
-        role: user.role,
-        fullName: user.fullName ? user.fullName : undefined,
-        sessionId: sessionId.id
-      }
+    const sessionId = await this.service.saveAccessToken(
+      user,
+      refreshHash,
+      expiresAt,
+    );
+    console.log(
+      'Before await this.service.saveAccessToken(user, refreshHash, expiresAt);',
     );
 
-    console.log('accessToken ', accessToken)
+    const accessToken = await this.signAccessToken({
+      id: user.id,
+      tenantId: user.tenantId,
+      email: user.email,
+      role: user.role,
+      fullName: user.fullName ? user.fullName : undefined,
+      sessionId: sessionId.id,
+    });
+
+    console.log('accessToken ', accessToken);
     return {
       accessToken,
       refresh_token: refresh,

@@ -29,7 +29,6 @@ export class PublicFormRepository {
     });
   }
 
-
   async createSubmission(params: {
     formId: string;
     formVersionId: string;

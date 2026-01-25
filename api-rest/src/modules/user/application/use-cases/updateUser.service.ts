@@ -7,11 +7,11 @@ import { USER_COMMAND_REPOSITORY } from '../tokens';
 export class UpdateUserService {
   constructor(
     @Inject(USER_COMMAND_REPOSITORY)
-    private readonly userManagementService: UserManagementService
+    private readonly userManagementService: UserManagementService,
   ) {}
 
-    async execute(id: string, dto: UpdateUserDto): Promise<UserResponseDto> {
-      const user = await this.userManagementService.updateUser(id, dto);
-      return user;
-    }
+  async execute(id: string, dto: UpdateUserDto): Promise<UserResponseDto> {
+    const user = await this.userManagementService.updateUser(id, dto);
+    return user;
+  }
 }

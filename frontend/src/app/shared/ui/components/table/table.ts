@@ -252,4 +252,9 @@ export class Table<T = any> implements OnChanges {
     if (value === null || value === undefined) return '';
     return String(value);
   }
+
+  getCellValueRaw(row: T, column: TableColumn<T>): any {
+    const key = column.id as keyof T;
+    return (row as any)[key];
+  }
 }

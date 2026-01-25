@@ -9,8 +9,8 @@ export interface RefreshTokenDto {
 
 export interface LoginResponseDto {
   accessToken: string;
-  refresh_token: string,
-  refresh_expires_at: Date,
+  refresh_token: string;
+  refresh_expires_at: Date;
 }
 
 export interface LogoutMessage {

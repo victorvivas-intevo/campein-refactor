@@ -26,11 +26,13 @@ export class FormsController {
 
   @Get('getSchema/:schemaId')
   async getSchemaById(@Param('schemaId') schemaId: string): Promise<any> {
-    return this.getFormsService.getFormSchemaById(schemaId)
+    return this.getFormsService.getFormSchemaById(schemaId);
   }
-  
+
   @Get('getSubmissions/:schemaId')
-  async getSubmissionBySchemaId(@Param('schemaId') schemaId: string): Promise<any> {
-    return this.getFormsService.getSubmissionBySchemaId(schemaId)
+  async getSubmissionBySchemaId(
+    @Param('schemaId') schemaId: string,
+  ): Promise<any> {
+    return this.getFormsService.getSubmissionBySchemaId(schemaId);
   }
 }

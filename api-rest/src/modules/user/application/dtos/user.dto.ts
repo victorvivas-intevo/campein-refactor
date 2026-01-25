@@ -8,13 +8,13 @@ export interface UserResponseDto {
   password?: string;
 }
 
-export interface TenantInterface{
+export interface TenantInterface {
   id?: string;
   name?: string;
   createdAt?: Date;
-} 
+}
 
-export interface CreateUserDto{
+export interface CreateUserDto {
   tenantId: string;
   email: string;
   fullName: string | null;
@@ -22,7 +22,7 @@ export interface CreateUserDto{
   password: string;
 }
 
-export interface UpdateUserDto{
+export interface UpdateUserDto {
   email: string;
   fullName: string | null;
   role: string;

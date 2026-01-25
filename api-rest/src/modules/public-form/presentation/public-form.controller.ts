@@ -18,8 +18,7 @@ export class PublicFormController {
     return this.publicFormService.getPublicFormSchemaByCode(code);
   }
 
-
-   /**
+  /**
    * POST /public-forms/:code/submissions
    *
    * Body esperado:

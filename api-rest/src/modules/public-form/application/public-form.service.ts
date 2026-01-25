@@ -34,7 +34,6 @@ export class PublicFormService {
     };
   }
 
-
   async submitPublicForm(
     code: string,
     dto: PublicFormSubmissionRequestDto,

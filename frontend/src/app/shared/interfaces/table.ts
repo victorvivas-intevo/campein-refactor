@@ -12,6 +12,10 @@ export interface TableColumn<T = any> {
   type?: TableColumnType;
   /** Si quieres mostrar un ancho fijo/porcentaje */
   width?: string;
+  /** Función para transformar el valor antes de mostrarlo */
+  formatter?: (value: any, row: T) => string;
+  /** Función para aplicar clases CSS dinámicas a la celda según el valor */
+  cellClass?: (value: any, row: T) => string;
 }
 
 export interface TablePaginationConfig {

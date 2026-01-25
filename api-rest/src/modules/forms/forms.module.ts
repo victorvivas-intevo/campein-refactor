@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { FormsController } from './presentation/forms.controller';
 // import { PublicFormService } from './application/public-form.service';
-import {FORM_QUERY_REPOSITORY} from './application/tokens'
+import { FORM_QUERY_REPOSITORY } from './application/tokens';
 import { FormRepository } from './infrastruture/form.repository';
 import { GetFormsService } from './application/use-case/get-form.service';
 

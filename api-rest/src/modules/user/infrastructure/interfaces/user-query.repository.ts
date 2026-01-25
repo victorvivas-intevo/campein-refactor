@@ -1,4 +1,4 @@
-import { UserResponseDto } from "../../application/dtos/user.dto";
+import { UserResponseDto } from '../../application/dtos/user.dto';
 
 export interface UserQueryService {
   findUsersByTenant(tenantId: string): Promise<UserResponseDto[] | null>;

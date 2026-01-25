@@ -1,4 +1,8 @@
-import { CreateUserDto, UserResponseDto, UpdateUserDto } from "../../application/dtos/user.dto";
+import {
+  CreateUserDto,
+  UserResponseDto,
+  UpdateUserDto,
+} from '../../application/dtos/user.dto';
 
 export interface UserManagementService {
   createUser(userDto: CreateUserDto): Promise<UserResponseDto>;

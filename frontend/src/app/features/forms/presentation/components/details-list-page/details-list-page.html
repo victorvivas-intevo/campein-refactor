@@ -27,4 +27,22 @@
       </div>
     </div>
   </div>
+
+  @if(row.versions){
+    @if(row.versions.length > 0){
+      <div class="w-full">
+        <app-table
+          styles=""
+          [columns]="columns"
+          [data]="row.versions"
+          [config]="tableConfig"
+          [rowActions]="rowActions"
+          (rowAction)="onRowAction($event)"
+        />
+      </div>
+    }@else {
+      <!-- TODO: Design and implement loading, error, and no data components -->
+    }
+
+  }
 }

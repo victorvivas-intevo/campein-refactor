@@ -8,11 +8,11 @@ import { USER_COMMAND_REPOSITORY } from '../tokens';
 export class CreateUserService {
   constructor(
     @Inject(USER_COMMAND_REPOSITORY)
-    private readonly userManagementService: UserManagementService
+    private readonly userManagementService: UserManagementService,
   ) {}
 
-    async execute(dto: CreateUserDto): Promise<UserResponseDto> {
-      const user = await this.userManagementService.createUser(dto);
-      return user;
-    }
+  async execute(dto: CreateUserDto): Promise<UserResponseDto> {
+    const user = await this.userManagementService.createUser(dto);
+    return user;
+  }
 }

@@ -4,21 +4,27 @@ export class PublicFormSchemaResponseDto {
   code?: string;
   name?: string;
   versionActive?: number;
-  versions: FormVersion[];
+  versions?: FormVersion[];
   schema?: unknown;
   submissions?: unknown[];
   isActive?: boolean;
   createdAt?: Date;
+  isPublic?: boolean;
   submissionCount?: number;
+  _count?: {
+    submissions: number;
+  };
 }
 
 export interface FormVersion {
   id?: string;
   version?: number;
-  isActive?: Boolean,
+  isActive?: boolean;
   _count?: {
-    submissions: number
-  },
+    submissions: number;
+  };
+  createdAt?: Date;
+  submissionCount?: number;
 }
 
 import { IsObject, IsOptional } from 'class-validator';

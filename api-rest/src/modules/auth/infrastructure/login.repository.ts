@@ -1,14 +1,7 @@
-
-import {
-  ConflictException,
-  Injectable,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 
-import {
-  PrismaClientKnownRequestError,
-} from '@prisma/client/runtime/client';
-
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
 
 import { UserResponseDto } from 'src/modules/user/application/dtos/user.dto';
 import { LoginRepositoryInterface } from './interfaces/login-interface.repository';
@@ -62,7 +55,12 @@ export class LoginRepository implements LoginRepositoryInterface {
     }
   }
 
-  async saveAccessToken(user: UserResponseDto, refreshHash: string, expiresAt: Date, meta?: { ip?: string; userAgent?: string }): Promise<{id: string}> {
+  async saveAccessToken(
+    user: UserResponseDto,
+    refreshHash: string,
+    expiresAt: Date,
+    meta?: { ip?: string; userAgent?: string },
+  ): Promise<{ id: string }> {
     try {
       const result = await this.prisma.userSession.create({
         data: {
@@ -79,13 +77,20 @@ export class LoginRepository implements LoginRepositoryInterface {
     } catch (e) {
       if (e instanceof PrismaClientKnownRequestError) {
         console.error(e);
-        throw new ConflictException('error repository saveAccessToken', e.message);
+        throw new ConflictException(
+          'error repository saveAccessToken',
+          e.message,
+        );
       }
       throw e;
     }
   }
 
-  async getSessionById(sessionId: string): Promise<{ userId: string; revokedAt: Date | null; expiresAt: Date } | null> {
+  async getSessionById(sessionId: string): Promise<{
+    userId: string;
+    revokedAt: Date | null;
+    expiresAt: Date;
+  } | null> {
     const session = await this.prisma.userSession.findUnique({
       where: { id: sessionId },
       select: { userId: true, revokedAt: true, expiresAt: true },
