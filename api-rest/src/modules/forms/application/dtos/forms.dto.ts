@@ -6,7 +6,7 @@ export class PublicFormSchemaResponseDto {
   versionActive?: number;
   versions?: FormVersion[];
   schema?: unknown;
-  submissions?: unknown[];
+  submissions?: SubmissionDTO[];
   isActive?: boolean;
   createdAt?: Date;
   isPublic?: boolean;
@@ -14,6 +14,16 @@ export class PublicFormSchemaResponseDto {
   _count?: {
     submissions: number;
   };
+}
+
+export interface SubmissionDTO{
+  id?: string;
+  submittedAt?: Date;
+  submittedBy?: string | null;
+  payload?: Record<string, any> | null;
+  metadata?: Record<string, any> | null;
+  formVersion?: FormVersion;
+  versionSubmited?: number;
 }
 
 export interface FormVersion {

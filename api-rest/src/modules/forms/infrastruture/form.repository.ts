@@ -58,7 +58,7 @@ export class FormRepository implements FormQueryService {
     });
   }
 
-  async findById(formId: string): Promise<PublicFormSchemaResponseDto | null> {
+  async findById(formId: string): Promise<any | null> {
     return this.prisma.form.findFirst({
       select: {
         id: true,
@@ -72,7 +72,24 @@ export class FormRepository implements FormQueryService {
             createdAt: 'desc',
           },
         },
-        submissions: true,
+        submissions: {
+          select:{
+            id: true,
+            submittedAt: true,
+            submittedBy: true,
+            payload: true,
+            metadata: true,
+            formVersion: {
+              select: {
+                id: true,
+                version: true,
+              },
+            },
+          },
+          orderBy:{
+            submittedAt: 'desc',
+          }
+        },
         name: true,
         _count: {
           select: {
@@ -115,7 +132,7 @@ export class FormRepository implements FormQueryService {
       select: {
         schema: true,
         isActive: true,
-        submissions: true,
+        // submissions: true,
         _count: {
           select: {
             submissions: true,

@@ -10,6 +10,7 @@ export interface GetFormDTO {
   description?: string;
   versions?: GetFormVersionDTO[];
   submissionCount?: number;
+  submissions?: GetFormSubmissionDTO[];
   createdAt?: Date;
   isActive: boolean;
   isPublic: boolean;
@@ -31,8 +32,10 @@ export interface GetFormSubmissionDTO {
   id: String;
   formId?: String;
   formVersionId?: String;
-  submittedAt: Date;
+  formVersion: GetFormVersionDTO;
+  submittedAt?: Date;
   submittedBy?: string; // id user
-  payload: JSON;
+  payload?: JSON;
   metadata?: JSON;
+  versionSubmited?: number;
 }

@@ -93,13 +93,14 @@ model FormSubmission {
   formId        String   @map("form_id") @db.Uuid
   formVersionId String   @map("form_version_id") @db.Uuid
   submittedAt   DateTime @default(now()) @map("submitted_at") @db.Timestamptz
-  submittedBy   String?  @map("submitted_by") @db.Text
+  submittedBy   String?  @map("submitted_by") @db.Uuid
   payload       Json     @db.JsonB
   metadata      Json?    @db.JsonB
 
   // relaciones
   form        Form        @relation("FormToFormSubmissions", fields: [formId], references: [id])
   formVersion FormVersion @relation("FormVersionToSubmissions", fields: [formVersionId], references: [id])
+  userSubmited User @relation("UserToSubmissions", fields: [submittedBy], references: [id])
 
   @@map("form_submissions")
 }

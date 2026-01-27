@@ -74,7 +74,6 @@ export class ViewSchemaPage implements OnInit {
       this.form = this.fecade.current() || undefined;
       this.versionForm = this.form?.versions?.find((v) => v.id === this.idVersion) || undefined;
       this.updateTabsData();
-      console.log(this.getVersions);
     });
     // await this.fecade.loadOne({id: this.idForm}).then(e =>{
     //   this.form = this.fecade.current() || undefined
@@ -99,16 +98,19 @@ export class ViewSchemaPage implements OnInit {
   }
 
   private updateTabsData() {
-    const schemaData = this.versionForm?.schema || this.versionForm; 
-
     this.formTabs = this.formTabs.map(tab => {
       if (tab.id === 'preview') {
+        const schemaData = this.versionForm?.schema || this.versionForm; 
         return { ...tab, inputs: { schema: schemaData } };
       }
-      // Actualizamos también el ID para los otros tabs si es necesario
-      if (['log', 'users', 'stats'].includes(tab.id)) {
-        return { ...tab, inputs: { formId: this.idForm } };
+      if (tab.id === 'log') {
+        return { ...tab, inputs: { submissions: this.form?.submissions, formId: this.idForm } };
       }
+      // TODO: add rules to update inputs for other tabs
+      // Actualizamos también el ID para los otros tabs si es necesario
+      // if (['log', 'users', 'stats'].includes(tab.id)) {
+      //   return { ...tab, inputs: { formId: this.idForm } };
+      // }
       return tab;
     });
   }
