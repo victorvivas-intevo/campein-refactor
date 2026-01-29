@@ -53,10 +53,11 @@ export class GetFormsService {
         return {
           id: sub.id,
           submittedAt: sub.submittedAt,
-          submittedBy: sub.submittedBy || undefined,
+          submittedBy: sub.userSubmited?.fullName || undefined,
           payload: (sub.payload as Record<string, any>) || undefined,
           metadata: (sub.metadata as Record<string, any>) || undefined,
-          versionSubmited: versionValue, // Aquí asignamos el valor directo (ej: 1 o "v1")
+          versionSubmited: versionValue,
+          userSubmited: sub.userSubmited || null,
         };
       });
       return { ...form, submissions: flatSubmissions };

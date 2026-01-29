@@ -29,10 +29,15 @@ export class LogsSubmissions implements OnChanges {
       formatter: (value: number) => 'V' + value || '',
     },
     {
-      id: 'user',
+      id: 'submittedBy',
       header: 'Usuario',
       type: 'text',
-      formatter: (value: string) => value || 'En desarrollo',
+      formatter: (value: string) => value || 'Registro anónimo',
+      cellClass: (value: boolean) => {
+      return value
+        ? 'text-green-700 bg-green-100 ring-1 ring-green-600/20' // Estilo Activo
+        : 'text-red-700 bg-red-100 ring-1 ring-red-600/20'; // Estilo Inactivo
+    },
     },
     {
       id: 'submittedAt',

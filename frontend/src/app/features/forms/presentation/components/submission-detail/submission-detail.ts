@@ -1,5 +1,5 @@
 import { GetFormSubmissionDTO } from '@/features/forms/domain/dtos/form-list.dto';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-submission-detail',
@@ -9,5 +9,12 @@ import { Component, Input } from '@angular/core';
 })
 export class SubmissionDetail {
   @Input() item?: GetFormSubmissionDTO;
+  @Output() close = new EventEmitter<void>();
+
+
+  closeTab(): void {
+    this.item = undefined;
+    this.close.emit();
+  }
 
 }

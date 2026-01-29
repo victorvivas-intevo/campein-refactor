@@ -38,4 +38,13 @@ export interface GetFormSubmissionDTO {
   payload?: JSON;
   metadata?: JSON;
   versionSubmited?: number;
+  createdAt?: Date;
+  userSubmited: UserDTO | null;
+}
+
+export interface UserDTO {
+  id?: string;
+  email?: string;
+  fullName?: string;
+  role?: string;
 }

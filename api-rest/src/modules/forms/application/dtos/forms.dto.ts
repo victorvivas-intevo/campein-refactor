@@ -21,9 +21,17 @@ export interface SubmissionDTO {
   submittedAt?: Date;
   submittedBy?: string | null;
   payload?: Record<string, any> | null;
-  metadata?: Record<string, any> | null;
+  metadata?: Record<string, unknown> | null;
+  userSubmited: UserDTO | null;
   formVersion?: FormVersion;
   versionSubmited?: number;
+}
+
+export interface UserDTO {
+  id?: string;
+  email?: string;
+  fullName?: string;
+  role?: string;
 }
 
 export interface FormVersion {

@@ -1,121 +1,138 @@
 <!-- Submission Details Panel -->
-  <div class="w-[450px] bg-gray-50 flex flex-col shrink-0 overflow-hidden">
-    <div class="p-6 border-b border-gray-200 bg-white shrink-0">
-      <div class="flex justify-between items-start mb-4">
-        <div>
-          <div
-            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary border border-primary/20 mb-2"
-          >
-            Version {{ item?.versionSubmited || 'N/A' }}
-          </div>
-          <h3 class="text-xl font-bold text-gray-900">Detalles del envío</h3>
-          <p class="text-xs text-gray-500 font-mono mt-1">ID: #SUB-{{ item?.id }}</p>
-        </div>
-        <button class="text-gray-400 hover:text-gray-600 cursor-pointer">
-          <span class="material-symbols-outlined">more_vert</span>
-        </button>
-      </div>
-      <div class="flex items-center gap-4 py-3 px-4 bg-gray-50 rounded-lg">
-        <div
-          class="size-10 rounded-full bg-blue-100 flex items-center justify-center text-sm font-bold text-blue-600"
-        >
-          JD
-        </div>
-        <div>
-          <p class="text-sm font-bold text-gray-900">John Doe</p>
-          <p class="text-xs text-gray-500">john.doe@example.com</p>
-        </div>
-      </div>
-    </div>
-    <div class="flex-1 overflow-y-auto p-6 custom-scrollbar space-y-6">
-      <div class="space-y-1">
-        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
-          >Full Name</label
-        >
-        <p class="text-sm text-gray-800 font-medium">John Doe</p>
-      </div>
-      <div class="space-y-1">
-        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
-          >Email Address</label
-        >
-        <p class="text-sm text-gray-800 font-medium">john.doe@example.com</p>
-      </div>
-      <div class="space-y-2">
-        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
-          >Overall Satisfaction</label
-        >
-        <div class="flex gap-1.5">
-          <span
-            class="size-8 rounded flex items-center justify-center bg-primary text-white text-xs font-bold shadow-sm"
-            >4</span
-          >
-          <span
-            class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
-            >5</span
-          >
-          <span
-            class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
-            >6</span
-          >
-          <span
-            class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
-            >7</span
-          >
-          <span
-            class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
-            >8</span
-          >
-        </div>
-      </div>
-      <div class="space-y-2">
-        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
-          >Feature Interests</label
-        >
-        <div class="flex flex-wrap gap-2">
-          <span
-            class="px-2.5 py-1 rounded bg-blue-100 text-blue-700 text-[11px] font-semibold border border-blue-200"
-            >Mobile App</span
-          >
-          <span
-            class="px-2.5 py-1 rounded bg-blue-100 text-blue-700 text-[11px] font-semibold border border-blue-200"
-            >Data Export</span
-          >
-        </div>
-      </div>
-      <div class="space-y-1">
-        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
-          >Additional Comments</label
-        >
-        <div class="p-3 bg-white border border-gray-200 rounded-lg">
-          <p class="text-sm text-gray-600 leading-relaxed italic">
-            "The new dashboard features are exactly what we needed. One minor suggestion: would love
-            to see more filtering options in the export tool. Overall 9/10 experience!"
-          </p>
-        </div>
-      </div>
-      <div class="pt-4 border-t border-gray-200">
-        <div class="flex justify-between items-center text-xs">
-          <span class="text-gray-400">Submitted from</span>
-          <span class="text-gray-600 font-medium">Web (Chrome / Mac OS)</span>
-        </div>
-        <div class="flex justify-between items-center text-xs mt-2">
-          <span class="text-gray-400">IP Address</span>
-          <span class="text-gray-600 font-medium">192.168.1.44</span>
-        </div>
-      </div>
-    </div>
-    <div class="p-4 border-t border-gray-200 bg-white shrink-0 flex gap-2">
-      <button
-        class="flex-1 flex items-center justify-center bg-gray-100 text-gray-700 py-2 rounded-lg text-sm font-bold hover:bg-gray-200 transition-colors"
-      >
-        <span class="material-symbols-outlined text-lg mr-2">print</span>
-        Print
-      </button>
-      <button
-        class="flex-1 flex items-center justify-center bg-gray-100 text-gray-700 py-2 rounded-lg text-sm font-bold hover:bg-gray-200 transition-colors"
-      >
-        <span class="material-symbols-outlined text-lg mr-2">delete</span>
-        Delete
-      </button>
-    </div>
-  </div>
+ @if(item){
+     <div class="w-[450px] bg-gray-50 flex flex-col shrink-0 overflow-hidden">
+       <div class="p-6 border-b border-gray-200 bg-white shrink-0">
+         <div class="flex justify-between items-start mb-4">
+           <div>
+             <div
+               class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary border border-primary/20 mb-2"
+             >
+               Version {{ item.versionSubmited || 'N/A' }}
+             </div>
+             <h3 class="text-xl font-bold text-gray-900">Detalles del envío</h3>
+             <p class="text-xs text-gray-500 font-mono mt-1">ID: #SUB-{{ item.id }}</p>
+           </div>
+           <button class="text-gray-400 hover:text-gray-600 cursor-pointer" (click)="closeTab()">
+             <span class="material-symbols-outlined">close</span>
+           </button>
+         </div>
+         @if(item.userSubmited){
+           <div class="flex items-center gap-4 py-3 px-4 bg-gray-50 rounded-lg">
+           <div
+               class="size-10 rounded-full bg-primary-green-100 flex items-center justify-center text-sm font-bold text-primary-green-600 uppercase"
+           >
+               {{ (item.userSubmited.fullName ? item.userSubmited.fullName.charAt(0) : 'U')  }}
+           </div>
+           <div>
+               <p class="text-sm font-bold text-gray-900">{{item.userSubmited.fullName || 'Usuario no tiene nombre'}}</p>
+               <p class="text-xs text-gray-500">{{item.userSubmited.email}}</p>
+           </div>
+           </div>
+       } @else{
+           <div class="flex items-center gap-4 py-3 px-4 bg-gray-50 rounded-lg">
+           <div
+               class="rounded-full bg-orange-100 flex items-center justify-center text-sm font-bold text-orange-400 p-2"
+           >
+               <span class="material-symbols-outlined text-xl">
+                   no_accounts
+               </span>
+           </div>
+           <div>
+               <p class="text-sm font-bold text-gray-900">Registro voluntario</p>
+           </div>
+           </div>
+         }
+       </div>
+       <div class="flex-1 overflow-y-auto p-6 custom-scrollbar space-y-6">
+         <div class="space-y-1">
+           <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
+             >Full Name</label
+           >
+           <p class="text-sm text-gray-800 font-medium">datos del visaje</p>
+         </div>
+         <div class="space-y-1">
+           <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
+             >Email Address</label
+           >
+           <p class="text-sm text-gray-800 font-medium">datos del visaje</p>
+         </div>
+         <div class="space-y-2">
+           <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
+             >Overall Satisfaction</label
+           >
+           <div class="flex gap-1.5">
+             <span
+               class="size-8 rounded flex items-center justify-center bg-primary text-white text-xs font-bold shadow-sm"
+               >4</span
+             >
+             <span
+               class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
+               >5</span
+             >
+             <span
+               class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
+               >6</span
+             >
+             <span
+               class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
+               >7</span
+             >
+             <span
+               class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
+               >8</span
+             >
+           </div>
+         </div>
+         <div class="space-y-2">
+           <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
+             >Feature Interests</label
+           >
+           <div class="flex flex-wrap gap-2">
+             <span
+               class="px-2.5 py-1 rounded bg-blue-100 text-blue-700 text-[11px] font-semibold border border-blue-200"
+               >Mobile App</span
+             >
+             <span
+               class="px-2.5 py-1 rounded bg-blue-100 text-blue-700 text-[11px] font-semibold border border-blue-200"
+               >Data Export</span
+             >
+           </div>
+         </div>
+         <div class="space-y-1">
+           <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
+             >Additional Comments</label
+           >
+           <div class="p-3 bg-white border border-gray-200 rounded-lg">
+             <p class="text-sm text-gray-600 leading-relaxed italic">
+               "The new dashboard features are exactly what we needed. One minor suggestion: would love
+               to see more filtering options in the export tool. Overall 9/10 experience!"
+             </p>
+           </div>
+         </div>
+         <div class="pt-4 border-t border-gray-200">
+           <div class="flex justify-between items-center text-xs">
+             <span class="text-gray-400">Submitted from</span>
+             <span class="text-gray-600 font-medium">Web (Chrome / Mac OS)</span>
+           </div>
+           <div class="flex justify-between items-center text-xs mt-2">
+             <span class="text-gray-400">IP Address</span>
+             <span class="text-gray-600 font-medium">192.168.1.44</span>
+           </div>
+         </div>
+       </div>
+       <div class="p-4 border-t border-gray-200 bg-white shrink-0 flex gap-2">
+         <button
+           class="flex-1 flex items-center justify-center bg-gray-100 text-gray-700 py-2 rounded-lg text-sm font-bold hover:bg-gray-200 transition-colors"
+         >
+           <span class="material-symbols-outlined text-lg mr-2">print</span>
+           Print
+         </button>
+         <button
+           class="flex-1 flex items-center justify-center bg-gray-100 text-gray-700 py-2 rounded-lg text-sm font-bold hover:bg-gray-200 transition-colors"
+         >
+           <span class="material-symbols-outlined text-lg mr-2">delete</span>
+           Delete
+         </button>
+       </div>
+     </div>
+ }
