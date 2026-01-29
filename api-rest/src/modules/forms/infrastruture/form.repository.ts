@@ -151,4 +151,21 @@ export class FormRepository implements FormQueryService {
       },
     });
   }
+
+  async getUsersByFormId(formId: string): Promise<any | null> {
+    return this.prisma.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        fullName: true,
+      },
+      where: {
+        assignedForms: {
+          some: {
+            formId: formId,
+          },
+        },
+      },
+    });
+  }
 }

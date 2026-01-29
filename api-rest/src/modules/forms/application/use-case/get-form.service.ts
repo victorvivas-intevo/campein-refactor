@@ -91,4 +91,12 @@ export class GetFormsService {
 
     return form;
   }
+
+  async getUsersByFormId(formId: string): Promise<any[]> {
+    const users = await this.formQueryRepository.getUsersByFormId(formId);
+    if (!users) {
+      throw new NotFoundException(`Error al traer los usuarios del formulario`);
+    }
+    return users;
+  }
 }

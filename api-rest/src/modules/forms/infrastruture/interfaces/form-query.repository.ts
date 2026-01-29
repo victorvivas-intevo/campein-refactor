@@ -8,4 +8,5 @@ export interface FormQueryService {
   findSubmissionBySchemaId(
     schemaId: string,
   ): Promise<PublicFormSchemaResponseDto | null>;
+  getUsersByFormId(formId: string): Promise<any[] | null>;
 }
