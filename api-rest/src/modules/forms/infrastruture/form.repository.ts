@@ -73,10 +73,17 @@ export class FormRepository implements FormQueryService {
           },
         },
         submissions: {
-          select:{
+          select: {
             id: true,
             submittedAt: true,
-            submittedBy: true,
+            userSubmited: {
+              select: {
+                id: true,
+                email: true,
+                fullName: true,
+                role: true,
+              },
+            },
             payload: true,
             metadata: true,
             formVersion: {
@@ -86,9 +93,9 @@ export class FormRepository implements FormQueryService {
               },
             },
           },
-          orderBy:{
+          orderBy: {
             submittedAt: 'desc',
-          }
+          },
         },
         name: true,
         _count: {

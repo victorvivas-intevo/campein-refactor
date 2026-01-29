@@ -1,11 +1,17 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Table } from "@/shared/ui/components/table/table";
+import { Table } from '@/shared/ui/components/table/table';
 import { GetFormSubmissionDTO } from '@/features/forms/domain/dtos/form-list.dto';
-import { buttonVariants, TableColumn, TableConfig, TableRowAction } from '@/shared/interfaces/table';
+import {
+  buttonVariants,
+  TableColumn,
+  TableConfig,
+  TableRowAction,
+} from '@/shared/interfaces/table';
+import { SubmissionDetail } from '../submission-detail/submission-detail';
 
 @Component({
   selector: 'app-logs-submissions',
-  imports: [Table],
+  imports: [Table, SubmissionDetail],
   templateUrl: './logs-submissions.html',
   styles: ``,
 })
@@ -15,12 +21,18 @@ export class LogsSubmissions implements OnChanges {
 
   itemView?: GetFormSubmissionDTO;
 
-    columns: TableColumn<GetFormSubmissionDTO>[] = [
+  columns: TableColumn<GetFormSubmissionDTO>[] = [
     {
       id: 'versionSubmited',
       header: 'Version',
       type: 'text',
-      formatter: (value: number) => ('V' + value || ''),
+      formatter: (value: number) => 'V' + value || '',
+    },
+    {
+      id: 'user',
+      header: 'Usuario',
+      type: 'text',
+      formatter: (value: string) => value || 'En desarrollo',
     },
     {
       id: 'submittedAt',
@@ -51,7 +63,7 @@ export class LogsSubmissions implements OnChanges {
 
   rowActions: TableRowAction<GetFormSubmissionDTO>[] = [
     {
-      id: 'view',
+      id: 'viewSubmission',
       label: 'Ver',
       iconClass: 'fa-regular fa-eye',
       variant: buttonVariants.find((e) => e.variant == 'ghost'),
@@ -67,11 +79,10 @@ export class LogsSubmissions implements OnChanges {
   }
 
   onRowAction(event: { actionId: string; row: GetFormSubmissionDTO }): void {
-      if (event.actionId === 'version') this.viewVersions(event.row);
-    }
-  
-    viewVersions(row: GetFormSubmissionDTO): void {
-      console.log('view submission, ', row);
-      // console.log(this.itemView)
-    }
+    if (event.actionId === 'viewSubmission') this.viewSubmission(event.row);
+  }
+
+  viewSubmission(row: GetFormSubmissionDTO): void {
+    // logica especial para ver la submission si aplica
+  }
 }

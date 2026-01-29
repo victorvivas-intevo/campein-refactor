@@ -16,7 +16,7 @@ export class PublicFormSchemaResponseDto {
   };
 }
 
-export interface SubmissionDTO{
+export interface SubmissionDTO {
   id?: string;
   submittedAt?: Date;
   submittedBy?: string | null;

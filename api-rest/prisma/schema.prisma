@@ -59,6 +59,8 @@ model User {
 
   sessions UserSession[]
 
+  formSubmissions FormSubmission[] @relation("UserToSubmissions")
+
   // Para que un email pueda repetirse en otro tenant,
   // pero sea único dentro del mismo tenant:
   @@unique([tenantId, email])
@@ -100,7 +102,7 @@ model FormSubmission {
   // relaciones
   form        Form        @relation("FormToFormSubmissions", fields: [formId], references: [id])
   formVersion FormVersion @relation("FormVersionToSubmissions", fields: [formVersionId], references: [id])
-  userSubmited User @relation("UserToSubmissions", fields: [submittedBy], references: [id])
+  userSubmited User? @relation("UserToSubmissions", fields: [submittedBy], references: [id])
 
   @@map("form_submissions")
 }

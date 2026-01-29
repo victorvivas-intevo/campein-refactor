@@ -77,7 +77,6 @@ export class Table<T = any> implements OnChanges {
     if (action.show && !action.show(row)) return;
 
     if (action.selectsRow) {
-      console.log("paso por aqui, if (action.selectsRow) {")
       this.selectRow(row);
     }
 
