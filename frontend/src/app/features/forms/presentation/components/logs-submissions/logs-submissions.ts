@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, OnChanges, signal, SimpleChanges, ViewChild } from '@angular/core';
 import { Table } from '@/shared/ui/components/table/table';
 import { GetFormSubmissionDTO } from '@/features/forms/domain/dtos/form-list.dto';
 import {
@@ -8,6 +8,8 @@ import {
   TableRowAction,
 } from '@/shared/interfaces/table';
 import { SubmissionDetail } from '../submission-detail/submission-detail';
+import { FormFacade } from '@/features/forms/application/fecades/form.fecade';
+import { FormSchema } from '@/features/public-form/domain/types/public-form.types';
 
 @Component({
   selector: 'app-logs-submissions',
@@ -16,8 +18,40 @@ import { SubmissionDetail } from '../submission-detail/submission-detail';
   styles: ``,
 })
 export class LogsSubmissions implements OnChanges {
+
+  @ViewChild(Table) table!: Table<GetFormSubmissionDTO>;
+
   @Input() submissions?: GetFormSubmissionDTO[];
-  @Input() formId?: string;
+  
+  
+  formId?: string;
+
+  @Input({ required: true, alias: 'formId' }) 
+    set setFormId(value: string | null) {
+      if (value) {
+        this.formId = value;
+        this.loading.set(false); // Deja de cargar cuando hay datos
+      } else {
+        this.loading.set(true);
+      }
+    }
+
+  // estado
+  loading = signal<boolean>(true);
+  error = signal<string | null>(null);
+  formSchema = signal<FormSchema | null>(null);
+
+  private formFacade = inject(FormFacade);
+
+   @Input({ required: true, alias: 'schema' }) 
+    set setSchema(value: FormSchema | null) {
+      if (value) {
+        this.formSchema.set(value);
+        this.loading.set(false); // Deja de cargar cuando hay datos
+      } else {
+        this.loading.set(true);
+      }
+    }
 
   itemView?: GetFormSubmissionDTO;
 
@@ -73,8 +107,14 @@ export class LogsSubmissions implements OnChanges {
       iconClass: 'fa-regular fa-eye',
       variant: buttonVariants.find((e) => e.variant == 'ghost'),
       selectsRow: true,
+      activeIconClass: 'fa-regular fa-eye-slash',
+      activeVariant: buttonVariants.find((e) => e.variant == 'close')
     },
   ];
+
+  get activeSchema() {
+    return this.formFacade.currentSchema()?.schema;
+  }
 
   // constructor(private router: Router) {}
 
@@ -89,5 +129,14 @@ export class LogsSubmissions implements OnChanges {
 
   viewSubmission(row: GetFormSubmissionDTO): void {
     // logica especial para ver la submission si aplica
+  }
+
+  onCloseDetail(): void {
+    this.itemView = undefined; // Oculta el panel
+    
+    // Verifica que la tabla exista antes de llamar al método (por seguridad)
+    if (this.table) {
+      this.table.clearSelection();
+    }
   }
 }

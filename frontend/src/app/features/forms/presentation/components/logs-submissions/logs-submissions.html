@@ -206,7 +206,7 @@
     <div
       class="px-6 py-3 bg-gray-50 border-t border-gray-200 flex justify-between items-center shrink-0"
     >
-      <span class="text-[11px] text-gray-500 font-semibold uppercase">1,248 total results</span>
+      <span class="text-[11px] text-gray-500 font-semibold uppercase">{{submissions?.length}} envíos</span>
       <div class="flex gap-1">
         <button
           class="size-7 rounded border border-gray-200 bg-white flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors"
@@ -221,5 +221,5 @@
       </div>
     </div>
   </div>
-  <app-submission-detail [item]="itemView" (close)="itemView = undefined"></app-submission-detail>
+  <app-submission-detail [item]="itemView" (close)="onCloseDetail()" [schema]="formSchema()"></app-submission-detail>
 </div>

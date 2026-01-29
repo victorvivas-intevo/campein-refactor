@@ -43,21 +43,19 @@ export class ViewSchemaPage implements OnInit {
       label: 'Log de envíos',
       iconClass: 'fa-solid fa-database',
       component: LogsSubmissions,
-      inputs: { formId: '123' }, // Pasas datos al componente hijo
+      inputs: { formId: null, schema: null }, // Pasas datos al componente hijo
     },
     {
       id: 'users',
       label: 'Usuarios',
       iconClass: 'fa-solid fa-users',
       component: UsersAssignedForm,
-      inputs: { formId: '123' }, // Pasas datos al componente hijo
     },
     {
       id: 'stats',
       label: 'Estadísticas',
       iconClass: 'fa-solid fa-chart-column',
       component: StatsForm,
-      inputs: { formId: '123' }, // Pasas datos al componente hijo
     },
   ];
 
@@ -99,12 +97,12 @@ export class ViewSchemaPage implements OnInit {
 
   private updateTabsData() {
     this.formTabs = this.formTabs.map(tab => {
+      const schemaData = this.versionForm?.schema || this.versionForm; 
       if (tab.id === 'preview') {
-        const schemaData = this.versionForm?.schema || this.versionForm; 
         return { ...tab, inputs: { schema: schemaData } };
       }
       if (tab.id === 'log') {
-        return { ...tab, inputs: { submissions: this.form?.submissions, formId: this.idForm } };
+        return { ...tab, inputs: { submissions: this.form?.submissions, formId: this.idForm, schema: schemaData } };
       }
       // TODO: add rules to update inputs for other tabs
       // Actualizamos también el ID para los otros tabs si es necesario

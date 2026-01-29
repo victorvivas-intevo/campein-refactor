@@ -1,138 +1,230 @@
 <!-- Submission Details Panel -->
- @if(item){
-     <div class="w-[450px] bg-gray-50 flex flex-col shrink-0 overflow-hidden">
-       <div class="p-6 border-b border-gray-200 bg-white shrink-0">
-         <div class="flex justify-between items-start mb-4">
-           <div>
-             <div
-               class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary border border-primary/20 mb-2"
-             >
-               Version {{ item.versionSubmited || 'N/A' }}
-             </div>
-             <h3 class="text-xl font-bold text-gray-900">Detalles del envío</h3>
-             <p class="text-xs text-gray-500 font-mono mt-1">ID: #SUB-{{ item.id }}</p>
-           </div>
-           <button class="text-gray-400 hover:text-gray-600 cursor-pointer" (click)="closeTab()">
-             <span class="material-symbols-outlined">close</span>
-           </button>
-         </div>
-         @if(item.userSubmited){
-           <div class="flex items-center gap-4 py-3 px-4 bg-gray-50 rounded-lg">
-           <div
-               class="size-10 rounded-full bg-primary-green-100 flex items-center justify-center text-sm font-bold text-primary-green-600 uppercase"
-           >
-               {{ (item.userSubmited.fullName ? item.userSubmited.fullName.charAt(0) : 'U')  }}
-           </div>
-           <div>
-               <p class="text-sm font-bold text-gray-900">{{item.userSubmited.fullName || 'Usuario no tiene nombre'}}</p>
-               <p class="text-xs text-gray-500">{{item.userSubmited.email}}</p>
-           </div>
-           </div>
-       } @else{
-           <div class="flex items-center gap-4 py-3 px-4 bg-gray-50 rounded-lg">
-           <div
-               class="rounded-full bg-orange-100 flex items-center justify-center text-sm font-bold text-orange-400 p-2"
-           >
-               <span class="material-symbols-outlined text-xl">
-                   no_accounts
-               </span>
-           </div>
-           <div>
-               <p class="text-sm font-bold text-gray-900">Registro voluntario</p>
-           </div>
-           </div>
-         }
-       </div>
-       <div class="flex-1 overflow-y-auto p-6 custom-scrollbar space-y-6">
-         <div class="space-y-1">
-           <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
-             >Full Name</label
-           >
-           <p class="text-sm text-gray-800 font-medium">datos del visaje</p>
-         </div>
-         <div class="space-y-1">
-           <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
-             >Email Address</label
-           >
-           <p class="text-sm text-gray-800 font-medium">datos del visaje</p>
-         </div>
-         <div class="space-y-2">
-           <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
-             >Overall Satisfaction</label
-           >
-           <div class="flex gap-1.5">
-             <span
-               class="size-8 rounded flex items-center justify-center bg-primary text-white text-xs font-bold shadow-sm"
-               >4</span
-             >
-             <span
-               class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
-               >5</span
-             >
-             <span
-               class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
-               >6</span
-             >
-             <span
-               class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
-               >7</span
-             >
-             <span
-               class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
-               >8</span
-             >
-           </div>
-         </div>
-         <div class="space-y-2">
-           <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
-             >Feature Interests</label
-           >
-           <div class="flex flex-wrap gap-2">
-             <span
-               class="px-2.5 py-1 rounded bg-blue-100 text-blue-700 text-[11px] font-semibold border border-blue-200"
-               >Mobile App</span
-             >
-             <span
-               class="px-2.5 py-1 rounded bg-blue-100 text-blue-700 text-[11px] font-semibold border border-blue-200"
-               >Data Export</span
-             >
-           </div>
-         </div>
-         <div class="space-y-1">
-           <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
-             >Additional Comments</label
-           >
-           <div class="p-3 bg-white border border-gray-200 rounded-lg">
-             <p class="text-sm text-gray-600 leading-relaxed italic">
-               "The new dashboard features are exactly what we needed. One minor suggestion: would love
-               to see more filtering options in the export tool. Overall 9/10 experience!"
-             </p>
-           </div>
-         </div>
-         <div class="pt-4 border-t border-gray-200">
-           <div class="flex justify-between items-center text-xs">
-             <span class="text-gray-400">Submitted from</span>
-             <span class="text-gray-600 font-medium">Web (Chrome / Mac OS)</span>
-           </div>
-           <div class="flex justify-between items-center text-xs mt-2">
-             <span class="text-gray-400">IP Address</span>
-             <span class="text-gray-600 font-medium">192.168.1.44</span>
-           </div>
-         </div>
-       </div>
-       <div class="p-4 border-t border-gray-200 bg-white shrink-0 flex gap-2">
-         <button
-           class="flex-1 flex items-center justify-center bg-gray-100 text-gray-700 py-2 rounded-lg text-sm font-bold hover:bg-gray-200 transition-colors"
-         >
-           <span class="material-symbols-outlined text-lg mr-2">print</span>
-           Print
-         </button>
-         <button
-           class="flex-1 flex items-center justify-center bg-gray-100 text-gray-700 py-2 rounded-lg text-sm font-bold hover:bg-gray-200 transition-colors"
-         >
-           <span class="material-symbols-outlined text-lg mr-2">delete</span>
-           Delete
-         </button>
-       </div>
-     </div>
- }
+@if (false && item) {
+  <div class="w-[450px] bg-gray-50 flex flex-col shrink-0 overflow-hidden">
+    <div class="p-6 border-b border-gray-200 bg-white shrink-0">
+      <div class="flex justify-between items-start mb-4">
+        <div>
+          <div
+            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary border border-primary/20 mb-2"
+          >
+            Version {{ item.versionSubmited || 'N/A' }}
+          </div>
+          <h3 class="text-xl font-bold text-gray-900">Detalles del envío</h3>
+          <p class="text-xs text-gray-500 font-mono mt-1">ID: #SUB-{{ item.id }}</p>
+        </div>
+        <button class="text-gray-400 hover:text-gray-600 cursor-pointer" (click)="closeTab()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      @if (item.userSubmited) {
+        <div class="flex items-center gap-4 py-3 px-4 bg-gray-50 rounded-lg">
+          <div
+            class="size-10 rounded-full bg-primary-green-100 flex items-center justify-center text-sm font-bold text-primary-green-600 uppercase"
+          >
+            {{ item.userSubmited.fullName ? item.userSubmited.fullName.charAt(0) : 'U' }}
+          </div>
+          <div>
+            <p class="text-sm font-bold text-gray-900">
+              {{ item.userSubmited.fullName || 'Usuario no tiene nombre' }}
+            </p>
+            <p class="text-xs text-gray-500">{{ item.userSubmited.email }}</p>
+          </div>
+        </div>
+      } @else {
+        <div class="flex items-center gap-4 py-3 px-4 bg-gray-50 rounded-lg">
+          <div
+            class="rounded-full bg-orange-100 flex items-center justify-center text-sm font-bold text-orange-400 p-2"
+          >
+            <span class="material-symbols-outlined text-xl"> no_accounts </span>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-gray-900">Registro voluntario</p>
+          </div>
+        </div>
+      }
+    </div>
+    <!-- render payload -->
+    <app-dynamic-submission-viewer [schema]="schema"></app-dynamic-submission-viewer>
+    <div class="flex-1 overflow-y-auto p-6 custom-scrollbar space-y-6">
+      <div class="space-y-1">
+        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
+          >Full Name</label
+        >
+        <p class="text-sm text-gray-800 font-medium">datos del visaje</p>
+      </div>
+      <div class="space-y-1">
+        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
+          >Email Address</label
+        >
+        <p class="text-sm text-gray-800 font-medium">datos del visaje</p>
+      </div>
+      <div class="space-y-2">
+        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
+          >Overall Satisfaction</label
+        >
+        <div class="flex gap-1.5">
+          <span
+            class="size-8 rounded flex items-center justify-center bg-primary text-white text-xs font-bold shadow-sm"
+            >4</span
+          >
+          <span
+            class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
+            >5</span
+          >
+          <span
+            class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
+            >6</span
+          >
+          <span
+            class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
+            >7</span
+          >
+          <span
+            class="size-8 rounded flex items-center justify-center bg-gray-200 text-gray-400 text-xs font-bold"
+            >8</span
+          >
+        </div>
+      </div>
+      <div class="space-y-2">
+        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
+          >Feature Interests</label
+        >
+        <div class="flex flex-wrap gap-2">
+          <span
+            class="px-2.5 py-1 rounded bg-blue-100 text-blue-700 text-[11px] font-semibold border border-blue-200"
+            >Mobile App</span
+          >
+          <span
+            class="px-2.5 py-1 rounded bg-blue-100 text-blue-700 text-[11px] font-semibold border border-blue-200"
+            >Data Export</span
+          >
+        </div>
+      </div>
+      <div class="space-y-1">
+        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"
+          >Additional Comments</label
+        >
+        <div class="p-3 bg-white border border-gray-200 rounded-lg">
+          <p class="text-sm text-gray-600 leading-relaxed italic">
+            "The new dashboard features are exactly what we needed. One minor suggestion: would love
+            to see more filtering options in the export tool. Overall 9/10 experience!"
+          </p>
+        </div>
+      </div>
+      <div class="pt-4 border-t border-gray-200">
+        <div class="flex justify-between items-center text-xs">
+          <span class="text-gray-400">Submitted from</span>
+          <span class="text-gray-600 font-medium">Web (Chrome / Mac OS)</span>
+        </div>
+        <div class="flex justify-between items-center text-xs mt-2">
+          <span class="text-gray-400">IP Address</span>
+          <span class="text-gray-600 font-medium">192.168.1.44</span>
+        </div>
+      </div>
+    </div>
+    <!-- acctions -->
+    <div class="p-4 border-t border-gray-200 bg-white shrink-0 flex gap-2">
+      <button
+        class="flex-1 flex items-center justify-center bg-gray-100 text-gray-700 py-2 rounded-lg text-sm font-bold hover:bg-gray-200 transition-colors"
+      >
+        <span class="material-symbols-outlined text-lg mr-2">print</span>
+        Print
+      </button>
+      <button
+        class="flex-1 flex items-center justify-center bg-gray-100 text-gray-700 py-2 rounded-lg text-sm font-bold hover:bg-gray-200 transition-colors"
+      >
+        <span class="material-symbols-outlined text-lg mr-2">delete</span>
+        Delete
+      </button>
+    </div>
+  </div>
+}
+
+<div 
+  class="fixed inset-0 z-50 flex justify-end" 
+  [class.pointer-events-none]="!item"
+>
+  <div 
+    class="absolute inset-0 bg-gray-900/20 backdrop-blur-sm transition-opacity duration-300"
+    [class.opacity-0]="!item"
+    [class.opacity-100]="item"
+    (click)="closeTab()"
+  ></div>
+
+  <aside 
+    class="relative w-full max-w-xl bg-white shadow-2xl flex flex-col transition-transform duration-300 transform"
+    [class.translate-x-full]="!item"
+    [class.translate-x-0]="item"
+  >
+    @if (item) {
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
+        <div>
+          <h2 class="text-lg font-bold text-gray-800">Detalle del Envío</h2>
+          <p class="text-xs text-gray-500 font-mono mt-0.5">ID: {{ item.id || 'N/A' }}</p>
+        </div>
+        <button 
+          (click)="closeTab()" 
+          class="p-2 rounded-full hover:bg-gray-200 text-gray-500 transition-colors"
+        >
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+        
+        <div class="mb-8 p-4 bg-blue-50/50 rounded-lg border border-blue-100 grid grid-cols-2 gap-4">
+          <div class="flex items-center gap-4 col-span-2">
+          @if (item.userSubmited) {
+              <div
+                class="size-10 rounded-full bg-primary-green-100 flex items-center justify-center text-sm font-bold text-primary-green-600 uppercase"
+              >
+                {{ item.userSubmited.fullName ? item.userSubmited.fullName.charAt(0) : 'U' }}
+              </div>
+              <div>
+                <p class="text-sm font-bold text-gray-900">
+                  {{ item.userSubmited.fullName || 'Usuario no tiene nombre' }}
+                </p>
+                <p class="text-xs text-gray-500">{{ item.userSubmited.email }}</p>
+              </div>
+            } @else {
+                <div
+                  class="rounded-full bg-orange-100 flex items-center justify-center font-bold text-orange-400 p-2"
+                >
+                  <span class="material-symbols-outlined text-xl"> no_accounts </span>
+                </div>
+                <div>
+                  <p class="text-sm font-bold text-gray-900">Registro voluntario</p>
+                </div>
+              }
+          </div>
+          <div>
+            <span class="block text-xs text-blue-400 font-bold uppercase">Fecha</span>
+            <span class="text-sm text-gray-700 font-medium">
+              {{ item.submittedAt | date:'yyyy-MM-dd HH:mm' }}
+            </span>
+          </div>
+          <div>
+            <span class="block text-xs text-blue-400 font-bold uppercase">Versión</span>
+            <span class="text-sm text-gray-700 font-medium">V{{ item.versionSubmited }}</span>
+          </div>
+        </div>
+
+        <h3 class="text-sm font-bold text-gray-800 uppercase border-b border-gray-200 pb-2 mb-4">
+          Respuestas del Formulario
+        </h3>
+
+        <app-dynamic-submission-viewer
+          [schema]="schema"
+          [data]="item.payload"
+        ></app-dynamic-submission-viewer>
+
+      </div>
+
+      <div class="p-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-2">
+        <button class="px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded hover:bg-gray-50" (click)="closeTab()">
+          Cerrar
+        </button>
+      </div>
+    }
+  </aside>
+</div>
