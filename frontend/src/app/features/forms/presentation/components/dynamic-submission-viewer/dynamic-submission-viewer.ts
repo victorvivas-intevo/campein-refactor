@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './dynamic-submission-viewer.html',
 })
 export class DynamicSubmissionViewer {
+  /** Metadata de envio de formulario */
+  @Input() metadata: any | null = null;
   /** El esquema del formulario (JSON que define los campos) */
   @Input() schema: any; 
   
