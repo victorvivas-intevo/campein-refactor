@@ -5,6 +5,6 @@ export class CanAccessPolicy {
     if (!requiredRole) return true;
     if (!session) return false;
 
-    return session.user.rol === requiredRole;
+    return session.user.role === requiredRole;
   }
 }

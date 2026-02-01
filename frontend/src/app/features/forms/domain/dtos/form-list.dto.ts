@@ -14,6 +14,7 @@ export interface GetFormDTO {
   createdAt?: Date;
   isActive: boolean;
   isPublic: boolean;
+  assignments?: UserDTO[];
 }
 
 export interface GetFormVersionDTO {

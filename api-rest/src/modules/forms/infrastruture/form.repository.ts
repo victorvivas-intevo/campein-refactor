@@ -67,6 +67,18 @@ export class FormRepository implements FormQueryService {
         description: true,
         isPublic: true,
         isActive: true,
+        assignments: {
+            select: {
+              user: {
+                select: {
+                  id: true,
+                  email: true,
+                  fullName: true,
+                  role: true,
+                }
+              },
+          },
+        },
         versions: {
           orderBy: {
             createdAt: 'desc',

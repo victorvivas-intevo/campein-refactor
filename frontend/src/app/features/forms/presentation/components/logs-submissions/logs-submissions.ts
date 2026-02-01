@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnChanges, signal, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, computed, inject, Input, OnChanges, signal, SimpleChanges, ViewChild } from '@angular/core';
 import { Table } from '@/shared/ui/components/table/table';
 import { GetFormSubmissionDTO } from '@/features/forms/domain/dtos/form-list.dto';
 import {
@@ -24,17 +24,38 @@ export class LogsSubmissions implements OnChanges {
   @Input() submissions?: GetFormSubmissionDTO[];
   
   
-  formId?: string;
-
   @Input({ required: true, alias: 'formId' }) 
-    set setFormId(value: string | null) {
-      if (value) {
-        this.formId = value;
-        this.loading.set(false); // Deja de cargar cuando hay datos
-      } else {
-        this.loading.set(true);
-      }
+  set setFormId(value: string | null) {
+    if (value) {
+      this.formId = value;
+      this.loading.set(false); // Deja de cargar cuando hay datos
+    } else {
+      this.loading.set(true);
     }
+  }
+
+  userFilter = signal<string>('');
+  
+  filteredSubmissions = computed(() => { //
+    const filter = this.userFilter().toLowerCase().trim();
+    if (!this.submissions) return [];
+    if (!filter) return this.submissions;
+
+    return this.submissions.filter(sub => 
+      sub.submittedBy?.toLowerCase().includes(filter)
+    );
+  });
+
+  onFilterChange(event: Event): void { //
+    const input = event.target as HTMLInputElement;
+    this.userFilter.set(input.value);
+  }
+
+  clearFilter(): void { //
+    this.userFilter.set('');
+  }
+  
+  formId?: string;
 
   // estado
   loading = signal<boolean>(true);

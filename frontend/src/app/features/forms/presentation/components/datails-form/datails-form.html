@@ -37,14 +37,21 @@
       </div>
       <div class="flex gap-3">
         <button
-          class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary-green-100 text-gray-700 text-sm font-bold shadow-md hover:bg-primary-green-200 transition-colors gap-1"
+          class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary-red-100 text-gray-700 text-sm font-bold shadow-md hover:bg-primary-red-300 transition-colors gap-1 cursor-pointer"
+          (click)="enterToForm()"
+        >
+          <i class="fa-solid fa-file-arrow-up"></i>
+          Registrar
+        </button>
+        <button
+          class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary-green-100 text-gray-700 text-sm font-bold shadow-md hover:bg-primary-green-200 transition-colors gap-1 cursor-pointer"
           (click)="copyUrl()"
         >
           <i class="fa-solid fa-share"></i>
           Compartir
         </button>
         <button
-          class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary-red-400 text-white text-sm font-bold shadow-md hover:bg-primary-red-500 transition-colors gap-1"
+          class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary-red-400 text-white text-sm font-bold shadow-md hover:bg-primary-red-500 transition-colors gap-1 cursor-pointer"
         >
           <i class="fa-solid fa-pen-to-square"></i>
           Editar

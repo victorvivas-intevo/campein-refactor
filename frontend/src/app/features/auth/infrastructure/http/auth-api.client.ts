@@ -7,7 +7,7 @@ export const AUTH_API_URL = new InjectionToken<string>('AUTH_API_URL');
 export interface LoginApiResponse {
   accessToken: string;
   refresh_token?: string;
-  user: { id: string; email: string; name?: string; rol?: string };
+  user: { id: string; email: string; name?: string; role?: string };
 }
 
 export interface RefreshApiResponse extends LoginApiResponse {}

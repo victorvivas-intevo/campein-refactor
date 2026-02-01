@@ -55,15 +55,17 @@
             class="w-full pl-10 pr-4 py-1.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary placeholder:text-gray-500"
             placeholder="Filtrar por usuario..."
             type="text"
+            [value]="userFilter()"
+            (input)="onFilterChange($event)"
           />
         </div>
       </div>
       <div class="flex items-center gap-2 border-l border-gray-200 pl-4">
-        <button class="p-1.5 text-gray-400 hover:text-primary transition-colors">
+        <button class="p-1.5 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer" (click)="clearFilter()">
           <span class="material-symbols-outlined">filter_list_off</span>
         </button>
         <div class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">
-          Mostrando <span class="text-primary">{{submissions?.length}}</span> of {{submissions?.length}}
+          Mostrando <span class="text-primary">{{filteredSubmissions().length}}</span> of {{submissions?.length}}
         </div>
       </div>
     </div>
@@ -72,7 +74,7 @@
         <app-table
           styles=""
           [columns]="columns"
-          [data]="submissions"
+          [data]="filteredSubmissions()"
           [config]="tableConfig"
           [rowActions]="rowActions"
           (rowAction)="onRowAction($event)"
@@ -83,7 +85,7 @@
     <div
       class="px-6 py-3 bg-gray-50 border-t border-gray-200 flex justify-between items-center shrink-0"
     >
-      <span class="text-[11px] text-gray-500 font-semibold uppercase">{{submissions?.length}} envíos</span>
+      <span class="text-[11px] text-gray-500 font-semibold uppercase">{{filteredSubmissions().length}} envíos encontrados</span>
       <div class="flex gap-1">
         <button
           class="size-7 rounded border border-gray-200 bg-white flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors"

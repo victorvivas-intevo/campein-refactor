@@ -6,6 +6,7 @@ const MENU_ITEMS: MenuInterface[] = [
   { publicName: 'Dashboard', route: '/app/dashboard', icon: 'fa-house' },
   { publicName: 'Usuarios', route: '/app/users', icon: 'fa-user' },
   { publicName: 'Formularios', route: '/app/forms', icon: 'fa-file-alt' },
+  { publicName: 'Mapa de calor', route: '/app/map', icon: 'fa-regular fa-map' },
 ];
 
 @Component({

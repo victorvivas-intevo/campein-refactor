@@ -14,6 +14,7 @@ export class PublicFormSchemaResponseDto {
   _count?: {
     submissions: number;
   };
+  assignments?: UserDTO[];
 }
 
 export interface SubmissionDTO {

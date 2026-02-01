@@ -7,6 +7,11 @@ export const dashboardRoutes: Routes = [
       import('@/features/dashboard/presentation/pages/dashboard.page/dashboard.page').then((m) => m.DashboardPage),
   },
   {
+    path: 'map',
+    loadComponent: () =>
+      import('@/shared/ui/components/mapa-1/mapa-1').then((m) => m.Mapa1),
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',

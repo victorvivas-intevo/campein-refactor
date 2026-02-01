@@ -32,7 +32,7 @@ export class AuthHttpGateway implements AuthGatewayInterface {
     return this.api.me(accessToken).pipe(
       map((res) => {
         const expiresAt = this.decoder.getExpiresAt(accessToken) ?? undefined;
-        const user = new User(res.user.id, res.user.email, res.user.name!, res.user.rol ?? 'User');
+        const user = new User(res.user.id, res.user.email, res.user.name!, res.user.role ?? 'User');
         const tokens = new AuthTokens(accessToken);
         return new Session(user, tokens, expiresAt);
       })

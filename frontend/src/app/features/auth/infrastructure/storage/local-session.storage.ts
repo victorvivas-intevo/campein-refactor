@@ -5,7 +5,7 @@ import { User } from '../../domain/entities/user.entity';
 import { AuthTokens } from '../../domain/value-objects/auth-tokens.vo';
 
 type PersistedSession = {
-  user: { id: string; email: string; name?: string; rol: string; tenantId: string };
+  user: { id: string; email: string; name?: string; role: string; tenantId: string };
   tokens: { accessToken: string; refreshToken?: string };
   accessTokenExpiresAt?: string; // ISO
 };
@@ -21,7 +21,7 @@ export class LocalSessionStore implements SessionStoreInterface {
         email: session.user.email,
         tenantId: session.user.tenantId,
         name: session.user.name,
-        rol: session.user.rol ?? 'USER',
+        role: session.user.role ?? 'USER',
       },
       tokens: {
         accessToken: session.tokens.accessToken,
@@ -43,7 +43,7 @@ export class LocalSessionStore implements SessionStoreInterface {
 
     try {
       const data = JSON.parse(raw) as PersistedSession;
-      const user = new User(data.user.id, data.user.tenantId, data.user.email, data.user.rol ?? 'USER', data.user.name ?? '');
+      const user = new User(data.user.id, data.user.tenantId, data.user.email, data.user.role ?? 'USER', data.user.name ?? '');
       const tokens = new AuthTokens(data.tokens.accessToken, data.tokens.refreshToken);
       const expiresAt = data.accessTokenExpiresAt ? new Date(data.accessTokenExpiresAt) : undefined;
       return new Session(user, tokens, expiresAt);
@@ -58,7 +58,7 @@ export class LocalSessionStore implements SessionStoreInterface {
 
   getRoleId(): string {
     const session = this.load();
-    return session?.user.rol ?? '';
+    return session?.user.role ?? '';
   }
 
   getTenantId(): string {
