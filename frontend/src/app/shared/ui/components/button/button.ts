@@ -105,7 +105,8 @@ export class Button {
       'focus:ring-2',
       'focus:ring-offset-2',
       'disabled:opacity-60',
-      'disabled:pointer-events-none'
+      'disabled:pointer-events-none',
+      'hover:cursor-pointer'
     );
 
     return classes;

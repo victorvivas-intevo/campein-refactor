@@ -61,6 +61,12 @@ export class Table<T = any> implements OnChanges {
 
   private selectRow(row: T): void {
     const id = this.getRowId(row);
+
+    if (this.selectedRowId === id) {
+      this.clearSelection();
+      return;
+    }
+    
     this.selectedRowId = id;
     this.rowSelected.emit(row);
   }
@@ -77,7 +83,6 @@ export class Table<T = any> implements OnChanges {
     if (action.show && !action.show(row)) return;
 
     if (action.selectsRow) {
-      console.log("paso por aqui, if (action.selectsRow) {")
       this.selectRow(row);
     }
 

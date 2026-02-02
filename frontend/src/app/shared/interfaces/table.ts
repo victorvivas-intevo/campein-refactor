@@ -29,7 +29,7 @@ export interface TableConfig {
   sortable?: boolean;
 }
 
-export type TableRowActionVariant = 'primary' | 'ghost' | 'danger';
+export type TableRowActionVariant = 'primary' | 'ghost' | 'danger' | 'close';
 
 export interface TableRowAction<T = any> {
   id: string;
@@ -38,6 +38,8 @@ export interface TableRowAction<T = any> {
   variant?: ButtonActionStyle;
   show?: (row: T) => boolean;
   selectsRow?: boolean;
+  activeIconClass?: string;
+  activeVariant?: ButtonActionStyle;
 }
 
 export interface ButtonActionStyle {
@@ -59,5 +61,9 @@ export const buttonVariants: ButtonActionStyle[] = [
   {
     variant: 'ghost',
     classList: `bg-gray-400 hover:bg-gray-300`,
+  },
+  {
+    variant: 'close',
+    classList: `bg-primary-green-100 hover:bg-primary-green-300`,
   },
 ]

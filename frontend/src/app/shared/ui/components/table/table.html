@@ -48,17 +48,37 @@
         } @if(rowActions.length){
         <td>
           <div class="w-full flex gap-2 justify-center">
-            @for (action of rowActions; track $index) { @if(shouldShowAction(action, row)){
-            <button
-              type="button"
-              [class]=" action.variant?.classList + ` cursor-pointer px-1.5 py-1 rounded-full transition-colors ease-in-out duration-100`"
-              (click)="onRowActionClick(action, row, $event)"
-            >
-              @if(action.iconClass){
-              <i class="action-icon" [ngClass]="action.iconClass" aria-hidden="true"></i>
+            @for (action of rowActions; track $index) { 
+              @if(shouldShowAction(action, row)){
+                <!-- <button
+                  type="button"
+                  [class]=" action.variant?.classList + ` cursor-pointer px-1.5 py-1 rounded-full transition-colors ease-in-out duration-100`"
+                  (click)="onRowActionClick(action, row, $event)"
+                >
+                  @if(action.iconClass){
+                  <i class="action-icon" [ngClass]="action.iconClass" aria-hidden="true"></i>
+                  }
+                </button> -->
+                <button
+                  type="button"
+                  [class]="(isSelected(row) && action.selectsRow && action.activeVariant 
+                            ? action.activeVariant.classList 
+                            : action.variant?.classList) 
+                            + ' cursor-pointer px-1.5 py-1 rounded-full transition-colors ease-in-out duration-100'"
+                  (click)="onRowActionClick(action, row, $event)"
+                >
+                  @if(action.iconClass){
+                    <i 
+                      class="action-icon" 
+                      [ngClass]="isSelected(row) && action.selectsRow && action.activeIconClass 
+                                ? action.activeIconClass 
+                                : action.iconClass" 
+                      aria-hidden="true">
+                    </i>
+                  }
+                </button>
               }
-            </button>
-            } }
+            }
           </div>
         </td>
         }

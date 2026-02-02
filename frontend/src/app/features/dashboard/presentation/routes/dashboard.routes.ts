@@ -7,13 +7,28 @@ export const dashboardRoutes: Routes = [
       import('@/features/dashboard/presentation/pages/dashboard.page/dashboard.page').then((m) => m.DashboardPage),
   },
   {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
+    path: 'election-statistics',
+    loadComponent: () =>
+      import('@/shared/ui/components/election-statistics/election-statistics').then((m) => m.ElectionStatistics),
   },
   {
-    path: '**',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
-  }
+    path: 'fico-volunteers',
+    loadComponent: () =>
+      import('@/shared/ui/components/fico-volunteers/fico-volunteers').then((m) => m.FicoVolunteers),
+  },
+  {
+    path: 'duque-volunteers',
+    loadComponent: () =>
+      import('@/shared/ui/components/heat-map/heat-map').then((m) => m.HeatMap),
+  },
+  // {
+  //   path: '',
+  //   redirectTo: 'dashboard',
+  //   pathMatch: 'full',
+  // },
+  // {
+  //   path: '**',
+  //   redirectTo: 'dashboard',
+  //   pathMatch: 'full',
+  // }
 ];

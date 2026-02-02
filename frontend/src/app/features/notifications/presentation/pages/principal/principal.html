@@ -1,0 +1,43 @@
+<div class="flex flex-col gap-3">
+  <app-steb-by-steb
+    [steps]="['Audiencia', 'Mensaje', 'Publicar', 'Resumen']"
+    [currentStep]="pasoActual"
+    (changeStep)="changeSteb($event)"
+  ></app-steb-by-steb>
+
+  <div class="space-y-2">
+    <div class="flex justify-between items-end">
+      <div>
+        <h1 class="text-4xl font-black text-zinc-900 tracking-tight font-montserrat">
+          Paso 1: Seleccionar audiencia
+        </h1>
+        <p class="text-zinc-500 mt-1">
+          Seleccione su público objetivo mediante la carga de archivos o la selección interna de
+          usuarios.
+        </p>
+      </div>
+      <div class="flex gap-3">
+        <button
+          class="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-200 font-bold text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
+        >
+          <span class="material-symbols-outlined text-lg">history</span>
+          Historial de mensajes
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-card >
+    <app-tabs [tabs]="formTabs">
+    </app-tabs>
+  </app-card>
+
+  <!-- <div class="flex justify-end pt-4">
+    <button
+      class="flex items-center gap-2 px-8 py-3 rounded-xl bg-primary-green-700 text-white font-bold text-base shadow-lg shadow-primary-green-700/20 hover:brightness-110 transition-all font-montserrat"
+    >
+      Next: Create Message
+      <span class="material-symbols-outlined">arrow_forward</span>
+    </button>
+  </div> -->
+</div>

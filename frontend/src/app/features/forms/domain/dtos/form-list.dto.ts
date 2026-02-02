@@ -1,3 +1,5 @@
+import { FormSchema } from "@/shared/ui/form-controls/form-control.types";
+
 export interface RequestGetFormDTO {
   id?: string;
   code?: string;
@@ -10,16 +12,18 @@ export interface GetFormDTO {
   description?: string;
   versions?: GetFormVersionDTO[];
   submissionCount?: number;
+  submissions?: GetFormSubmissionDTO[];
   createdAt?: Date;
   isActive: boolean;
   isPublic: boolean;
+  assignments?: UserDTO[];
 }
 
 export interface GetFormVersionDTO {
   id: string;
   version: number;
   isActive: boolean;
-  schema?: JSON;
+  schema?: FormSchema;
   submissions?: GetFormSubmissionDTO[];
   _count?: {submissions: number};
   createdAt?: Date;
@@ -31,8 +35,19 @@ export interface GetFormSubmissionDTO {
   id: String;
   formId?: String;
   formVersionId?: String;
-  submittedAt: Date;
+  formVersion: GetFormVersionDTO;
+  submittedAt?: Date;
   submittedBy?: string; // id user
-  payload: JSON;
+  payload?: JSON;
   metadata?: JSON;
+  versionSubmited?: number;
+  createdAt?: Date;
+  userSubmited: UserDTO | null;
+}
+
+export interface UserDTO {
+  id?: string;
+  email?: string;
+  fullName?: string;
+  role?: string;
 }

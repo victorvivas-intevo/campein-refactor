@@ -1,1 +1,104 @@
-<p>logs-submissions works!</p>
+<div class="flex flex-1 overflow-hidden">
+  <!-- Table -->
+  <div class="flex-1 flex flex-col border-r border-gray-200 overflow-hidden">
+    <label class="text-xs font-bold text-gray-500 uppercase">Filtros:</label>
+    <div class="py-4 pr-2 border-b border-gray-200 flex flex-wrap items-center gap-4 shrink-0">
+      <!-- Data range filter -->
+      <!-- <div class="flex items-center gap-2">
+        <div class="relative group">
+          <button
+            class="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1.5 rounded-lg text-sm text-gray-700 hover:border-primary transition-all"
+          >
+            <i class="fa-regular fa-calendar text-lg"></i>
+            <span>Rango de fecha</span>
+            <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div
+            class="hidden group-hover:block absolute left-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-xl z-30 p-2"
+          >
+            <button
+              class="w-full text-left px-3 py-1.5 text-xs hover:bg-gray-100 rounded font-medium"
+            >
+              Hoy
+            </button>
+            <button
+              class="w-full text-left px-3 py-1.5 text-xs hover:bg-gray-100 rounded font-medium"
+            >
+              Ultimas 24 horas
+            </button>
+            <button
+              class="w-full text-left px-3 py-1.5 text-xs hover:bg-gray-100 rounded font-medium text-primary bg-primary/5"
+            >
+              Ultimos 7 días
+            </button>
+            <button
+              class="w-full text-left px-3 py-1.5 text-xs hover:bg-gray-100 rounded font-medium"
+            >
+              Este mes
+            </button>
+            <div class="border-t border-gray-100 my-1"></div>
+            <button
+              class="w-full text-left px-3 py-1.5 text-xs hover:bg-gray-100 rounded font-medium text-gray-400 italic"
+            >
+              Rango personalizado...
+            </button>
+          </div>
+        </div>
+      </div> -->
+      <!-- User filter -->
+      <div class="flex-1 min-w-[200px] max-w-sm">
+        <div class="relative">
+          <i
+            class="fa-solid fa-street-view absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg"
+          ></i>
+          <input
+            class="w-full pl-10 pr-4 py-1.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary placeholder:text-gray-500"
+            placeholder="Filtrar por usuario..."
+            type="text"
+            [value]="userFilter()"
+            (input)="onFilterChange($event)"
+          />
+        </div>
+      </div>
+      <div class="flex items-center gap-2 border-l border-gray-200 pl-4">
+        <button class="p-1.5 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer" (click)="clearFilter()">
+          <span class="material-symbols-outlined">filter_list_off</span>
+        </button>
+        <div class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+          Mostrando <span class="text-primary">{{filteredSubmissions().length}}</span> of {{submissions?.length}}
+        </div>
+      </div>
+    </div>
+    <div class="overflow-y-auto custom-scrollbar flex-1">
+      @if(submissions){
+        <app-table
+          styles=""
+          [columns]="columns"
+          [data]="filteredSubmissions()"
+          [config]="tableConfig"
+          [rowActions]="rowActions"
+          (rowAction)="onRowAction($event)"
+          (rowSelected)="itemView = $event!"
+        />
+      }
+    </div>
+    <div
+      class="px-6 py-3 bg-gray-50 border-t border-gray-200 flex justify-between items-center shrink-0"
+    >
+      <span class="text-[11px] text-gray-500 font-semibold uppercase">{{filteredSubmissions().length}} envíos encontrados</span>
+      <div class="flex gap-1">
+        <button
+          class="size-7 rounded border border-gray-200 bg-white flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <span class="material-symbols-outlined text-sm">chevron_left</span>
+        </button>
+        <button
+          class="size-7 rounded border border-gray-200 bg-white flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <span class="material-symbols-outlined text-sm">chevron_right</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <app-submission-detail [item]="itemView" (close)="onCloseDetail()" [schema]="formSchema()"></app-submission-detail>
+</div>
