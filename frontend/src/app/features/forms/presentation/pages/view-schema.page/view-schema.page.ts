@@ -36,28 +36,26 @@ export class ViewSchemaPage implements OnInit {
       label: 'Previsualización',
       iconClass: 'fa-solid fa-newspaper',
       component: PreviewForm,
-      inputs: { schema: this.versionForm }, // Pasas datos al componente hijo
+      inputs: { schema: null }, // Pasas datos al componente hijo
     },
     {
       id: 'log',
       label: 'Log de envíos',
       iconClass: 'fa-solid fa-database',
       component: LogsSubmissions,
-      inputs: { formId: '123' }, // Pasas datos al componente hijo
+      inputs: { formId: null, schema: null }, // Pasas datos al componente hijo
     },
     {
       id: 'users',
       label: 'Usuarios',
       iconClass: 'fa-solid fa-users',
       component: UsersAssignedForm,
-      inputs: { formId: '123' }, // Pasas datos al componente hijo
     },
     {
       id: 'stats',
       label: 'Estadísticas',
       iconClass: 'fa-solid fa-chart-column',
       component: StatsForm,
-      inputs: { formId: '123' }, // Pasas datos al componente hijo
     },
   ];
 
@@ -73,7 +71,7 @@ export class ViewSchemaPage implements OnInit {
     this.fecade.loadOne({ id: this.idForm }).then((e) => {
       this.form = this.fecade.current() || undefined;
       this.versionForm = this.form?.versions?.find((v) => v.id === this.idVersion) || undefined;
-      console.log(this.getVersions);
+      this.updateTabsData();
     });
     // await this.fecade.loadOne({id: this.idForm}).then(e =>{
     //   this.form = this.fecade.current() || undefined
@@ -90,9 +88,28 @@ export class ViewSchemaPage implements OnInit {
   onVersionSelected(version: GetFormVersionDTO): void {
     this.idVersion = version.id;
     this.versionForm = this.form?.versions?.find((v) => v.id === this.idVersion);
+    this.updateTabsData();
     this.router.navigate(['../', version.id], { 
       relativeTo: this.route, // Indica que partimos de la ruta actual
       replaceUrl: true        // Opcional: reemplaza el historial para que el botón "atrás" no sea infinito
+    });
+  }
+
+  private updateTabsData() {
+    this.formTabs = this.formTabs.map(tab => {
+      const schemaData = this.versionForm?.schema || this.versionForm; 
+      if (tab.id === 'preview') {
+        return { ...tab, inputs: { schema: schemaData } };
+      }
+      if (tab.id === 'log') {
+        return { ...tab, inputs: { submissions: this.form?.submissions, formId: this.idForm, schema: schemaData } };
+      }
+      // TODO: add rules to update inputs for other tabs
+      // Actualizamos también el ID para los otros tabs si es necesario
+      // if (['log', 'users', 'stats'].includes(tab.id)) {
+      //   return { ...tab, inputs: { formId: this.idForm } };
+      // }
+      return tab;
     });
   }
 }

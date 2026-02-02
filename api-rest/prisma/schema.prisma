@@ -35,6 +35,8 @@ model Form {
   isPublic    Boolean  @default(false) @map("is_public")
   isActive  Boolean  @default(false) @map("is_active")
 
+  assignments FormAssignmentUser[]
+
   // relaciones
   tenant      Tenant           @relation(fields: [tenantId], references: [id])
   versions    FormVersion[]    @relation("FormToFormVersions")
@@ -58,6 +60,10 @@ model User {
   tenant Tenant @relation(fields: [tenantId], references: [id])
 
   sessions UserSession[]
+
+  assignedForms FormAssignmentUser[]
+
+  formSubmissions FormSubmission[] @relation("UserToSubmissions")
 
   // Para que un email pueda repetirse en otro tenant,
   // pero sea único dentro del mismo tenant:
@@ -93,13 +99,14 @@ model FormSubmission {
   formId        String   @map("form_id") @db.Uuid
   formVersionId String   @map("form_version_id") @db.Uuid
   submittedAt   DateTime @default(now()) @map("submitted_at") @db.Timestamptz
-  submittedBy   String?  @map("submitted_by") @db.Text
+  submittedBy   String?  @map("submitted_by") @db.Uuid
   payload       Json     @db.JsonB
   metadata      Json?    @db.JsonB
 
   // relaciones
   form        Form        @relation("FormToFormSubmissions", fields: [formId], references: [id])
   formVersion FormVersion @relation("FormVersionToSubmissions", fields: [formVersionId], references: [id])
+  userSubmited User? @relation("UserToSubmissions", fields: [submittedBy], references: [id])
 
   @@map("form_submissions")
 }
@@ -121,4 +128,19 @@ model UserSession {
   @@index([userId])
   @@index([tenantId])
   @@map("user_sessions")
+}
+
+model FormAssignmentUser {
+  formId     String   @map("form_id") @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  assignedAt DateTime @default(now()) @map("assigned_at") @db.Timestamptz
+
+  // Relaciones
+  // onDelete: Cascade asegura que si se borra el form o el user, se borre la asignación
+  form Form @relation(fields: [formId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Llave compuesta: evita duplicar la misma asignación
+  @@id([formId, userId])
+  @@map("form_assignments")
 }

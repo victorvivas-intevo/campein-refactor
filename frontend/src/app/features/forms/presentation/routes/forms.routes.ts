@@ -7,6 +7,11 @@ export const formsRoutes: Routes = [
       import('@/features/forms/presentation/pages/forms.page/forms.page').then((m) => m.FormsPage),
   },
   {
+    path: 'forms/sendSubmission/:codeForm',
+    loadComponent: () =>
+      import('@/features/forms/presentation/pages/submission-form.page/submission-form.page').then((m) => m.SubmissionFormPage),
+  },
+  {
     path: 'forms/view-schema/:codeForm/:codeVersion',
     loadComponent: () =>
       import('@/features/forms/presentation/pages/view-schema.page/view-schema.page').then((m) => m.ViewSchemaPage),

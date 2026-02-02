@@ -81,6 +81,8 @@ export class FormsPage implements OnInit {
       iconClass: 'fa-regular fa-eye',
       variant: buttonVariants.find((e) => e.variant == 'ghost'),
       selectsRow: true,
+      activeIconClass: 'fa-regular fa-eye-slash',
+      activeVariant: buttonVariants.find((e) => e.variant == 'close')
     },
     {
       id: 'edit',

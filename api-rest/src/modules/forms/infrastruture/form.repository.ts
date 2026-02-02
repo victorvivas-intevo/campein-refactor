@@ -58,7 +58,7 @@ export class FormRepository implements FormQueryService {
     });
   }
 
-  async findById(formId: string): Promise<PublicFormSchemaResponseDto | null> {
+  async findById(formId: string): Promise<any | null> {
     return this.prisma.form.findFirst({
       select: {
         id: true,
@@ -67,12 +67,48 @@ export class FormRepository implements FormQueryService {
         description: true,
         isPublic: true,
         isActive: true,
+        assignments: {
+          select: {
+            user: {
+              select: {
+                id: true,
+                email: true,
+                fullName: true,
+                role: true,
+              },
+            },
+          },
+        },
         versions: {
           orderBy: {
             createdAt: 'desc',
           },
         },
-        submissions: true,
+        submissions: {
+          select: {
+            id: true,
+            submittedAt: true,
+            userSubmited: {
+              select: {
+                id: true,
+                email: true,
+                fullName: true,
+                role: true,
+              },
+            },
+            payload: true,
+            metadata: true,
+            formVersion: {
+              select: {
+                id: true,
+                version: true,
+              },
+            },
+          },
+          orderBy: {
+            submittedAt: 'desc',
+          },
+        },
         name: true,
         _count: {
           select: {
@@ -82,6 +118,70 @@ export class FormRepository implements FormQueryService {
       },
       where: {
         id: formId,
+      },
+    });
+  }
+
+  async findByCode(formCode: string): Promise<any | null> {
+    return this.prisma.form.findFirst({
+      select: {
+        id: true,
+        code: true,
+        createdAt: true,
+        description: true,
+        isPublic: true,
+        isActive: true,
+        assignments: {
+          select: {
+            user: {
+              select: {
+                id: true,
+                email: true,
+                fullName: true,
+                role: true,
+              },
+            },
+          },
+        },
+        versions: {
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
+        submissions: {
+          select: {
+            id: true,
+            submittedAt: true,
+            userSubmited: {
+              select: {
+                id: true,
+                email: true,
+                fullName: true,
+                role: true,
+              },
+            },
+            payload: true,
+            metadata: true,
+            formVersion: {
+              select: {
+                id: true,
+                version: true,
+              },
+            },
+          },
+          orderBy: {
+            submittedAt: 'desc',
+          },
+        },
+        name: true,
+        _count: {
+          select: {
+            submissions: true,
+          },
+        },
+      },
+      where: {
+        code: formCode,
       },
     });
   }
@@ -115,7 +215,7 @@ export class FormRepository implements FormQueryService {
       select: {
         schema: true,
         isActive: true,
-        submissions: true,
+        // submissions: true,
         _count: {
           select: {
             submissions: true,
@@ -124,6 +224,23 @@ export class FormRepository implements FormQueryService {
       },
       where: {
         id: schemaId,
+      },
+    });
+  }
+
+  async getUsersByFormId(formId: string): Promise<any | null> {
+    return this.prisma.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        fullName: true,
+      },
+      where: {
+        assignedForms: {
+          some: {
+            formId: formId,
+          },
+        },
       },
     });
   }

@@ -1,0 +1,48 @@
+<div class="w-full max-w-3xl mx-auto mb-2">
+  <nav aria-label="Progress">
+    <ol class="flex items-center font-montserrat" role="list">
+      
+      <li 
+        *ngFor="let step of steps; let i = index; let isLast = last" 
+        class="relative"
+        [class.flex-1]="!isLast"
+      >
+        <div 
+          class="flex flex-col items-center cursor-pointer group"
+        >
+          <span
+            class="relative z-10 flex h-10 w-10 items-center justify-center rounded-full font-bold transition-all duration-300"
+            [ngClass]="{
+              'bg-primary-red-600 text-white shadow-lg shadow-primary-red-600/30': i <= currentStep,
+              'border-2 border-custom-bg-300 bg-white text-zinc-400 group-hover:border-primary-red-400': i > currentStep
+            }"
+          >
+            <span *ngIf="i < currentStep" class="material-symbols-outlined text-sm">check</span>
+            <span *ngIf="i >= currentStep">{{ i + 1 }}</span>
+          </span>
+
+          <span 
+            class="mt-2 text-xs font-bold uppercase tracking-wider transition-colors duration-300"
+            [ngClass]="{
+              'text-primary-red-600': i <= currentStep,
+              'text-zinc-400 font-medium': i > currentStep
+            }"
+          >
+            {{ step }}
+          </span>
+        </div>
+
+        <div
+          *ngIf="!isLast"
+          aria-hidden="true"
+          class="absolute inset-0 top-5 left-1/2 -ml-px w-full h-0.5 -z-0 transition-colors duration-500"
+          [ngClass]="{
+            'bg-primary-red-600': i < currentStep,
+            'bg-custom-bg-300': i >= currentStep
+          }"
+        ></div>
+      </li>
+
+    </ol>
+  </nav>
+</div>

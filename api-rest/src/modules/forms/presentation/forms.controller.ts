@@ -2,11 +2,11 @@
 import {
   Body,
   Controller,
-  Delete,
+  // Delete,
   Get,
   Param,
-  Post,
-  Put,
+  // Post,
+  // Put,
 } from '@nestjs/common';
 import { GetFormsService } from '../application/use-case/get-form.service';
 
@@ -20,8 +20,18 @@ export class FormsController {
   }
 
   @Get('byId/:formId')
-  async getFormsById(@Param('formId') tenantId: string): Promise<any> {
-    return this.getFormsService.getFormById(tenantId);
+  async getFormsById(@Param('formId') formId: string): Promise<any> {
+    return this.getFormsService.getFormById(formId);
+  }
+
+  @Get('byCode/:formCode')
+  async getFormsByCode(@Param('formCode') formCode: string): Promise<any> {
+    return this.getFormsService.getFormByCode(formCode);
+  }
+
+  @Get('getUsersbyFormId/:formId')
+  async getUsersByFormId(@Param('formId') formId: string): Promise<any> {
+    return this.getFormsService.getUsersByFormId(formId);
   }
 
   @Get('getSchema/:schemaId')
