@@ -68,15 +68,15 @@ export class FormRepository implements FormQueryService {
         isPublic: true,
         isActive: true,
         assignments: {
-            select: {
-              user: {
-                select: {
-                  id: true,
-                  email: true,
-                  fullName: true,
-                  role: true,
-                }
+          select: {
+            user: {
+              select: {
+                id: true,
+                email: true,
+                fullName: true,
+                role: true,
               },
+            },
           },
         },
         versions: {
@@ -118,6 +118,70 @@ export class FormRepository implements FormQueryService {
       },
       where: {
         id: formId,
+      },
+    });
+  }
+
+  async findByCode(formCode: string): Promise<any | null> {
+    return this.prisma.form.findFirst({
+      select: {
+        id: true,
+        code: true,
+        createdAt: true,
+        description: true,
+        isPublic: true,
+        isActive: true,
+        assignments: {
+          select: {
+            user: {
+              select: {
+                id: true,
+                email: true,
+                fullName: true,
+                role: true,
+              },
+            },
+          },
+        },
+        versions: {
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
+        submissions: {
+          select: {
+            id: true,
+            submittedAt: true,
+            userSubmited: {
+              select: {
+                id: true,
+                email: true,
+                fullName: true,
+                role: true,
+              },
+            },
+            payload: true,
+            metadata: true,
+            formVersion: {
+              select: {
+                id: true,
+                version: true,
+              },
+            },
+          },
+          orderBy: {
+            submittedAt: 'desc',
+          },
+        },
+        name: true,
+        _count: {
+          select: {
+            submissions: true,
+          },
+        },
+      },
+      where: {
+        code: formCode,
       },
     });
   }

@@ -16,7 +16,7 @@ export class FormFacade {
   private getFormsByTenantUC = inject(GetFormsUseCase);
   private getFormSubmissionUC = inject(GetFormSubmissionUseCase);
   private getFormSchemaUC = inject(GetFormSchemaUseCase);
-  private getFormByCodeUC = inject(GetFormByCodeUseCase);
+  // private getFormByCodeUC = inject(GetFormByCodeUseCase);
 
   items = signal<GetFormDTO[]>([]);
   current = signal<GetFormDTO | null>(null);
@@ -64,15 +64,15 @@ export class FormFacade {
     }
   }
   
-  async GetFormByCode(code: string) {
-    this.loading.set(true);
-    try {
-      const form = await firstValueFrom(this.getFormByCodeUC.execute(code));
-      this.current.set(form);
-    } finally {
-      this.loading.set(false);
-    }
-  }
+  // async GetFormByCode(code: string) {
+  //   this.loading.set(true);
+  //   try {
+  //     const form = await firstValueFrom(this.getFormByCodeUC.execute(code));
+  //     this.current.set(form);
+  //   } finally {
+  //     this.loading.set(false);
+  //   }
+  // }
 
 
   // async create(dto: XxxCreateDto) {

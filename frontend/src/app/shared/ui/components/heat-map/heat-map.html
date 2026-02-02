@@ -1,0 +1,117 @@
+<!-- Page Heading & Campaign Switcher -->
+<div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-8">
+  <div class="flex flex-col gap-2">
+    <h1 class="text-black text-4xl font-black leading-tight tracking-[-0.033em]">Mapa de calor</h1>
+    <p class="text-gray-700 text-lg font-normal leading-normal">
+      Distribución geográfica en tiempo real de métricas de campaña
+    </p>
+  </div>
+  <div class="flex flex-col gap-3 min-w-[320px]">
+    <p class="text-xs font-bold uppercase tracking-wider text-primary-green-700 px-1">
+      Campaña activa
+    </p>
+    <div
+      class="flex h-12 w-full items-center justify-center rounded-xl bg-white border border-[#cee9e1] p-1.5 shadow-sm"
+    >
+      <label
+        (click)="cambiar('campanaD')"
+        class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-4 transition-all has-[:checked]:bg-primary-red-600 has-[:checked]:text-white text-primary-green-700 text-sm font-bold"
+      >
+        <span class="truncate">Campaña D</span>
+        <input checked="" class="hidden" name="campaign-toggle" type="radio" value="Campaña D" />
+      </label>
+      <label
+        (click)="cambiar('campanaF')"
+        class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-4 transition-all has-[:checked]:bg-primary-red-600 has-[:checked]:text-white text-primary-green-700 text-sm font-bold"
+      >
+        <span class="truncate">Campaña F</span>
+        <input class="hidden" name="campaign-toggle" type="radio" value="Campaña F" />
+      </label>
+    </div>
+  </div>
+</div>
+<!-- Dashboard Content Grid -->
+<div class="grid grid-cols-12 gap-8">
+  <!-- Left Side: KPI Column -->
+  <div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <app-card>
+        <div class="flex justify-between items-start">
+          <p class="text-primary-red-500 text-lg font-semibold uppercase">Voluntarios</p>
+          <span class="material-symbols-outlined text-primary-red-500">groups</span>
+        </div>
+        <p class="text-black tracking-tight text-3xl font-black">
+          {{ datosActivos?.cantidadVoluntarios }}
+        </p>
+      </app-card>
+      <app-card>
+        <div class="flex justify-between items-start">
+          <p class="text-primary-green-700 text-lg font-semibold uppercase">Inscritos</p>
+          <span class="material-symbols-outlined text-primary-green-700">how_to_reg</span>
+        </div>
+        <p class="text-black tracking-tight text-3xl font-black">
+          {{ datosActivos?.testigosInscritos }}
+        </p>
+      </app-card>
+      <app-card>
+        <div class="flex justify-between items-start">
+          <p class="text-primary-green-700 text-lg font-semibold uppercase">Requeridos</p>
+          <span class="material-symbols-outlined text-primary-green-700">assignment_late</span>
+        </div>
+        <p class="text-black tracking-tight text-3xl font-black">
+          {{ datosActivos?.testigosRequeridos }}
+        </p>
+      </app-card>
+      <app-card>
+        <div class="flex justify-between items-start">
+          <p class="text-primary-red-500 text-lg font-semibold uppercase">Medio de confirmación</p>
+          <span class="material-symbols-outlined text-primary-red-500">analytics</span>
+        </div>
+        <p class="tracking-tight text-sm font-black text-primary-green-700">
+          Llamada <span class="text-xl text-black">{{ datosActivos?.medioNumero }}</span>
+        </p>
+      </app-card>
+    </div>
+    <!-- Progress Section -->
+    <app-card>
+      <div class="flex flex-col gap-4">
+        <div class="flex justify-between items-end">
+          <div>
+            <h3 class="text-black text-lg font-bold">Testigos Confirmados</h3>
+            <p class="text-primary-green-600 text-sm">Avance en la recolección de testigos</p>
+          </div>
+          <p class="text-primary text-3xl font-black">{{ datosActivos?.testigosConfirmados }}</p>
+        </div>
+        <div class="rounded-full bg-[#cee9e1] h-4 overflow-hidden">
+          <div
+            class="h-full rounded-full bg-primary-red-500"
+            [style.width]="datosActivos?.testigosConfirmados"
+          ></div>
+        </div>
+        <div class="flex justify-between text-xs font-bold text-primary-green-600">
+          <span>Actual: {{ datosActivos?.testigosInscritos }}</span>
+          <span>Meta: {{ datosActivos?.testigosRequeridos }}</span>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- Right Side: Heat Map Placeholder -->
+  <app-card class="col-span-12 lg:col-span-8 flex flex-col">
+    <!-- Map Header -->
+    <div class="border-b border-[#e7f4f0] flex justify-between items-center pb-6">
+      <div>
+        <h3 class="text-black text-xl font-bold">Distribución Geográfica</h3>
+        <p class="text-primary-green-600 text-sm">Mapa de calor de densidad de voluntarios</p>
+      </div>
+    </div>
+    <!-- Visual Placeholder for Map -->
+    <div class="flex-1 relative bg-[#f0f9f6] overflow-hidden">
+      <img
+        [src]="'assets/images/campanas/' + campanaActiva + '/mapa.png'"
+        alt=""
+        style="width: 100%; height: auto"
+      />
+    </div>
+  </app-card>
+</div>

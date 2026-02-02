@@ -1,9 +1,13 @@
-<div class="max-w-3xl mx-auto p-6">
+<div class="mx-auto p-6">
   <div class="mb-6 flex items-center justify-between">
-    <button (click)="goBack()" class="text-gray-500 hover:text-gray-700 flex items-center gap-2">
+    <button
+      (click)="goBack('back')"
+      class="text-gray-500 hover:text-gray-700 flex items-center gap-2 cursor-pointer"
+    >
       <i class="fa-solid fa-arrow-left"></i> Volver
     </button>
-    <h1 class="text-xl font-bold text-gray-800">Completar Formulario</h1>
+    <div #pageTop></div>
+    <!-- <h1 class="text-xl font-bold text-gray-800">{{ currentForm()?.name }}</h1> -->
   </div>
 
   @if (loading()) {
@@ -31,7 +35,11 @@
       </div>
       <h2 class="text-2xl font-bold mb-2">¡Envío Exitoso!</h2>
       <p class="text-gray-600 mb-6">La información se ha registrado correctamente en el sistema.</p>
-      <app-button label="Volver a formularios" (click)="goBack()"></app-button>
+      <div class="flex gap-4 items-center justify-center">
+        <app-button (click)="goBack('back')">Volver a formularios</app-button>
+        <app-button (click)="goBack('new')">Registrar otro formulario</app-button>
+      </div>
+      <!-- <app-button label="Volver a formularios" (click)="goBack()"></app-button> -->
     </div>
   }
 
@@ -45,13 +53,23 @@
           }
         </div>
 
-        <div class="p-6">
+        <div class="p-6 flex flex-col items-center justify-center gap-8">
+          <img
+            src="/assets/logos/logo-campein-red-x2.png"
+            alt="Campein"
+            srcset=""
+            class="w-48 h-auto"
+          />
           @if (versionActive) {
-            <!-- <app-dynamic-form
-              [schema]="versionActive"
+            <!-- *ngIf="formSchema() as schema" -->
+            <!-- [schema]="versionActive" -->
+            <app-dynamic-form
+              *ngIf="formSchema() as schema"
+              [schema]="schema"
               submitLabel="Enviar Registro"
-              (submit)="onSubmit($event)"
-            ></app-dynamic-form> -->
+              (submitted)="onSubmit($event)"
+              (fieldLabelAction)="onFieldLabelAction($event)"
+            ></app-dynamic-form>
           } @else {
             <p class="text-center text-gray-400 py-8">
               El formulario no tiene un esquema definido.
@@ -73,7 +91,7 @@
           No tienes permisos para ver o completar este formulario. Contacta a un administrador si
           crees que esto es un error.
         </p>
-        <app-button variant="primary" label="Regresar" (click)="goBack()"></app-button>
+        <app-button variant="primary" label="Regresar" (click)="goBack('back')"></app-button>
       </div>
     }
   }

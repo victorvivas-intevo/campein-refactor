@@ -1,3 +1,5 @@
+import { FormSchema } from "@/shared/ui/form-controls/form-control.types";
+
 export interface RequestGetFormDTO {
   id?: string;
   code?: string;
@@ -21,7 +23,7 @@ export interface GetFormVersionDTO {
   id: string;
   version: number;
   isActive: boolean;
-  schema?: JSON;
+  schema?: FormSchema;
   submissions?: GetFormSubmissionDTO[];
   _count?: {submissions: number};
   createdAt?: Date;
