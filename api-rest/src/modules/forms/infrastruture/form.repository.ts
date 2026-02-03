@@ -234,6 +234,7 @@ export class FormRepository implements FormQueryService {
         id: true,
         email: true,
         fullName: true,
+        role: true,
       },
       where: {
         assignedForms: {

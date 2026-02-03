@@ -12,6 +12,8 @@ export interface PublicFormSchemaResponse {
   name: string;     // nombre legible
   version: number;  // versión activa
   schema: FormSchema;
+  isPublic: boolean;
+  isActive: boolean;
 }
 
 export interface PublicFormSubmissionResponse {

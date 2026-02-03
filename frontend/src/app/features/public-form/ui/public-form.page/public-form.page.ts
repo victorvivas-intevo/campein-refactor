@@ -58,26 +58,32 @@ export class PublicFormPage {
       .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
         next: (response) => {
-          const data: FormSchema = response.schema
-          const check: FormFieldConfig = {
-            id: "dataPolicyConsent",
-            type: "checkbox",
-            label: {
-              text: "Autorizo el tratamiento de mis datos personales de acuerdo con la",
-              actions: [
-                {
-                  type: "openModal",
-                  modalId: "data-policy",
-                  text: "Política de tratamiento de datos"
-                }
-              ]
-            },
-            required: true,
-            column: 1,
-            order: 999
+          if(response){
+            if(!response.isActive || !response.isPublic){
+              this.error.set('Este formulario no existe o no está disponible.');
+              return;
+            }
+            const data: FormSchema = response.schema
+            const check: FormFieldConfig = {
+              id: "dataPolicyConsent",
+              type: "checkbox",
+              label: {
+                text: "Autorizo el tratamiento de mis datos personales de acuerdo con la",
+                actions: [
+                  {
+                    type: "openModal",
+                    modalId: "data-policy",
+                    text: "Política de tratamiento de datos"
+                  }
+                ]
+              },
+              required: true,
+              column: 1,
+              order: 999
+            }
+            data.fields.push(check)
+            this.formSchema.set(data);
           }
-          data.fields.push(check)
-          this.formSchema.set(data);
         },
         error: (err) => {
           if (err.status === 404) {

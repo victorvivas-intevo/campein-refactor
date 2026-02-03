@@ -1,0 +1,42 @@
+# Etapa 1: Construcción
+FROM node:22-alpine AS builder
+
+WORKDIR /app
+
+# Copiar archivos de definición de dependencias
+COPY package*.json ./
+COPY prisma ./prisma/
+
+
+# Instalar dependencias
+RUN npm install
+
+# Copiar el resto del código y construir
+COPY . .
+# RUN npx prisma generate
+# Ejecutar npx indicando la ruta exacta si es necesario
+
+RUN DATABASE_URL="postgresql://campein-local:CampeinLocal@192.168.23.1:5432/campein_refactor?schema=public" npx prisma generate --schema ./prisma/schema.prisma
+# RUN npx prisma generate --schema ./prisma/schema.prisma
+RUN npm run build
+
+# Etapa 2: Producción
+FROM node:22-alpine AS runner
+
+WORKDIR /app
+
+# Variable de entorno para producción
+ENV NODE_ENV=production
+
+# Copiar archivos necesarios de la etapa de construcción
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/prisma ./prisma
+
+# Cloud Run inyecta automáticamente la variable PORT, 
+# tu código en main.ts ya la maneja: await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
+EXPOSE 3000
+
+# Comando para iniciar la aplicación
+CMD ["node", "dist/src/main.js"]

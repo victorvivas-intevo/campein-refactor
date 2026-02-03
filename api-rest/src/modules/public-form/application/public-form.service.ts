@@ -31,6 +31,8 @@ export class PublicFormService {
       name: formVersion.form.name,
       version: formVersion.version,
       schema: formVersion.schema,
+      isActive: formVersion.form.isActive,
+      isPublic: formVersion.form.isPublic,
     };
   }
 
