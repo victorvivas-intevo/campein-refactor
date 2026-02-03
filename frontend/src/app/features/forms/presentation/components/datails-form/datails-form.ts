@@ -26,7 +26,7 @@ export class DatailsForm {
   }
 
   enterToForm(): void {
-    const routeBase = this.form?.isPublic ? 'public-form' : 'app/forms/sendSubmission';
-    this.router.navigate([routeBase, this.form?.code]);
+    // const routeBase = this.form?.isPublic ? 'public-form' : 'app/forms/sendSubmission';
+    this.router.navigate(['app/forms/sendSubmission', this.form?.code]);
   }
 }
