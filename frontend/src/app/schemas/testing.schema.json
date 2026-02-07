@@ -1,0 +1,55 @@
+{
+  "fields": [
+    {
+      "id": "documentType",
+      "type": "select",
+      "label": "Tipo de documento",
+      "order": 1,
+      "column": 1,
+      "options": [
+        {
+          "label": "Cédula de ciudadanía",
+          "value": "CC"
+        },
+        {
+          "label": "Cédula de extranjería",
+          "value": "CE"
+        },
+        {
+          "label": "Otro",
+          "value": "OTRO"
+        }
+      ],
+      "required": true,
+      "placeholder": "Seleccione tipo de documento"
+    },
+    {
+      "id": "documentNumber",
+      "type": "text",
+      "label": "Número de documento",
+      "order": 2,
+      "column": 2,
+      "required": true,
+      "inputMode": "numeric",
+      "inputType": "text",
+      "validators": [
+        {
+          "type": "pattern",
+          "value": "^[0-9]+$",
+          "message": "Solo se permiten dígitos"
+        }
+      ],
+      "placeholder": "Ingrese número de documento",
+      "restriction": "digits"
+    },
+    {
+      "id": "comments",
+      "type": "text",
+      "label": "Comentarios",
+      "order": 16,
+      "column": 1,
+      "required": false,
+      "placeholder": "Ingrese su comentario"
+    }
+  ]
+}

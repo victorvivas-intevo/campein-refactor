@@ -1,4 +1,4 @@
-import { Component, ElementRef, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { Card } from '@/shared/ui/components/card/card';
 import { DynamicForm } from '@/shared/ui/form-controls/dynamic-form/dynamic-form';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { PublicFormApiService } from '../../data-access/public-form.service';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs';
 import { Modal } from '@/shared/ui/components/modal/modal';
+import { ToastService } from '@/shared/services/toast/toast.service';
 // import defaultFormSchema from '@/schemas/contact-form.schema.json';
 
 @Component({
@@ -36,6 +37,9 @@ export class PublicFormPage {
 
   // Controlador de modal
   dataPolicyModalOpen = signal(false);
+
+  // Toast: notificación
+  private toast = inject(ToastService);
 
   private formCode!: string;
 
@@ -112,11 +116,11 @@ export class PublicFormPage {
       .pipe(finalize(() => this.submitting.set(false)))
       .subscribe({
         next: (res) => {
-          console.log('Envío guardado en backend:', res);
+          // console.log('Envío guardado en backend:', res);
           this.submitSuccess.set(true);
-
           this.dynamicForm?.resetForm();
-           this.scrollToTop();
+          this.toast.success('Formulario enviado con éxito.');
+          this.scrollToTop();
         },
         error: (err) => {
           console.error('Error enviando formulario', err);
