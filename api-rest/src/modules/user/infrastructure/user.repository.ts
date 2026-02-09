@@ -9,13 +9,14 @@ import { PrismaService } from '../../../prisma/prisma.service';
 import type { Prisma } from '@prisma/client';
 import {
   PrismaClientKnownRequestError,
-  PrismaClientUnknownRequestError,
+  // PrismaClientUnknownRequestError,
 } from '@prisma/client/runtime/client';
 
 import * as bcrypt from 'bcryptjs';
 
 import {
   CreateUserDto,
+  FindUsersOptions,
   UpdateUserDto,
   UserResponseDto,
 } from '../application/dtos/user.dto';
@@ -49,6 +50,7 @@ export class UserRepository implements UserQueryService, UserManagementService {
         email: true,
         fullName: true,
         role: true,
+        isActive: true,
         createdAt: false,
         password: false,
       },
@@ -62,34 +64,86 @@ export class UserRepository implements UserQueryService, UserManagementService {
   }
 
   async findUserById(userId: string): Promise<UserResponseDto | null> {
-    return this.prisma.user.findUnique({
-      select: {
-        id: true,
-        tenantId: true,
-        email: true,
-        fullName: true,
-        role: true,
-        createdAt: false,
-        password: false,
-        tenant: {
-          select: {
-            id: true,
-            name: true,
-            createdAt: true,
+    try {
+      const user = await this.prisma.user.findUnique({
+        select: {
+          id: true,
+          tenantId: true,
+          email: true,
+          fullName: true,
+          role: true,
+          createdAt: false,
+          password: false,
+          isActive: true,
+          tenant: {
+            select: {
+              id: true,
+              name: true,
+              createdAt: true,
+            },
           },
         },
-      },
-      where: {
-        id: userId,
-      },
-    });
+        where: {
+          id: userId,
+        },
+      });
+
+      return user;
+    } catch (e) {
+      console.error(e);
+      throw new NotFoundException('El usuario no existe.');
+    }
+  }
+
+  async findUserSubordinates(
+    userId: string,
+  ): Promise<UserResponseDto[] | null> {
+    try {
+      const users = await this.prisma.user.findMany({
+        select: {
+          id: true,
+          tenantId: true,
+          email: true,
+          fullName: true,
+          role: true,
+          createdAt: false,
+          password: false,
+          isActive: true,
+          tenant: {
+            select: {
+              id: true,
+              name: true,
+              createdAt: true,
+            },
+          },
+        },
+        where: {
+          leaderId: userId,
+        },
+      });
+
+      return users;
+    } catch (e) {
+      console.error(e);
+      throw new NotFoundException(
+        'Error al buscar los subordinados del usuario.',
+      );
+    }
   }
 
   /**
    * Busca todos los usuarios .
    */
-  async findAllUsers(): Promise<UserResponseDto[] | null> {
+  async findAllUsers(
+    options: FindUsersOptions,
+  ): Promise<UserResponseDto[] | null> {
+    const whereCondition: Prisma.UserWhereInput = {
+      tenantId: options.tenantId,
+      leaderId: options.leaderId,
+    };
+
     return this.prisma.user.findMany({
+      where: whereCondition,
       select: {
         id: true,
         tenantId: true,
@@ -97,6 +151,7 @@ export class UserRepository implements UserQueryService, UserManagementService {
         fullName: true,
         role: true,
         createdAt: true,
+        isActive: true,
         password: false,
         tenant: true,
       },
@@ -119,6 +174,7 @@ export class UserRepository implements UserQueryService, UserManagementService {
           email: userDto.email.trim().toLowerCase(),
           fullName: userDto.fullName,
           role: userDto.role,
+          leaderId: userDto.leaderId,
           password: hashedPassword,
         },
         select: this.userSelect,
