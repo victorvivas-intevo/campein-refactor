@@ -17,7 +17,7 @@ export class PublicFormRepository {
       where: {
         isActive: true,
         form: {
-          code
+          code,
         },
       },
       include: {

@@ -21,7 +21,7 @@ export class LocalSessionStore implements SessionStoreInterface {
         email: session.user.email,
         tenantId: session.user.tenantId,
         name: session.user.name,
-        role: session.user.role ?? 'USER',
+        role: session.user.role ?? 'LIDER_BETA',
       },
       tokens: {
         accessToken: session.tokens.accessToken,
@@ -43,7 +43,7 @@ export class LocalSessionStore implements SessionStoreInterface {
 
     try {
       const data = JSON.parse(raw) as PersistedSession;
-      const user = new User(data.user.id, data.user.tenantId, data.user.email, data.user.role ?? 'USER', data.user.name ?? '');
+      const user = new User(data.user.id, data.user.tenantId, data.user.email, data.user.role ?? 'LIDER_BETA', data.user.name ?? '');
       const tokens = new AuthTokens(data.tokens.accessToken, data.tokens.refreshToken);
       const expiresAt = data.accessTokenExpiresAt ? new Date(data.accessTokenExpiresAt) : undefined;
       return new Session(user, tokens, expiresAt);

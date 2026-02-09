@@ -97,7 +97,7 @@ export class SubmissionFormPage implements OnInit {
     if (!user || !form) return false;
 
     // 2. Si es ADMIN, pase directo
-    if (user.role === 'admin') return true;
+    if (user.role === 'ADMIN_CAMPANA' || user.role === 'ADMIN_SISTEMA') return true;
 
     // 3. Validación de privilegios (Asumiendo que el form tiene una lista de usuarios asignados)
     // Ajusta 'assignedUsers' según como se llame la propiedad en tu DTO de formulario

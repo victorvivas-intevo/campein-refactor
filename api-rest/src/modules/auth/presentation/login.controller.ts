@@ -3,7 +3,7 @@ import type { Request, Response } from 'express';
 import type {
   LoginDto,
   LoginResponseDto,
-  RefreshTokenDto,
+  // RefreshTokenDto,
 } from '../application/dtos/login.dto';
 import { LoginService } from '../application/use-case/login.service';
 import { LogoutService } from '../application/use-case/logout.service';
