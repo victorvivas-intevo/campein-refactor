@@ -4,4 +4,6 @@ export class PublicFormSchemaResponseDto {
   name: string;
   version: number;
   schema: unknown;
+  isActive?: boolean;
+  isPublic?: boolean;
 }

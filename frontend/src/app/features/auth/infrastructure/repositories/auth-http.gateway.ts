@@ -32,7 +32,7 @@ export class AuthHttpGateway implements AuthGatewayInterface {
     return this.api.me(accessToken).pipe(
       map((res) => {
         const expiresAt = this.decoder.getExpiresAt(accessToken) ?? undefined;
-        const user = new User(res.user.id, res.user.email, res.user.name!, res.user.role ?? 'User');
+        const user = new User(res.user.id, res.user.email, res.user.name!, res.user.role ?? 'LIDER_BETA');
         const tokens = new AuthTokens(accessToken);
         return new Session(user, tokens, expiresAt);
       })
@@ -50,7 +50,7 @@ export class AuthHttpGateway implements AuthGatewayInterface {
     const tenantId = (claims?.tenantId as string) ?? (claims?.['tenantId'] as string) ?? '';
     const email = (claims?.email as string) ?? (claims?.['email'] as string) ?? '';
     const name = (claims?.fullName as string) ?? (claims?.['fullName'] as string) ?? undefined;
-    const role = (claims?.role as string) ?? (claims?.['rol'] as string) ?? 'USER';
+    const role = (claims?.role as string) ?? (claims?.['rol'] as string) ?? 'LIDER_BETA';
 
     // Si tu token no trae id/email, no hay forma confiable de construir User.
     // En ese caso, necesitas un endpoint /me o que el backend incluya esos claims.

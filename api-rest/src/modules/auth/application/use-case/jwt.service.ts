@@ -26,6 +26,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const sessionId = payload.sessionId as string | undefined;
     const userId = payload.id as string | undefined;
 
+    console.log(
+      `Validando token para el usuario ${payload.email} con sessionId ${sessionId}`,
+    );
+
     if (!sessionId || !userId)
       throw new UnauthorizedException('Token inválido.');
 

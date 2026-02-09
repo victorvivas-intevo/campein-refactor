@@ -1,8 +1,8 @@
 import {
-  BadRequestException,
+  // BadRequestException,
   Inject,
   Injectable,
-  NotFoundException,
+  // NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
@@ -55,6 +55,10 @@ export class LoginService {
 
     if (!passwordMatch) {
       throw new UnauthorizedException('Credenciales inválidas.');
+    }
+
+    if (!user.isActive) {
+      throw new UnauthorizedException('Usuario inactivo.');
     }
 
     const refresh = generateRefreshToken();

@@ -5,6 +5,7 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 /**
@@ -55,6 +56,7 @@ model User {
   password  String // hash bcrypt
   fullName  String?
   role      String   @default("user")
+  isActive  Boolean  @default(false) @map("is_active")
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
 
   tenant Tenant @relation(fields: [tenantId], references: [id])
@@ -64,6 +66,13 @@ model User {
   assignedForms FormAssignmentUser[]
 
   formSubmissions FormSubmission[] @relation("UserToSubmissions")
+
+  // CAMPO NUEVO: Jerarquía
+  leaderId  String?  @map("leader_id") @db.Uuid
+  
+  // Relaciones de jerarquía de usuario
+  leader       User?  @relation("UserHierarchy", fields: [leaderId], references: [id])
+  subordinates User[] @relation("UserHierarchy")
 
   // Para que un email pueda repetirse en otro tenant,
   // pero sea único dentro del mismo tenant:

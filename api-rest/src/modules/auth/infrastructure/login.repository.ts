@@ -17,6 +17,7 @@ export class LoginRepository implements LoginRepositoryInterface {
     fullName: true,
     role: true,
     password: true,
+    isActive: true,
     tenant: {
       select: {
         id: true,

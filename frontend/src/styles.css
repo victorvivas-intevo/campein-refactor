@@ -68,8 +68,6 @@
   --color-purple-heart-900: #4f1b97;
   --color-purple-heart-950: #300e67;
 
-
-
   /* Variaciones color gris placeholders inputs */
   --color-placeholder-input-50: #f5f6f9;
   --color-placeholder-input-100: #e8e9f1;
@@ -85,7 +83,7 @@
 
   --color-border-input: #e2e2e2;
 
-  --color-head-table-bg: #F0F0F7;
+  --color-head-table-bg: #f0f0f7;
 
   /* Bordes redondeados */
   --radius-card-0: 20px;
@@ -98,6 +96,34 @@
 
   /* Custom fonts */
   --font-montserrat: 'Montserrat', sans-serif;
+
+
+  --animate-toast-in: toast-in 0.3s ease-in-out forwards;
+  --animate-toast-out: toast-out 0.25s ease-in-out forwards;
+  /* --animation-toast-out: toast-out 0.25s ease-in-out forwards; */
+
+  /* Keyframes */
+  @keyframes toast-in {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes toast-out {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
 }
 
 @layer base {
@@ -264,7 +290,6 @@
          outline-none ring-1 ring-gray-400
          cursor-pointer;
   } */
-
 
   /* end fields forms private layout and auth layout */
 }
