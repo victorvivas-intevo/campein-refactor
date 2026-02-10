@@ -25,8 +25,10 @@ export class FormsController {
   }
 
   @Get('byId/:formId')
-  async getFormsById(@Param('formId') formId: string): Promise<any> {
-    return this.getFormsService.getFormById(formId);
+  async getFormsById(
+    @CurrentUser() currentUser: UserPayload,
+    @Param('formId') formId: string): Promise<any> {
+    return this.getFormsService.getFormById(currentUser, formId);
   }
 
   @Get('byCode/:formCode')
@@ -49,5 +51,13 @@ export class FormsController {
     @Param('schemaId') schemaId: string,
   ): Promise<any> {
     return this.getFormsService.getSubmissionBySchemaId(schemaId);
+  }
+
+  @Get('getFormsAssigmentUser/:idUser')
+  async getFormsAssigmentUser(
+    @CurrentUser() currentUser: UserPayload,
+    @Param('idUser') idUser: string,
+  ): Promise<any> {
+    return this.getFormsService.getFormsAssigmentUser(currentUser, idUser);
   }
 }
