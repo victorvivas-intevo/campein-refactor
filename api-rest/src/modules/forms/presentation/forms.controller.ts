@@ -9,14 +9,19 @@ import {
   // Put,
 } from '@nestjs/common';
 import { GetFormsService } from '../application/use-case/get-form.service';
+import type { UserPayload } from 'src/modules/auth/domain/interfaces/user-payload.interface';
+import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 
 @Controller('forms')
 export class FormsController {
   constructor(private readonly getFormsService: GetFormsService) {}
 
   @Get('byTenant/:tenantId')
-  async getFormsByTenant(@Param('tenantId') tenantId: string): Promise<any[]> {
-    return this.getFormsService.getFormsByTenant(tenantId);
+  async getFormsByTenant(
+    @CurrentUser() currentUser: UserPayload,
+    @Param('tenantId') tenantId: string,
+  ): Promise<any[]> {
+    return this.getFormsService.getFormsByTenant(currentUser, tenantId);
   }
 
   @Get('byId/:formId')

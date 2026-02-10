@@ -10,4 +10,5 @@ export interface FormQueryService {
     schemaId: string,
   ): Promise<PublicFormSchemaResponseDto | null>;
   getUsersByFormId(formId: string): Promise<any[] | null>;
+  getMyForms(): Promise<PublicFormSchemaResponseDto[] | null>;
 }

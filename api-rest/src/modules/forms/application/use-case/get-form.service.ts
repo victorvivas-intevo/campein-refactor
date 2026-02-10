@@ -3,6 +3,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { PublicFormSchemaResponseDto } from '../dtos/forms.dto';
 import type { FormQueryService } from '../../infrastruture/interfaces/form-query.repository';
 import { FORM_QUERY_REPOSITORY } from '../tokens';
+import { UserPayload } from 'src/modules/auth/domain/interfaces/user-payload.interface';
 
 @Injectable()
 export class GetFormsService {
@@ -11,9 +12,19 @@ export class GetFormsService {
     private readonly formQueryRepository: FormQueryService,
   ) {}
 
+  // async getMyForms(
+  //   session: UserPayload,
+  // ): Promise<PublicFormSchemaResponseDto[]> {
+  //   const tenantId = session.tenantId;
+  //   const response = await this.formQueryRepository.findByTenant(tenantId);
+
+  // }
+
   async getFormsByTenant(
+    session: UserPayload,
     tenantId: string,
   ): Promise<PublicFormSchemaResponseDto[]> {
+    if (session.role !== 'ADMIN_SISTEMA') tenantId = session.tenantId;
     const response = await this.formQueryRepository.findByTenant(tenantId);
 
     if (!response)
