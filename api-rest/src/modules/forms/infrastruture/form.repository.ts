@@ -17,7 +17,8 @@ import { PrismaService } from '../../../prisma/prisma.service';
 // import { PublicFormSchemaResponseDto } from '../application/dtos/forms.dto';
 // import { FormManagementService } from './interfaces/form-management.repository';
 import { FormQueryService } from './interfaces/form-query.repository';
-import { PublicFormSchemaResponseDto } from '../application/dtos/forms.dto';
+import { FormRequestDto, PublicFormSchemaResponseDto } from '../application/dtos/forms.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class FormRepository implements FormQueryService {
@@ -67,6 +68,7 @@ export class FormRepository implements FormQueryService {
         description: true,
         isPublic: true,
         isActive: true,
+        tenantId: true,
         assignments: {
           select: {
             user: {
@@ -244,5 +246,18 @@ export class FormRepository implements FormQueryService {
         },
       },
     });
+  }
+
+  async getFormsAssigmentUser(options: FormRequestDto): Promise<PublicFormSchemaResponseDto[] | null> {
+    const whereCondition: Prisma.FormWhereInput = {
+      assignments: {
+        some: {
+          userId: options.userId,
+        },
+      },
+    };
+    return this.prisma.form.findMany({
+      where: whereCondition
+    })
   }
 }

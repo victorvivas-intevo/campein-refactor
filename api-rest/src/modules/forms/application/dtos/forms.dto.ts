@@ -1,6 +1,7 @@
 export class PublicFormSchemaResponseDto {
   id?: string;
   formId?: string;
+  tenantId?: string;
   code?: string;
   name?: string;
   versionActive?: number;
@@ -15,6 +16,18 @@ export class PublicFormSchemaResponseDto {
     submissions: number;
   };
   assignments?: UserDTO[];
+}
+
+export interface FormRequestDto {
+  userId?: string;
+  code?: string;
+  name?: string;
+  schema?: unknown;
+  isPublic?: boolean;
+  isActive?: boolean;
+  tenantId?: string;
+  createdBy?: string;
+  version?: number;
 }
 
 export interface SubmissionDTO {

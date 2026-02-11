@@ -1,8 +1,15 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 // import { UserRepository } from '../../infrastructure/user.repository';
-import { PublicFormSchemaResponseDto } from '../dtos/forms.dto';
+import { FormRequestDto, PublicFormSchemaResponseDto } from '../dtos/forms.dto';
 import type { FormQueryService } from '../../infrastruture/interfaces/form-query.repository';
 import { FORM_QUERY_REPOSITORY } from '../tokens';
+import { UserPayload } from 'src/modules/auth/domain/interfaces/user-payload.interface';
 
 @Injectable()
 export class GetFormsService {
@@ -12,8 +19,13 @@ export class GetFormsService {
   ) {}
 
   async getFormsByTenant(
+    session: UserPayload,
     tenantId: string,
   ): Promise<PublicFormSchemaResponseDto[]> {
+    if (session.role !== 'ADMIN_SISTEMA' && session.role !== 'ADMIN_CAMPANA') {
+      throw new UnauthorizedException(`No tienes permisos para ver los formularios`);
+    }
+    if (session.role !== 'ADMIN_SISTEMA') tenantId = session.tenantId;
     const response = await this.formQueryRepository.findByTenant(tenantId);
 
     if (!response)
@@ -36,15 +48,34 @@ export class GetFormsService {
     return forms;
   }
 
-  async getFormById(formId: string): Promise<PublicFormSchemaResponseDto> {
+  async getFormById(session: UserPayload, formId: string): Promise<PublicFormSchemaResponseDto> {
+    if (!formId) throw new BadRequestException(`El id del formulario es requerido`);
+
     const form = (await this.formQueryRepository.findById(
       formId,
     )) as PublicFormSchemaResponseDto;
+
     if (!form) throw new NotFoundException(`Error al traer el formulario`);
+
+    if (form.tenantId !== session.tenantId && session.role !== 'ADMIN_SISTEMA') {
+      throw new UnauthorizedException(`No tienes permisos para ver el formulario`);
+    }
+
+    if (session.role === 'LIDER_BETA' || session.role === 'LIDER_ALFA') {
+      console.log('Verificando asignación de formulario para el usuario LIDER_BETA/ALFA');
+      const isAssigned = await this.formQueryRepository.getFormsAssigmentUser({
+        userId: session.id
+      });
+      if (!isAssigned || !isAssigned.some((f) => f.id === formId)) {
+        console.log('No es autorizado: el formulario no está asignado al usuario');
+        throw new UnauthorizedException(`No tienes permisos para ver el formulario`);
+      }
+    }
+    
     form.submissionCount = form._count?.submissions;
     delete form._count;
 
-    if (form.submissions) {
+    if (form.submissions && session.role !== 'LIDER_BETA') {
       const flatSubmissions = form.submissions.map((sub) => {
         // Extraemos el valor (puede ser string o number según tu schema)
         const versionValue = sub.formVersion?.version;
@@ -62,6 +93,12 @@ export class GetFormsService {
       });
       return { ...form, submissions: flatSubmissions };
     }
+    if (session.role === 'LIDER_BETA') {
+      // Eliminar campos que no se necesitan para el rol LIDER_BETA
+      delete form.submissions;
+      delete form.submissionCount;
+    }
+
     return form;
   }
 
@@ -127,5 +164,24 @@ export class GetFormsService {
       throw new NotFoundException(`Error al traer los usuarios del formulario`);
     }
     return users;
+  }
+
+  async getFormsAssigmentUser(
+    session: UserPayload,
+    idUser: string,
+  ): Promise<PublicFormSchemaResponseDto[]> {
+    const options: FormRequestDto = {};
+    if (session.role !== 'ADMIN_SISTEMA') {
+      options.tenantId = session.tenantId;
+    } else if (!idUser) {
+      throw new BadRequestException(`El id del usuario es requerido`);
+    } else {
+      options.userId = idUser;
+    }
+    const response =
+      await this.formQueryRepository.getFormsAssigmentUser(options);
+    if (!response)
+      throw new NotFoundException(`El usuario no tiene formularios asignados`);
+    return response;
   }
 }
