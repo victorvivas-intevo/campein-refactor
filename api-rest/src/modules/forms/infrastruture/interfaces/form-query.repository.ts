@@ -1,4 +1,4 @@
-import { PublicFormSchemaResponseDto } from '../../application/dtos/forms.dto';
+import { FormRequestDto, PublicFormSchemaResponseDto } from '../../application/dtos/forms.dto';
 
 export interface FormQueryService {
   // Super admin y admin campain (tenant)
@@ -10,4 +10,6 @@ export interface FormQueryService {
     schemaId: string,
   ): Promise<PublicFormSchemaResponseDto | null>;
   getUsersByFormId(formId: string): Promise<any[] | null>;
+  getFormsAssigmentUser(options: FormRequestDto): Promise<PublicFormSchemaResponseDto[] | null>;
 }
+
