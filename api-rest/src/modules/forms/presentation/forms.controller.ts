@@ -27,7 +27,8 @@ export class FormsController {
   @Get('byId/:formId')
   async getFormsById(
     @CurrentUser() currentUser: UserPayload,
-    @Param('formId') formId: string): Promise<any> {
+    @Param('formId') formId: string,
+  ): Promise<any> {
     return this.getFormsService.getFormById(currentUser, formId);
   }
 
