@@ -23,7 +23,9 @@ export class GetFormsService {
     tenantId: string,
   ): Promise<PublicFormSchemaResponseDto[]> {
     if (session.role !== 'ADMIN_SISTEMA' && session.role !== 'ADMIN_CAMPANA') {
-      throw new UnauthorizedException(`No tienes permisos para ver los formularios`);
+      throw new UnauthorizedException(
+        `No tienes permisos para ver los formularios`,
+      );
     }
     if (session.role !== 'ADMIN_SISTEMA') tenantId = session.tenantId;
     const response = await this.formQueryRepository.findByTenant(tenantId);
@@ -48,8 +50,12 @@ export class GetFormsService {
     return forms;
   }
 
-  async getFormById(session: UserPayload, formId: string): Promise<PublicFormSchemaResponseDto> {
-    if (!formId) throw new BadRequestException(`El id del formulario es requerido`);
+  async getFormById(
+    session: UserPayload,
+    formId: string,
+  ): Promise<PublicFormSchemaResponseDto> {
+    if (!formId)
+      throw new BadRequestException(`El id del formulario es requerido`);
 
     const form = (await this.formQueryRepository.findById(
       formId,
@@ -57,21 +63,32 @@ export class GetFormsService {
 
     if (!form) throw new NotFoundException(`Error al traer el formulario`);
 
-    if (form.tenantId !== session.tenantId && session.role !== 'ADMIN_SISTEMA') {
-      throw new UnauthorizedException(`No tienes permisos para ver el formulario`);
+    if (
+      form.tenantId !== session.tenantId &&
+      session.role !== 'ADMIN_SISTEMA'
+    ) {
+      throw new UnauthorizedException(
+        `No tienes permisos para ver el formulario`,
+      );
     }
 
     if (session.role === 'LIDER_BETA' || session.role === 'LIDER_ALFA') {
-      console.log('Verificando asignación de formulario para el usuario LIDER_BETA/ALFA');
+      console.log(
+        'Verificando asignación de formulario para el usuario LIDER_BETA/ALFA',
+      );
       const isAssigned = await this.formQueryRepository.getFormsAssigmentUser({
-        userId: session.id
+        userId: session.id,
       });
       if (!isAssigned || !isAssigned.some((f) => f.id === formId)) {
-        console.log('No es autorizado: el formulario no está asignado al usuario');
-        throw new UnauthorizedException(`No tienes permisos para ver el formulario`);
+        console.log(
+          'No es autorizado: el formulario no está asignado al usuario',
+        );
+        throw new UnauthorizedException(
+          `No tienes permisos para ver el formulario`,
+        );
       }
     }
-    
+
     form.submissionCount = form._count?.submissions;
     delete form._count;
 

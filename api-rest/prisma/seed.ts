@@ -1,9 +1,44 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { Pool } from 'pg';
+import * as dotenv from 'dotenv';
+import { join } from 'path';
+import * as fs from 'fs';
 
-const prisma = new PrismaClient();
+// 1. Cargar variables de entorno explícitamente desde la raíz del proyecto
+dotenv.config({ path: join(__dirname, '../.env') });
+
+// 2. Configurar la conexión igual que en tu PrismaService
+const connectionString =
+  process.env.DIRECT_DATABASE_URL || process.env.DATABASE_URL;
+
+if (!connectionString) {
+  throw new Error(
+    'No se encontró DIRECT_DATABASE_URL ni DATABASE_URL en el archivo .env',
+  );
+}
+
+const pool = new Pool({ connectionString });
+const adapter = new PrismaPg(pool);
+
+// 3. Inicializar Prisma pasando el adaptador
+const prisma = new PrismaClient({ adapter });
+
+function getJson(fileName: string): any {
+  const filePath = join(__dirname, 'form-schemas', fileName + '.schema.json');
+  try {
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    return JSON.parse(fileContent);
+  } catch (error) {
+    console.error(`Error al leer o parsear el archivo ${fileName}:`, error);
+    console.warn(`⚠️ Se usará objeto vacío.`);
+    return {};
+  }
+}
 
 async function main() {
-  // 1. Limpieza de datos (Opcional - Eliminar en orden de relaciones para evitar errores de FK)
+  console.log('--- Iniciando Seed ---');
+  // 1. Limpieza de datos
   await prisma.userSession.deleteMany({});
   await prisma.formAssignmentUser.deleteMany({});
   await prisma.formSubmission.deleteMany({});
@@ -11,6 +46,8 @@ async function main() {
   await prisma.user.deleteMany({});
   await prisma.form.deleteMany({});
   await prisma.tenant.deleteMany({});
+
+  console.log('🗑️  Base de datos limpia.');
 
   console.log('Iniciando el sembrado de datos (Seeding)...');
 
@@ -34,6 +71,7 @@ async function main() {
       },
     ],
   });
+  console.log('✅ Tenants creados.');
 
   // 3. Usuarios (Users) - Se crean individualmente para manejar la jerarquía de líderes
   const usersData = [
@@ -196,6 +234,7 @@ async function main() {
   for (const u of usersData) {
     await prisma.user.create({ data: u });
   }
+  console.log('✅ user creados.');
 
   // 4. Formularios (Forms)
   await prisma.form.createMany({
@@ -206,6 +245,17 @@ async function main() {
         code: 'voluntario-publico',
         name: 'Voluntarios',
         description: 'Registro publico de voluntariado',
+        createdAt: new Date('2025-12-16T08:19:35.323Z'),
+        isActive: true,
+        isPublic: true,
+      },
+      {
+        id: '84b9071e-171c-4d64-9777-46dfc105ae8e',
+        tenantId: '29bc37c6-0932-4f1c-9b29-d46f79edc767',
+        code: 'paloma-valencia',
+        name: 'Prospectos Paloma Valencia',
+        description: null,
+        createdAt: new Date('2026-01-15T17:13:27.832Z'),
         isActive: true,
         isPublic: true,
       },
@@ -215,11 +265,24 @@ async function main() {
         code: 'formulario-contacto',
         name: 'Formulario de contacto',
         description: 'Formulario para recolección de contactos',
+        createdAt: new Date('2026-01-12T18:09:36.737Z'),
         isActive: true,
+        isPublic: false,
+      },
+      {
+        id: 'b96e061d-fc7f-4788-b248-2ed2299ccbdc',
+        tenantId: 'b17c1160-adfd-4995-b218-f033124f13df',
+        code: 'formulario-propuestas',
+        name: 'Formulario propuestas',
+        description:
+          'Formulario para recolección de data enfocado a los intereses o dolores de la población electoral',
+        createdAt: new Date('2026-01-12T18:09:36.737Z'),
+        isActive: false,
         isPublic: false,
       },
     ],
   });
+  console.log('✅ form creados.');
 
   // 5. Versiones de Formularios (Form Versions)
   await prisma.formVersion.createMany({
@@ -228,22 +291,29 @@ async function main() {
         id: '0a8d6cf3-14c4-4644-8ed4-e09b2b0338c6',
         formId: '3fe84c0d-daa0-4b21-9f85-d046ef554016',
         version: 1,
-        schema: {
-          /* Pegar el JSON largo del campo schema en el SQL */
-        },
+        schema: getJson('voluntarios-v1'),
         isActive: true,
+        createdAt: new Date('2025-12-16T08:19:56.989Z'),
+      },
+      {
+        id: '192477e9-105f-4ee6-a233-ae430ddb4be1',
+        formId: '0a45dbaf-6f98-479d-82aa-6d8e504006e3',
+        version: 1,
+        schema: getJson('contacto-v1'),
+        isActive: false,
+        createdAt: new Date('2026-01-12T19:07:31.267Z'),
       },
       {
         id: '9da235e7-0b20-4562-a083-5476191cdcca',
         formId: '0a45dbaf-6f98-479d-82aa-6d8e504006e3',
         version: 2,
-        schema: {
-          /* ... */
-        },
+        schema: getJson('contacto-v2'),
         isActive: true,
+        createdAt: new Date('2026-01-13T19:07:31.267Z'),
       },
     ],
   });
+  console.log('✅ formVersion creados.');
 
   // 6. Envíos de Formularios (Form Submissions)
   await prisma.formSubmission.createMany({
@@ -269,6 +339,7 @@ async function main() {
       },
     ],
   });
+  console.log('✅ formSubmission creados.');
 
   // 7. Asignaciones de Formularios (Form Assignments)
   await prisma.formAssignmentUser.createMany({
@@ -283,6 +354,7 @@ async function main() {
       },
     ],
   });
+  console.log('✅ formAssignmentUser creados.');
 
   console.log('Seed completado con éxito.');
 }
