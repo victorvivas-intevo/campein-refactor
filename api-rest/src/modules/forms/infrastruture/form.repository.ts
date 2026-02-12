@@ -17,7 +17,10 @@ import { PrismaService } from '../../../prisma/prisma.service';
 // import { PublicFormSchemaResponseDto } from '../application/dtos/forms.dto';
 // import { FormManagementService } from './interfaces/form-management.repository';
 import { FormQueryService } from './interfaces/form-query.repository';
-import { FormRequestDto, PublicFormSchemaResponseDto } from '../application/dtos/forms.dto';
+import {
+  FormRequestDto,
+  PublicFormSchemaResponseDto,
+} from '../application/dtos/forms.dto';
 import { Prisma } from '@prisma/client';
 
 @Injectable()
@@ -248,7 +251,9 @@ export class FormRepository implements FormQueryService {
     });
   }
 
-  async getFormsAssigmentUser(options: FormRequestDto): Promise<PublicFormSchemaResponseDto[] | null> {
+  async getFormsAssigmentUser(
+    options: FormRequestDto,
+  ): Promise<PublicFormSchemaResponseDto[] | null> {
     const whereCondition: Prisma.FormWhereInput = {
       assignments: {
         some: {
@@ -257,7 +262,7 @@ export class FormRepository implements FormQueryService {
       },
     };
     return this.prisma.form.findMany({
-      where: whereCondition
-    })
+      where: whereCondition,
+    });
   }
 }
