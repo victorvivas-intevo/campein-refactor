@@ -5,9 +5,9 @@ import { routes } from './app.routes';
 import { provideAuth } from './features/auth/infrastructure/di/auth.providers';
 import { provideForms } from './features/forms/infrastructure/di/form.provider';
 import { authInterceptor } from './features/auth/infrastructure/security/auth.interceptor';
-// import { AuthInterceptor } from './features/auth/infrastructure/security/auth.interceptor';
+import { environment } from '../environments/environment';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = environment.apiUrl;
 
 export const appConfig: ApplicationConfig = {
   providers: [
