@@ -7,7 +7,7 @@ import { provideForms } from './features/forms/infrastructure/di/form.provider';
 import { authInterceptor } from './features/auth/infrastructure/security/auth.interceptor';
 import { environment } from '../environments/environment';
 
-const API_URL = environment.apiUrl;
+const API_URL = environment.production ? environment.apiUrlProd : environment.apiUrl;
 
 export const appConfig: ApplicationConfig = {
   providers: [

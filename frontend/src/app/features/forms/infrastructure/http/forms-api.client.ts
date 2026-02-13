@@ -1,4 +1,4 @@
-import { HttpBackend, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GetFormDTO, GetFormSubmissionDTO, GetFormVersionDTO } from '../../domain/dtos/form-list.dto';
@@ -11,7 +11,7 @@ export class FormsApiClient {
 
   constructor(private readonly http: HttpClient, 
     @Inject(FORM_API_URL) private readonly baseUrl: string) {
-    // this.http = new HttpClient(httpBackend);
+
   }
 
   // Get list of forms by tenant 
