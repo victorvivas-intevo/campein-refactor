@@ -19,7 +19,7 @@ export class DeleteUserService {
     private readonly userQueryService: UserQueryService,
   ) {}
 
-  async execute(currentUser: UserPayload, id: string): Promise<any> {
+  async execute(currentUser: UserPayload, id: string): Promise<void> {
     if (
       currentUser.role !== 'ADMIN_SISTEMA' &&
       currentUser.role !== 'ADMIN_CAMPANA'

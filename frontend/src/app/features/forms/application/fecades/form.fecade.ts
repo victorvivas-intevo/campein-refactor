@@ -4,10 +4,10 @@ import { GetFormsUseCase } from '../use-cases/get-forms.use-case';
 import { GetFormUseCase } from '../use-cases/get-form.use-case';
 import { GetFormSubmissionUseCase } from '../use-cases/get-form-submission.use-case';
 import { GetFormSchemaUseCase } from '../use-cases/get-form-submissions.use-case';
-import { Form as FormEntity } from '../../domain/entities/form.entity';
+// import { Form as FormEntity } from '../../domain/entities/form.entity';
 import { GetFormDTO, GetFormSubmissionDTO, GetFormVersionDTO, RequestGetFormDTO } from '../../domain/dtos/form-list.dto';
-import { CreateFormDTO, ResponseCreateFormDTO } from '../../domain/dtos/form-magement.dto';
-import { GetFormByCodeUseCase } from '../use-cases/get-form-by-code.use-case';
+// import { CreateFormDTO, ResponseCreateFormDTO } from '../../domain/dtos/form-magement.dto';
+// import { GetFormByCodeUseCase } from '../use-cases/get-form-by-code.use-case';
 
 @Injectable({ providedIn: 'root' })
 export class FormFacade {
@@ -24,10 +24,10 @@ export class FormFacade {
   currentSubmission = signal<GetFormSubmissionDTO | null>(null);
   loading = signal(false);
 
-  async load() {
+  async load(tenantId?: string) {
     this.loading.set(true);
     try {
-      const forms = await firstValueFrom(this.getFormsByTenantUC.execute());
+      const forms = await firstValueFrom(this.getFormsByTenantUC.execute(tenantId));
       this.items.set(forms);
     } finally {
       this.loading.set(false);

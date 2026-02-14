@@ -8,8 +8,13 @@ export class GetFormsUseCase {
   private sessionStore = inject(SESSION_STORE_TOKEN);
   constructor(private readonly gateway: FormsGatewayInterface) {}
 
-  execute(): Observable<GetFormDTO[]> {
-    const tenantId = this.sessionStore.getTenantId();
+  execute(id?: string): Observable<GetFormDTO[]> {
+    let tenantId: string;
+    const role = this.sessionStore.getRoleId();
+    if(id && role === 'ADMIN_SISTEMAS') { tenantId = id; }
+    else {
+      tenantId = this.sessionStore.getTenantId();
+    }
     return this.gateway.getFormsByTenantId(tenantId);
   }
 }

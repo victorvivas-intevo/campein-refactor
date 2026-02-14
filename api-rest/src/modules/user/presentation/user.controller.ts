@@ -21,10 +21,12 @@ import { DeleteUserService } from '../application/use-cases/deleteUser.service';
 
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import type { UserPayload } from 'src/modules/auth/domain/interfaces/user-payload.interface';
+import { ChangeUserStatusService } from '../application/use-cases/changeUser.service';
 
 @Controller('users')
 export class UserController {
   constructor(
+    private readonly changeUserStatusService: ChangeUserStatusService,
     private readonly getUserService: GetUserService,
     private readonly createUserService: CreateUserService,
     private readonly updateUserService: UpdateUserService,
@@ -91,5 +93,21 @@ export class UserController {
     @Param('userId', new ParseUUIDPipe()) userId: string,
   ): Promise<any> {
     return this.deleteUserService.execute(currentUser, userId);
+  }
+
+  @Get(':userId/activate')
+  activateUser(
+    @CurrentUser() currentUser: UserPayload,
+    @Param('userId', new ParseUUIDPipe()) userId: string,
+  ): Promise<void> {
+    return this.changeUserStatusService.execute(currentUser, userId, true);
+  }
+
+  @Get(':userId/deactivate')
+  deactivateUser(
+    @CurrentUser() currentUser: UserPayload,
+    @Param('userId', new ParseUUIDPipe()) userId: string,
+  ): Promise<void> {
+    return this.changeUserStatusService.execute(currentUser, userId, false);
   }
 }
