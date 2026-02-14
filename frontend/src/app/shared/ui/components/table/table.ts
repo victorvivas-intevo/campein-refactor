@@ -22,6 +22,7 @@ export class Table<T = any> implements OnChanges {
       enabled: false,
       pageSize: 10,
     },
+    
   };
 
   @Input() rowActions: TableRowAction<T>[] = [];

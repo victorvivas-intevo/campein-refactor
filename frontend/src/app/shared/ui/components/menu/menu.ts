@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ItemMenu } from "../item-menu/item-menu";
 import { MenuInterface } from '@/shared/interfaces/menu';
 
@@ -19,6 +19,6 @@ const MENU_ITEMS: MenuInterface[] = [
   styles: ``,
 })
 export class Menu {
-  items: MenuInterface[] = MENU_ITEMS;
+  @Input() items: MenuInterface[] = [];
 
 }

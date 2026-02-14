@@ -3,8 +3,8 @@
     <app-card class="w-full" size="sm">
         <h1 class="font-semibold text-lg text-primary-red-500">Gestión de usuarios</h1>
 
-        <app-skeleton [isLoading]="tableLoading" type="list" [count]="5">
-          <app-table [columns]="columns" [data]="items()" [rowActions]="rowActions"></app-table>
+        <app-skeleton [isLoading]="tableLoading" type="card" [count]="5">
+          <app-table [columns]="columns" [data]="items()" [rowActions]="rowActions" [config]="tableConfig"></app-table>
         </app-skeleton>
 
         <!-- <app-table [columns]="columns" [data]="data"></app-table> -->

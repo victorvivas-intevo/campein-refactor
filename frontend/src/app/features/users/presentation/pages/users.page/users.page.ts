@@ -12,6 +12,7 @@ import {
   TableConfig,
   TableRowAction,
 } from '@/shared/interfaces/table';
+import { SESSION_STORE_TOKEN } from '@/features/auth/application/interfaces/session-store.interface';
 
 @Component({
   selector: 'app-users.page',
@@ -22,15 +23,26 @@ import {
 export class UsersPage implements OnInit {
   toast = inject(ToastService);
   fecade = inject(UsersFacade);
+  sessionStore = inject(SESSION_STORE_TOKEN); // <--- 1. Inyectamos la sesión
+
   items = this.fecade.items;
-  // dataSource: UserResponseDto[] = [];
   itemView?: UserResponseDto;
 
-  // usersLoading = this.fecade.loading;
+  columns: TableColumn<UserResponseDto>[] = [];
+  rowActions: TableRowAction<UserResponseDto>[] = [];
+
+  tableConfig: TableConfig = {
+    sortable: true,
+    pagination: {
+      enabled: true,
+      pageSize: 10,
+    },
+  };
 
   tableLoading: boolean = true;
 
   ngOnInit(): void {
+    this.buildTableUI();
     this.getUsers();
   }
 
@@ -40,39 +52,105 @@ export class UsersPage implements OnInit {
     this.tableLoading = false;
   }
 
-  columns: TableColumn<UserResponseDto>[] = [
-    { id: 'fullName', header: 'Nombre', sortable: true, type: 'text' },
-    {
-      id: 'role',
-      header: 'Rol',
-      sortable: true,
-      type: 'text',
-      formatter: (value: string) => this.getRoleLabel(value),
-      cellClass: (value: string) => this.getRoleClass(value),
-    },
-    {
-      id: 'isActive',
-      header: 'Estado',
-      sortable: false,
-      type: 'text',
-      formatter: (value: boolean) => (value ? 'Activo' : 'Inactivo'),
-      cellClass: (value: boolean) => {
-        return value
-          ? 'text-green-700 bg-green-100 ring-1 ring-green-600/20'
-          : 'text-red-700 bg-red-100 ring-1 ring-red-600/20';
-      },
-    },
-    // { id: 'submissionCount', header: 'Envíos', sortable: true, type: 'text' },
-    // { id: 'createdAt', header: 'Fecha', sortable: true, type: 'date' },
-  ];
+  private buildTableUI() {
+    const currentRole = this.sessionStore.getRoleId();
 
-  tableConfig: TableConfig = {
-    sortable: true,
-    pagination: {
-      enabled: true,
-      pageSize: 10,
-    },
-  };
+    // Columnas base que TODOS ven
+    this.columns = [
+      { id: 'fullName', header: 'Nombre', sortable: true, type: 'text' },
+      {
+        id: 'role',
+        header: 'Rol',
+        sortable: true,
+        type: 'text',
+        formatter: (value: string) => this.getRoleLabel(value),
+        cellClass: (value: string) => this.getRoleClass(value),
+      },
+      {
+        id: 'isActive',
+        header: 'Estado',
+        sortable: false,
+        type: 'text',
+        formatter: (value: boolean) => (value ? 'Activo' : 'Inactivo'),
+        cellClass: (value: boolean) =>
+          value
+            ? 'text-green-700 bg-green-100 ring-1 ring-green-600/20'
+            : 'text-red-700 bg-red-100 ring-1 ring-red-600/20',
+      },
+    ];
+
+    this.rowActions = [
+      {
+        id: 'version',
+        label: 'Ver formularios',
+        iconClass: 'fa-regular fa-eye',
+        variant: buttonVariants.find((e) => e.variant == 'ghost'),
+        selectsRow: true,
+      },
+    ];
+
+    // REGLAS ESPECÍFICAS POR ROL
+    if (currentRole === 'ADMIN_SISTEMA') {
+      this.columns.push(
+        {
+          id: 'createdAt',
+          header: 'Fecha de Creación',
+          sortable: true,
+          type: 'date',
+        },
+        {
+          id: 'campain',
+          header: 'Campaña',
+          sortable: true,
+          type: 'text',
+          cellClass: () => { return 'font-semibold'}
+        },
+      );
+
+      // Los admins pueden editar e inhabilitar
+      this.rowActions.push(
+        {
+          id: 'edit',
+          label: 'Editar',
+          iconClass: 'fa-regular fa-pen-to-square',
+          variant: buttonVariants.find((e) => e.variant == 'primary'),
+          selectsRow: false,
+        },
+        {
+          id: 'disable',
+          label: 'Inhabilitar',
+          iconClass: 'fa-solid fa-diagram-project',
+          variant: buttonVariants.find((e) => e.variant == 'ghost'),
+        },
+      );
+    }
+  }
+
+  // columns: TableColumn<UserResponseDto>[] = [
+  //   { id: 'fullName', header: 'Nombre', sortable: true, type: 'text' },
+  //   {
+  //     id: 'role',
+  //     header: 'Rol',
+  //     sortable: true,
+  //     type: 'text',
+  //     formatter: (value: string) => this.getRoleLabel(value),
+  //     cellClass: (value: string) => this.getRoleClass(value),
+  //   },
+  //   {
+  //     id: 'isActive',
+  //     header: 'Estado',
+  //     sortable: false,
+  //     type: 'text',
+  //     formatter: (value: boolean) => (value ? 'Activo' : 'Inactivo'),
+  //     cellClass: (value: boolean) => {
+  //       return value
+  //         ? 'text-green-700 bg-green-100 ring-1 ring-green-600/20'
+  //         : 'text-red-700 bg-red-100 ring-1 ring-red-600/20';
+  //     },
+  //   },
+  //   // { id: 'submissionCount', header: 'Envíos', sortable: true, type: 'text' },
+  //   // { id: 'createdAt', header: 'Fecha', sortable: true, type: 'date' },
+  // ];
 
   getRoleLabel(role: string): string {
     switch (role) {
@@ -104,30 +182,30 @@ export class UsersPage implements OnInit {
     }
   }
 
-  rowActions: TableRowAction<UserResponseDto>[] = [
-    {
-      id: 'version',
-      label: 'Versiones',
-      iconClass: 'fa-regular fa-eye',
-      variant: buttonVariants.find((e) => e.variant == 'ghost'),
-      selectsRow: true,
-      activeIconClass: 'fa-regular fa-eye-slash',
-      activeVariant: buttonVariants.find((e) => e.variant == 'close'),
-    },
-    {
-      id: 'edit',
-      label: 'Editar',
-      iconClass: 'fa-regular fa-pen-to-square',
-      variant: buttonVariants.find((e) => e.variant == 'primary'),
-      selectsRow: false,
-    },
-    {
-      id: 'disable',
-      label: 'Inhabilitar',
-      iconClass: 'fa-solid fa-diagram-project',
-      variant: buttonVariants.find((e) => e.variant == 'ghost'),
-    },
-  ];
+  // rowActions: TableRowAction<UserResponseDto>[] = [
+  //   {
+  //     id: 'version',
+  //     label: 'Versiones',
+  //     iconClass: 'fa-regular fa-eye',
+  //     variant: buttonVariants.find((e) => e.variant == 'ghost'),
+  //     selectsRow: true,
+  //     activeIconClass: 'fa-regular fa-eye-slash',
+  //     activeVariant: buttonVariants.find((e) => e.variant == 'close'),
+  //   },
+  //   {
+  //     id: 'edit',
+  //     label: 'Editar',
+  //     iconClass: 'fa-regular fa-pen-to-square',
+  //     variant: buttonVariants.find((e) => e.variant == 'primary'),
+  //     selectsRow: false,
+  //   },
+  //   {
+  //     id: 'disable',
+  //     label: 'Inhabilitar',
+  //     iconClass: 'fa-solid fa-diagram-project',
+  //     variant: buttonVariants.find((e) => e.variant == 'ghost'),
+  //   },
+  // ];
 
   onRowAction(event: { actionId: string; row: UserResponseDto }): void {
     if (event.actionId === 'version') this.viewVersions(event.row);
