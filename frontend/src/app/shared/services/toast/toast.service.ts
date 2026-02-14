@@ -11,7 +11,8 @@ export type ToastVariant = 'success' | 'info' | 'warning' | 'error';
 
 export interface Toast {
   id: number;
-  message: string;
+  title: string;
+  message?: string;
   variant: ToastVariant;
   icon: IconDefinition; // Agregamos la propiedad de icono
   duration?: number;
@@ -31,10 +32,11 @@ export class ToastService {
     error: faTimesCircle,
   };
 
-  show(message: string, variant: ToastVariant = 'info', duration: number = 5000) {
+  show(title: string, message?: string, variant: ToastVariant = 'info', duration: number = 5000) {
     const id = this.counter++;
     const newToast: Toast = { 
-      id, 
+      id,
+      title,
       message, 
       variant, 
       icon: this.icons[variant], // Asignamos el icono según la variante
@@ -63,8 +65,8 @@ export class ToastService {
     }, 300);
   }
 
-  success(msg: string) { this.show(msg, 'success'); }
-  error(msg: string) { this.show(msg, 'error'); }
-  warning(msg: string) { this.show(msg, 'warning'); }
-  info(msg: string) { this.show(msg, 'info'); }
+  success(title: string, msg?: string) { this.show(title, msg ?? '', 'success'); }
+  error(title: string, msg?: string) { this.show(title, msg ?? '', 'error'); }
+  warning(title: string, msg?: string) { this.show(title, msg ?? '', 'warning'); }
+  info(title: string, msg?: string) { this.show(title, msg ?? '', 'info'); }
 }
