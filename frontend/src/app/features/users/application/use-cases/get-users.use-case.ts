@@ -13,7 +13,7 @@ export class GetUsersUseCase {
   execute(): Observable<UserResponseDto[]> {
     const currentRole = this.sessionStore.getRoleId();
     if(currentRole === 'LIDER_BETA') {
-        return throwError(() => new UnauthorizedRoleError('Los líderes Beta no tienen acceso a esta vista.'));
+      return throwError(() => new UnauthorizedRoleError('Los líderes Beta no tienen acceso a esta vista.'));
     }
     return this.gateway.getUsers();
   }
