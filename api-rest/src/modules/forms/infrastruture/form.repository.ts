@@ -262,6 +262,31 @@ export class FormRepository implements FormQueryService {
       },
     };
     return this.prisma.form.findMany({
+      select: {
+        code: true,
+        name: true,
+        description: true,
+        isPublic: true,
+        isActive: true,
+        versions: {
+          select: {
+            id: true,
+            version: true,
+            isActive: true,
+            createdAt: true,
+            _count: {
+              select: {
+                submissions: true,
+              },
+            },
+          },
+        },
+        id: true,
+        createdAt: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
       where: whereCondition,
     });
   }

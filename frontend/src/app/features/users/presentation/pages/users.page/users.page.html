@@ -1,17 +1,88 @@
-<div class="w-full flex gap-5">
-  <div class="w-full flex flex-col gap-5">
-    <app-card class="w-full" size="sm">
-        <h1 class="font-semibold text-lg text-primary-red-500">Gestión de usuarios</h1>
+<div class="w-full flex gap-5 flex-col">
+  <app-card class="w-full" size="sm">
+    <div class="flex flex-col gap-4">
+      <div class="flex justify-between items-center">
+        <h2 class="font-semibold text-gray-700 text-sm">Filtros de búsqueda</h2>
+        <button
+          (click)="clearFilters()"
+          class="px-3 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+        >
+          Limpiar filtros
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+        <div class="flex flex-col">
+          <label class="text-xs font-medium text-gray-600 mb-1">Nombre</label>
+          <input
+            type="text"
+            [(ngModel)]="filters.fullName"
+            (ngModelChange)="applyFilters()"
+            placeholder="Buscar por nombre..."
+            class="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary-red-300"
+          />
+        </div>
+
+        <div class="flex flex-col">
+          <label class="text-xs font-medium text-gray-600 mb-1">Correo</label>
+          <input
+            type="email"
+            [(ngModel)]="filters.email"
+            (ngModelChange)="applyFilters()"
+            placeholder="Buscar por correo..."
+            class="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary-red-300"
+          />
+        </div>
+
+        @if (currentRole === 'ADMIN_SISTEMA' || currentRole === 'ADMIN_CAMPANA') {
+          <div class="flex flex-col">
+            <label class="text-xs font-medium text-gray-600 mb-1">Rol</label>
+            <select
+              [(ngModel)]="filters.role"
+              (ngModelChange)="applyFilters()"
+              class="border border-gray-300 rounded-md px-3 py-1.5 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-primary-red-300 cursor-pointer"
+            >
+              <option value="">Todos los roles</option>
+              <option value="ADMIN_SISTEMA">Admin. Sistema</option>
+              <option value="ADMIN_CAMPANA">Admin. Campaña</option>
+              <option value="LIDER_ALFA">Líder Alfa</option>
+              <option value="LIDER_BETA">Líder Beta</option>
+            </select>
+          </div>
+        }
+
+        @if (currentRole === 'ADMIN_SISTEMA') {
+          <div class="flex flex-col">
+            <label class="text-xs font-medium text-gray-600 mb-1">Campaña</label>
+            <input
+              type="text"
+              [(ngModel)]="filters.campain"
+              (ngModelChange)="applyFilters()"
+              placeholder="Buscar campaña..."
+              class="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary-red-300"
+            />
+          </div>
+        }
+      </div>
+    </div>
+  </app-card>
+
+  <div class="w-full flex gap-5">
+    <div class="w-full flex flex-col gap-5">
+      <app-card class="w-full" size="sm">
+        <h1 class="font-semibold text-lg text-primary-red-500 mb-4">Gestión de usuarios</h1>
 
         <app-skeleton [isLoading]="tableLoading" type="card" [count]="5">
-          <app-table [columns]="columns" [data]="items()" [rowActions]="rowActions" [config]="tableConfig"></app-table>
+          <app-table
+            [columns]="columns"
+            [data]="filteredData"
+            [rowActions]="rowActions"
+            [config]="tableConfig"
+          ></app-table>
         </app-skeleton>
+      </app-card>
+    </div>
 
-        <!-- <app-table [columns]="columns" [data]="data"></app-table> -->
-    </app-card>
+    <app-card class="min-w-0 flex flex-1" size="sm"> </app-card>
   </div>
-  <app-card class="min-w-0 flex flex-1" size="sm"> 
-    <!-- max-h-100 sticky top-0 -->
-    <!-- @if (form$(); as f) {} -->
-  </app-card>
 </div>

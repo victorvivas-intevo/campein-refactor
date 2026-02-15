@@ -28,6 +28,10 @@ export class FormHttpGateway implements FormsGatewayInterface {
   getFormByCode(code: string): Observable<GetFormDTO> {
     return this.http.get<GetFormDTO>(`${this.baseUrl}/forms/byCode/${code}`);
   }
+
+  getFormsAssigmentUsers(userId: string): Observable<GetFormDTO[]> {
+    return this.http.get<GetFormDTO[]>(`${this.baseUrl}/forms/getFormsAssigmentUser/${userId}`);
+  }
   // Get schema
   getFormSchema(versionId: string): Observable<GetFormVersionDTO> {
     return this.http.get<GetFormVersionDTO>(`${this.baseUrl}/forms/getSchema/${versionId}`);

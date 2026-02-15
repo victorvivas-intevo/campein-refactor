@@ -15,6 +15,10 @@ export class GetFormsUseCase {
     else {
       tenantId = this.sessionStore.getTenantId();
     }
-    return this.gateway.getFormsByTenantId(tenantId);
+    if(role === 'ADMIN_SISTEMAS' || role === 'ADMIN_CAMPANA'){
+      return this.gateway.getFormsByTenantId(tenantId);
+    } else {
+      return this.gateway.getFormsAssigmentUsers(tenantId);
+    }
   }
 }

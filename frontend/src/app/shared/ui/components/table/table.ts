@@ -22,7 +22,6 @@ export class Table<T = any> implements OnChanges {
       enabled: false,
       pageSize: 10,
     },
-    
   };
 
   @Input() rowActions: TableRowAction<T>[] = [];
@@ -32,8 +31,10 @@ export class Table<T = any> implements OnChanges {
   @Input() rowIdKey: keyof T | ((row: T) => RowId) = 'id' as keyof T;
 
   @Output() rowSelected = new EventEmitter<T | null>();
-
   @Output() rowAction = new EventEmitter<{ actionId: string; row: T }>();
+  
+  // NUEVO: Emisor para notificar si se requiere saber externamente que cambió el límite
+  @Output() pageSizeChange = new EventEmitter<number>();
 
   sortColumnId: string | null = null;
   sortDirection: 'asc' | 'desc' | null = null;
@@ -43,6 +44,9 @@ export class Table<T = any> implements OnChanges {
   displayRows: T[] = [];
 
   selectedRowId: RowId | null = null;
+
+  // NUEVO: Opciones por defecto para el selector de registros por página
+  pageSizeOptions: number[] = [5, 10, 25, 50, 100];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data'] || changes['columns'] || changes['config']) {
@@ -78,7 +82,6 @@ export class Table<T = any> implements OnChanges {
   }
 
   onRowActionClick(action: TableRowAction<T>, row: T, ev?: MouseEvent): void {
-    // evita que el click “suba” (por si en el futuro pones click en tr)
     ev?.stopPropagation();
 
     if (action.show && !action.show(row)) return;
@@ -124,7 +127,6 @@ export class Table<T = any> implements OnChanges {
     const colId = String(column.id);
 
     if (this.sortColumnId !== colId || !this.sortDirection) {
-      // icono neutro (orden genérico)
       return 'fa-solid fa-arrow-up-wide-short';
     }
 
@@ -148,7 +150,6 @@ export class Table<T = any> implements OnChanges {
       if (aValue != null && bValue == null) return 1 * directionFactor;
       if (aValue == null && bValue == null) return 0;
 
-      // 1) numérico
       if (column.type === 'number') {
         const aNum = typeof aValue === 'number' ? aValue : parseFloat(aValue);
         const bNum = typeof bValue === 'number' ? bValue : parseFloat(bValue);
@@ -160,9 +161,7 @@ export class Table<T = any> implements OnChanges {
         return aNum > bNum ? 1 * directionFactor : aNum < bNum ? -1 * directionFactor : 0;
       }
 
-      // 2) fecha
       if (column.type === 'date') {
-        // soporta tanto Date como string ISO
         const aTime =
           aValue instanceof Date ? aValue.getTime() : new Date(aValue as string).getTime();
 
@@ -176,7 +175,6 @@ export class Table<T = any> implements OnChanges {
         return aTime > bTime ? 1 * directionFactor : aTime < bTime ? -1 * directionFactor : 0;
       }
 
-      // 3) por defecto → string
       const aStr = String(aValue).toLocaleLowerCase();
       const bStr = String(bValue).toLocaleLowerCase();
 
@@ -224,17 +222,26 @@ export class Table<T = any> implements OnChanges {
     this.goToPage(this.currentPage + 1);
   }
 
+  // NUEVO: Método para cambiar la cantidad de registros por página
+  onPageSizeChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const newSize = Number(target.value);
+    
+    if (this.config.pagination) {
+      this.config.pagination.pageSize = newSize;
+    }
+    
+    this.currentPage = 1; 
+    this.pageSizeChange.emit(newSize); // Emitimos al padre por si acaso
+    this.recalculate();
+  }
+
   private recalculate(): void {
     const sorted = this.sortData(this.data ?? []);
     this.displayRows = this.paginateData(sorted);
   }
 
   // ───────────── ACCIONES ─────────────
-
-  // onRowActionClick(action: TableRowAction<T>, row: T): void {
-  //   if (action.show && !action.show(row)) return;
-  //   this.rowAction.emit({ actionId: action.id, row });
-  // }
 
   shouldShowAction(action: TableRowAction<T>, row: T): boolean {
     return action.show ? action.show(row) : true;

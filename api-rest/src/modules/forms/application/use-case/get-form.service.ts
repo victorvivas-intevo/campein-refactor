@@ -199,6 +199,22 @@ export class GetFormsService {
       await this.formQueryRepository.getFormsAssigmentUser(options);
     if (!response)
       throw new NotFoundException(`El usuario no tiene formularios asignados`);
-    return response;
+
+    const forms = response.map((f) => ({
+      ...f,
+      submissionCount: f.versions?.reduce(
+        (acc, v) => acc + v._count!.submissions,
+        0,
+      ),
+      versions: f.versions?.map((v) => ({
+        id: v.id,
+        version: v.version,
+        isActive: v.isActive,
+        createdAt: v.createdAt,
+        submissionCount: v._count?.submissions,
+      })),
+    }));
+
+    return forms;
   }
 }
