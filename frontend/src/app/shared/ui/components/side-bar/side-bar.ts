@@ -27,7 +27,7 @@ export class SideBar {
     { publicName: 'Formularios', route: '/app/forms', icon: 'fa-regular fa-file-alt' },
     { publicName: 'Notificaciones', route: '/app/notifications', icon: 'fa-regular fa-bell', roles: privilegesAdmin },
     { publicName: 'Voluntariado Duque', route: '/app/duque-volunteers', icon: 'fa-regular fa-map', roles: privilegesAdmin },
-    { publicName: 'Volunmtariado Fico', route: '/app/fico-volunteers', icon: 'fa-regular fa-map', roles: privilegesAdmin },
+    { publicName: 'Voluntariado Fico', route: '/app/fico-volunteers', icon: 'fa-regular fa-map', roles: privilegesAdmin },
     { publicName: 'Estadisticas electorales', route: '/app/election-statistics', icon: 'fa-regular fa-map', roles: privilegesAdmin },
     { publicName: 'Paloma Valencia', route: '/app/analytical/paloma-valencia', icon: 'fa-regular fa-map', roles: privilegesAdmin },
   ];
