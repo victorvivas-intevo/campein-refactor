@@ -20,6 +20,8 @@ import { FormQueryService } from './interfaces/form-query.repository';
 import {
   FormRequestDto,
   PublicFormSchemaResponseDto,
+  SubmissionDTO,
+  SubmissionsRequestDTO,
 } from '../application/dtos/forms.dto';
 import { Prisma } from '@prisma/client';
 
@@ -287,6 +289,18 @@ export class FormRepository implements FormQueryService {
       orderBy: {
         createdAt: 'desc',
       },
+      where: whereCondition,
+    });
+  }
+
+  /**
+   * Traer los registros por formulario
+   */
+  async findSubmissionsByFormVersionId(
+    options: SubmissionsRequestDTO,
+  ): Promise<SubmissionDTO[]> {
+    const whereCondition: Prisma.FormSubmissionWhereInput = options;
+    return this.prisma.formSubmission.findMany({
       where: whereCondition,
     });
   }

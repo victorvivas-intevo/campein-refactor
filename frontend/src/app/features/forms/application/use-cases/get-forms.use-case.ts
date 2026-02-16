@@ -11,11 +11,11 @@ export class GetFormsUseCase {
   execute(id?: string): Observable<GetFormDTO[]> {
     let tenantId: string;
     const role = this.sessionStore.getRoleId();
-    if(id && role === 'ADMIN_SISTEMAS') { tenantId = id; }
+    if(id && role === 'ADMIN_SISTEMA') { tenantId = id; }
     else {
       tenantId = this.sessionStore.getTenantId();
     }
-    if(role === 'ADMIN_SISTEMAS' || role === 'ADMIN_CAMPANA'){
+    if(role === 'ADMIN_SISTEMA' || role === 'ADMIN_CAMPANA'){
       return this.gateway.getFormsByTenantId(tenantId);
     } else {
       return this.gateway.getFormsAssigmentUsers(tenantId);

@@ -1,6 +1,8 @@
 import {
   FormRequestDto,
   PublicFormSchemaResponseDto,
+  SubmissionDTO,
+  SubmissionsRequestDTO,
 } from '../../application/dtos/forms.dto';
 
 export interface FormQueryService {
@@ -16,4 +18,7 @@ export interface FormQueryService {
   getFormsAssigmentUser(
     options: FormRequestDto,
   ): Promise<PublicFormSchemaResponseDto[] | null>;
+  findSubmissionsByFormVersionId(
+    options: SubmissionsRequestDTO,
+  ): Promise<SubmissionDTO[]>;
 }
