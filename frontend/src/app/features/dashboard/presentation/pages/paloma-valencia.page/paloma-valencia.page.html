@@ -1,0 +1,185 @@
+<div class="p-8 space-y-8 min-h-screen">
+  
+  <div class="mb-8 flex justify-between items-center">
+    <div>
+      <h1 class="text-2xl font-bold text-placeholder-input-950">Dashboard de Analítica</h1>
+      <p class="text-placeholder-input-500 text-sm">Análisis de rendimiento y sentimiento</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <app-card size="md">
+      <p class="text-placeholder-input-500 text-sm font-medium mb-1">Menciones Totales</p>
+      <h3 class="text-3xl font-bold mb-2 text-placeholder-input-900">142.8K</h3>
+      <span class="text-secondary-red-600 text-sm font-bold flex items-center gap-1">
+        <span class="material-symbols-outlined text-sm">trending_up</span>
+        +12.4% vs semana pasada
+      </span>
+    </app-card>
+
+    <app-card size="md">
+      <p class="text-placeholder-input-500 text-sm font-medium mb-1">Tema Principal</p>
+      <h3 class="text-3xl font-bold mb-2 text-placeholder-input-900">Seguridad</h3>
+      <span class="text-primary-red-600 text-sm font-bold">81% del alcance total</span>
+    </app-card>
+
+    <app-card size="md">
+      <p class="text-placeholder-input-500 text-sm font-medium mb-1">Participación (Share of Voice)</p>
+      <h3 class="text-3xl font-bold mb-2 text-placeholder-input-900">24.5%</h3>
+      <span class="text-placeholder-input-400 text-sm font-medium">Posición #2 en la región</span>
+    </app-card>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    
+    <app-card size="lg">
+      <div class="flex justify-between items-start mb-8">
+        <div>
+          <h2 class="text-xl font-bold text-placeholder-input-950">Sentimiento en Comentarios</h2>
+          <p class="text-placeholder-input-500 text-sm">Analizando más de 12,400 interacciones</p>
+        </div>
+        <span class="px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full uppercase">Alerta Crítica</span>
+      </div>
+      
+      <div class="flex flex-col md:flex-row items-center gap-10">
+        <div class="relative w-56 h-56 flex items-center justify-center">
+          <svg class="w-full h-full -rotate-90 origin-center" viewBox="0 0 36 36">
+            <circle class="text-placeholder-input-200" cx="18" cy="18" fill="transparent" r="16" stroke="currentColor" stroke-width="4"></circle>
+            <circle class="text-primary-red-600 transition-all duration-1000" cx="18" cy="18" fill="transparent" r="16" stroke="currentColor" stroke-dasharray="23 77" stroke-width="4"></circle>
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <span class="text-4xl font-black text-placeholder-input-950">23%</span>
+            <span class="text-xs uppercase tracking-widest text-placeholder-input-500">Aprobación</span>
+          </div>
+        </div>
+        
+        <div class="flex-1 space-y-6 w-full">
+          <div>
+            <div class="flex justify-between text-sm font-bold mb-2 text-placeholder-input-900">
+              <span>Desaprobación</span>
+              <span class="text-placeholder-input-600">77%</span>
+            </div>
+            <div class="w-full h-3 bg-custom-bg-200 rounded-full overflow-hidden">
+              <div class="h-full bg-placeholder-input-600 w-[77%]"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-sm font-bold mb-2 text-placeholder-input-900">
+              <span>Aprobación</span>
+              <span class="text-primary-red-600">23%</span>
+            </div>
+            <div class="w-full h-3 bg-custom-bg-200 rounded-full overflow-hidden">
+              <div class="h-full bg-primary-red-600 w-[23%]"></div>
+            </div>
+          </div>
+          <p class="text-xs text-placeholder-input-400 italic">"La minoría vocal domina la sección de comentarios, enfocándose principalmente en la ejecución de políticas."</p>
+        </div>
+      </div>
+    </app-card>
+
+    <app-card size="lg">
+      <div class="flex justify-between items-start mb-8">
+        <div>
+          <h2 class="text-xl font-bold text-primary-red-600">Sentimiento de 'Me Gusta'</h2>
+          <p class="text-placeholder-input-500 text-sm">Analizando más de 89,200 Me Gusta</p>
+        </div>
+        <span class="px-3 py-1 bg-secondary-red-100 text-secondary-red-600 text-xs font-bold rounded-full uppercase">Fuerte Apoyo</span>
+      </div>
+      
+      <div class="flex flex-col md:flex-row items-center gap-10">
+        <div class="relative w-56 h-56 flex items-center justify-center">
+          <svg class="w-full h-full -rotate-90 origin-center" viewBox="0 0 36 36">
+            <circle class="text-custom-bg-200" cx="18" cy="18" fill="transparent" r="16" stroke="currentColor" stroke-width="4"></circle>
+            <circle class="text-secondary-red-500 transition-all duration-1000" cx="18" cy="18" fill="transparent" r="16" stroke="currentColor" stroke-dasharray="93 7" stroke-width="4"></circle>
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <span class="text-4xl font-black text-secondary-red-600">93%</span>
+            <span class="text-xs uppercase tracking-widest text-placeholder-input-500">Aprobación</span>
+          </div>
+        </div>
+        
+        <div class="flex-1 space-y-6 w-full">
+          <div>
+            <div class="flex justify-between text-sm font-bold mb-2 text-placeholder-input-900">
+              <span>Aprobación</span>
+              <span class="text-secondary-red-600">93%</span>
+            </div>
+            <div class="w-full h-3 bg-custom-bg-200 rounded-full overflow-hidden">
+              <div class="h-full bg-secondary-red-500 w-[93%]"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-sm font-bold mb-2 text-placeholder-input-900">
+              <span>Desaprobación</span>
+              <span class="text-placeholder-input-500">7%</span>
+            </div>
+            <div class="w-full h-3 bg-custom-bg-200 rounded-full overflow-hidden">
+              <div class="h-full bg-placeholder-input-400 w-[7%]"></div>
+            </div>
+          </div>
+          <p class="text-xs text-placeholder-input-400 italic">"La alta aprobación en los 'me gusta' indica un fuerte apoyo de la 'mayoría silenciosa' hacia los mensajes clave."</p>
+        </div>
+      </div>
+    </app-card>
+
+  </div>
+
+  <app-card size="lg">
+    <h2 class="text-xl font-bold mb-8 text-placeholder-input-950">Principales Temas de Discusión</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <div class="p-6 rounded-xl bg-primary-red-50 border border-primary-red-200 relative overflow-hidden">
+        <div class="absolute -right-4 -top-4 opacity-10">
+          <span class="material-symbols-outlined text-8xl text-primary-red-600">security</span>
+        </div>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="material-symbols-outlined text-primary-red-600">shield</span>
+          <h3 class="font-bold text-lg text-placeholder-input-950">Seguridad</h3>
+        </div>
+        <div class="text-5xl font-black text-primary-red-600 mb-2">81%</div>
+        <p class="text-placeholder-input-600 text-sm">Tema líder que impulsa 4 veces más la participación que cualquier otro tema.</p>
+      </div>
+
+      <div class="p-6 rounded-xl bg-custom-bg-100 border border-custom-bg-200">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="material-symbols-outlined text-placeholder-input-500">policy</span>
+          <h3 class="font-bold text-lg text-placeholder-input-950">Corrupción</h3>
+        </div>
+        <div class="text-5xl font-black text-placeholder-input-500 mb-2">11%</div>
+        <p class="text-placeholder-input-600 text-sm">Ocupa sistemáticamente el segundo lugar, sobre todo en discusiones críticas.</p>
+      </div>
+
+      <div class="p-6 rounded-xl bg-custom-bg-100 border border-custom-bg-200">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="material-symbols-outlined text-placeholder-input-500">health_and_safety</span>
+          <h3 class="font-bold text-lg text-placeholder-input-950">Salud</h3>
+        </div>
+        <div class="text-5xl font-black text-placeholder-input-500 mb-2">3%</div>
+        <p class="text-placeholder-input-600 text-sm">Tema emergente a raíz de las recientes propuestas de políticas regionales.</p>
+      </div>
+
+    </div>
+  </app-card>
+
+  <!-- <app-card size="lg" class="flex flex-col h-80 relative">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-xl font-bold text-placeholder-input-950">Puntos Clave de Interacción Geográfica</h2>
+      <div class="flex gap-2">
+        <span class="flex items-center gap-1 text-xs font-bold px-2 py-1 bg-primary-red-100 text-primary-red-600 rounded">Alta Actividad</span>
+        <span class="flex items-center gap-1 text-xs font-bold px-2 py-1 bg-custom-bg-200 text-placeholder-input-800 rounded">Moderada</span>
+      </div>
+    </div>
+    
+    <div class="flex-1 w-full rounded-xl bg-custom-bg-100 flex items-center justify-center relative overflow-hidden">
+      <div class="absolute inset-0 opacity-40 bg-center bg-cover" style="background-image: url('assets/images/campanas/campanaD/mapa.png');"></div>
+      
+      <div class="z-10 flex flex-col items-center">
+        <span class="material-symbols-outlined text-primary-red-600 text-5xl mb-2 animate-bounce">location_on</span>
+        <p class="text-placeholder-input-950 bg-white/70 px-4 py-1 rounded-full font-bold text-lg backdrop-blur-sm shadow-sm">
+          Bogotá, D.C. (+45%)
+        </p>
+      </div>
+    </div>
+  </app-card> -->
+
+</div>

@@ -24,6 +24,7 @@ import { Button } from "@/shared/ui/components/button/button";
 export class UsersPage implements OnInit {
   toast = inject(ToastService);
   fecade = inject(UsersFacade);
+  // TODO: inyect AuthFecade
   sessionStore = inject(SESSION_STORE_TOKEN);
 
   cdr = inject(ChangeDetectorRef);

@@ -1,3 +1,36 @@
-<div class="w-full mb-5">
-  top bar works
-</div>
+<header class="sticky top-0 z-10 border-b border-border-input px-8 py-4 flex items-center justify-end">
+  
+  <!-- <div class="flex items-center gap-4">
+    <h2 class="text-xl font-bold tracking-tight text-placeholder-input-950">Panel de Control</h2>
+    <span class="px-3 py-1 bg-primary-red-50 text-primary-red-600 text-xs font-bold rounded-full border border-primary-red-200">
+      EN VIVO
+    </span>
+  </div> -->
+
+  <div class="flex items-center gap-6">
+    
+    <div class="flex items-center gap-3">
+      <button class="w-10 h-10 rounded-xl bg-custom-bg-100 flex items-center justify-center hover:bg-custom-bg-200 transition-colors relative">
+        <span class="material-symbols-outlined text-placeholder-input-600">notifications</span>
+        <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+      </button>
+
+      <div class="h-8 w-[1px] bg-custom-bg-300"></div>
+
+      <div class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
+        
+        <div class="text-right hidden sm:block">
+          <p class="text-sm font-bold leading-none text-placeholder-input-950">{{session()?.user?.name || 'Usuario'}}</p>
+          <p class="text-[10px] text-placeholder-input-500 uppercase tracking-widest mt-1 font-medium">{{ displayRole() }}</p>
+        </div>
+        
+        <div class="w-10 h-10 rounded-full border-2 border-primary-red-200 bg-primary-red-50 flex items-center justify-center overflow-hidden text-primary-red-600">
+          <span class="material-symbols-outlined">person</span>
+          
+          </div>
+        
+      </div>
+    </div>
+
+  </div>
+</header>

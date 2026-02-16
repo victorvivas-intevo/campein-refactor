@@ -6,6 +6,7 @@ import { LogoutUseCase } from '../use-cases/logout.service';
 import { LoadSessionUseCase } from '../use-cases/load-session.service';
 import { RefreshTokenUseCase } from '../use-cases/refresh-token.service';
 import { Session } from '../../domain/entities/session.entity';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthFacade {
@@ -20,7 +21,8 @@ export class AuthFacade {
     private readonly loginUC: LoginUseCase,
     private readonly logoutUC: LogoutUseCase,
     private readonly loadSessionUC: LoadSessionUseCase,
-    private readonly refreshUC: RefreshTokenUseCase
+    private readonly refreshUC: RefreshTokenUseCase,
+    private readonly router: Router
   ) {
     // hidratar sesión al iniciar
     this._session.set(this.loadSessionUC.execute());
@@ -48,5 +50,10 @@ export class AuthFacade {
     return this.refreshUC.execute().pipe(
       tap(session => this._session.set(session))
     );
+  }
+
+  handleUnauthorized(): void {
+    this.logout();
+    this.router.navigate(['/auth/login']);
   }
 }
