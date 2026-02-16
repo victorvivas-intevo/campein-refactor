@@ -1,17 +1,23 @@
 import { map, Observable, throwError } from 'rxjs';
-// import { GetFormDTO } from "../../domain/dtos/form-list.dto";
-import { UserGatewayInterface } from '../../domain/repositories/user-gateway.interface';
-import { inject } from '@angular/core';
-import { SESSION_STORE_TOKEN } from '@/features/auth/application/interfaces/session-store.interface';
+import { UserQueryInterface } from '../../domain/repositories/user-query.interface';
+import { inject, Injectable } from '@angular/core';
 import { UserResponseDto } from '../../domain/dtos/user.dto';
 import { UnauthorizedRoleError } from '../../domain/errors/unauthorized-role.error';
+import { AuthFacade } from '@/features/auth/application/fecades/auth.fecade';
 
+@Injectable()
 export class GetUsersUseCase {
-  private sessionStore = inject(SESSION_STORE_TOKEN);
-  constructor(private readonly gateway: UserGatewayInterface) {}
+  private authFecade = inject(AuthFacade);
+  constructor(private readonly gateway: UserQueryInterface) {}
 
   execute(): Observable<UserResponseDto[]> {
-    const currentRole = this.sessionStore.getRoleId();
+    const currentRole = this.authFecade.session()?.user.role;
+    if (!currentRole || currentRole === '') {
+      this.authFecade.logout();
+      throwError(
+        () => new UnauthorizedRoleError('Los líderes Beta no tienen acceso a esta vista.'),
+      );
+    }
     if (currentRole === 'LIDER_BETA') {
       return throwError(
         () => new UnauthorizedRoleError('Los líderes Beta no tienen acceso a esta vista.'),

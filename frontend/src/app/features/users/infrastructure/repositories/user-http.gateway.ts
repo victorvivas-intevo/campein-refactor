@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CreateUserDto, UpdateUserDto, UserResponseDto } from '../../domain/dtos/user.dto';
-import { UserGatewayInterface } from '../../domain/repositories/user-gateway.interface';
+import { UserQueryInterface } from '../../domain/repositories/user-query.interface';
+import { UserManagementInterface } from '../../domain/repositories/user-manegement.interface';
 // import {
 //   GetFormDTO,
 //   GetFormSubmissionDTO,
@@ -12,7 +13,7 @@ import { UserGatewayInterface } from '../../domain/repositories/user-gateway.int
 export const USER_API_URL = new InjectionToken<string>('USER_API_URL');
 
 @Injectable()
-export class UserApiClient implements UserGatewayInterface {
+export class UserApiClient implements UserQueryInterface, UserManagementInterface {
 
   constructor(
     private readonly http: HttpClient,
@@ -35,8 +36,8 @@ export class UserApiClient implements UserGatewayInterface {
     return this.http.get<UserResponseDto[]>(`${this.baseUrl}/users/subordinates/${userId}`);
   }
   
-  createUser(userData: CreateUserDto): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/users`, userData);
+  createUser(userData: CreateUserDto): Observable<UserResponseDto> {
+    return this.http.post<UserResponseDto>(`${this.baseUrl}/users`, userData);
   }
   
   updateUser(userData: UpdateUserDto, id: string): Observable<any> {

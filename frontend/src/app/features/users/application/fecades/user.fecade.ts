@@ -1,15 +1,19 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { catchError, EMPTY, firstValueFrom } from 'rxjs';
 import { GetUsersUseCase } from '../use-cases/get-users.use-case';
-import { UserResponseDto } from '../../domain/dtos/user.dto';
+import { CreateUserDto, UserResponseDto } from '../../domain/dtos/user.dto';
 import { UnauthorizedRoleError } from '../../domain/errors/unauthorized-role.error';
 import { ToastService } from '@/shared/services/toast/toast.service';
+import { CreateUserUseCase } from '../use-cases/create-user.use-case';
+import { Router } from '@angular/router';
 // import { GetFormDTO, GetFormSubmissionDTO, GetFormVersionDTO } from '../../domain/dtos/form-list.dto';
 
 @Injectable({ providedIn: 'root' })
 export class UsersFacade {
 
   private getUsersUC = inject(GetUsersUseCase);
+  private createUserUC = inject(CreateUserUseCase);
+  private router = inject(Router);
 
   items = signal<UserResponseDto[]>([]);
   current = signal<UserResponseDto | null>(null);
@@ -34,6 +38,30 @@ export class UsersFacade {
       ).subscribe(users => {
         this.items.set(users);
       });
+    } finally {
+      this.loading.set(false);
+    }
+  }
+
+  async createUser(userData: CreateUserDto): Promise<void> {
+    this.loading.set(true);
+    try {
+      await firstValueFrom(
+        this.createUserUC.execute(userData).pipe(
+          catchError((error) => {
+            if (error instanceof UnauthorizedRoleError) {
+              this.toast.error('Acceso Denegado', error.message);
+            } else {
+              this.toast.error('Error del servidor, no se logró crear el usuario');
+            }
+            return EMPTY; 
+          })
+        )
+      );
+      this.toast.success('Éxito', 'Usuario creado correctamente');
+      // Opcional: recargar la lista de usuarios o redirigir
+      // await this.load();
+
     } finally {
       this.loading.set(false);
     }
