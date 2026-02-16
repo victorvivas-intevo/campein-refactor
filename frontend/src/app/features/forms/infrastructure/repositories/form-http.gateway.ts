@@ -22,9 +22,11 @@ export class FormHttpGateway implements FormsGatewayInterface {
   getFormsByTenantId(tenantId: string): Observable<GetFormDTO[]> {
     return this.http.get<GetFormDTO[]>(`${this.baseUrl}/forms/byTenant/${tenantId}`);
   }
+
   getFormById(formId: string): Observable<GetFormDTO> {
     return this.http.get<GetFormDTO>(`${this.baseUrl}/forms/byId/${formId}`);
   }
+
   getFormByCode(code: string): Observable<GetFormDTO> {
     return this.http.get<GetFormDTO>(`${this.baseUrl}/forms/byCode/${code}`);
   }
@@ -32,24 +34,29 @@ export class FormHttpGateway implements FormsGatewayInterface {
   getFormsAssigmentUsers(userId: string): Observable<GetFormDTO[]> {
     return this.http.get<GetFormDTO[]>(`${this.baseUrl}/forms/getFormsAssigmentUser/${userId}`);
   }
+
   // Get schema
   getFormSchema(versionId: string): Observable<GetFormVersionDTO> {
     return this.http.get<GetFormVersionDTO>(`${this.baseUrl}/forms/getSchema/${versionId}`);
   }
+
   // Get submmitions
-  getFormSubmissionById(formId: string, submissionId: string): Observable<GetFormSubmissionDTO> {
-    return this.http.get<GetFormSubmissionDTO>(
-      `${this.baseUrl}/forms/${formId}/getSubmissions/${submissionId}`,
+  getFormSubmissions(formId: string): Observable<GetFormSubmissionDTO[]> {
+    return this.http.get<GetFormSubmissionDTO[]>(
+      `${this.baseUrl}/forms/getSubmissions/${formId}`,
     );
   }
+
   // Create Forms
   createForm(formData: CreateFormDTO): Observable<ResponseCreateFormDTO> {
     return this.http.post<any>(`${this.baseUrl}/forms`, formData);
   }
+
   // Update Forms
   updateForm(formId: string, formData: any): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/forms/${formId}`, formData);
   }
+  
   // Delete Forms
   deleteForm(formId: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/forms/${formId}`);

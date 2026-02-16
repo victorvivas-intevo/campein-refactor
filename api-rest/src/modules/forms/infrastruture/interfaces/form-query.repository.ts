@@ -7,8 +7,14 @@ import {
 
 export interface FormQueryService {
   // Super admin y admin campain (tenant)
-  findByCode(formCode: string): Promise<PublicFormSchemaResponseDto | null>;
-  findById(formId: string): Promise<PublicFormSchemaResponseDto | null>;
+  findByCode(
+    formCode: string,
+    userOpts?: { role: string; userId: string },
+  ): Promise<PublicFormSchemaResponseDto | null>;
+  findById(
+    formId: string,
+    userOpts?: { role: string; userId: string },
+  ): Promise<PublicFormSchemaResponseDto | null>;
   findByTenant(tenantId: string): Promise<PublicFormSchemaResponseDto[] | null>;
   findSchemaById(schemaId: string): Promise<PublicFormSchemaResponseDto | null>;
   findSubmissionBySchemaId(
@@ -18,7 +24,5 @@ export interface FormQueryService {
   getFormsAssigmentUser(
     options: FormRequestDto,
   ): Promise<PublicFormSchemaResponseDto[] | null>;
-  findSubmissionsByFormVersionId(
-    options: SubmissionsRequestDTO,
-  ): Promise<SubmissionDTO[]>;
+  findSubmissions(options: SubmissionsRequestDTO): Promise<SubmissionDTO[]>;
 }

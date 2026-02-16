@@ -32,14 +32,14 @@ export class LocalSessionStore implements SessionStoreInterface {
     };
 
     localStorage.setItem(this.key, JSON.stringify(payload));
-    console.log("local-session.storage.ts save method called")
-    console.log("Se creó la sesión en el almacenamiento local:", payload);
+    // console.log("local-session.storage.ts save method called")
+    // console.log("Se creó la sesión en el almacenamiento local:", payload);
   }
 
   load(): Session | null {
     const raw = localStorage.getItem(this.key);
-    console.log("local-session.storage.ts load method called");
-    console.log(raw);
+    // console.log("local-session.storage.ts load method called");
+    // console.log(raw);
     if (!raw) return null;
 
     try {

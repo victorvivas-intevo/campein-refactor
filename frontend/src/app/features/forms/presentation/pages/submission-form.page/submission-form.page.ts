@@ -21,6 +21,9 @@ import {
   FieldLabelActionConfig,
   FormFieldConfig,
 } from '@/shared/ui/form-controls/form-control.types';
+import { SESSION_STORE_TOKEN } from '@/features/auth/application/interfaces/session-store.interface';
+import { Session } from '@/features/auth/domain/entities/session.entity';
+import { ToastService } from '@/shared/services/toast/toast.service';
 // import { FormSchema } from '@/features/public-form/domain/types/public-form.types';
 @Component({
   selector: 'app-submission-form.page',
@@ -41,6 +44,8 @@ export class SubmissionFormPage implements OnInit {
   private location = inject(Location);
   public authFacade = inject(AuthFacade);
 
+  toast = inject(ToastService)
+
   private publicFormService = inject(PublicFormApiService);
 
   codeForm: string | null = null;
@@ -51,7 +56,8 @@ export class SubmissionFormPage implements OnInit {
   formSchema = signal<FormSchema | null>(null);
 
   currentForm = this.formFacade.current;
-  currentUser = this.authFacade.session;
+  // currentUser = this.authFacade.session;
+  currentUser = inject(SESSION_STORE_TOKEN);
 
   // versionActive? = computed(() => this.currentForm()?.versions?.map((e) => {return e.isActive}) || null);
 
@@ -90,7 +96,8 @@ export class SubmissionFormPage implements OnInit {
   }
 
   canAccess = computed(() => {
-    const user = this.currentUser()?.user;
+    // const user = this.currentUser()?.user;
+    const user = this.currentUser.load()?.user
     const form = this.currentForm();
 
     // 1. Si no hay datos, no hay acceso aún
@@ -101,8 +108,15 @@ export class SubmissionFormPage implements OnInit {
 
     // 3. Validación de privilegios (Asumiendo que el form tiene una lista de usuarios asignados)
     // Ajusta 'assignedUsers' según como se llame la propiedad en tu DTO de formulario
-    const isAssigned = form.assignments?.some((u: UserDTO) => u.id === user.id);
 
+    console.log("assignments", form.assignments)
+
+    console.log("this.currentUser.getUserId() ", this.currentUser.getUserId())
+    
+    console.log("user.id ", user.id)
+    const isAssigned = form.assignments?.some((u: UserDTO) => u.id === user.id);
+    
+    console.log("isAssigned", isAssigned)
     // O si la validación es por "Activo"
     const isActive = form.isActive;
 
@@ -130,13 +144,14 @@ export class SubmissionFormPage implements OnInit {
     effect(() => {
       if (!this.loading() && this.currentForm() && !this.canAccess()) {
         // console.warn('Usuario sin privilegios para este formulario');
-        this.router.navigate(['/dashboard']); // Descomentar para redirigir automáticamente
+        // this.router.navigate(['/app/dashboard']); // Descomentar para redirigir automáticamente
       }
     });
   }
 
   async onSubmit(payload: Record<string, any>): Promise<void> {
     if (!this.codeForm || !this.canAccess()) {
+      this.toast.error("No se puede enviar el formulario:", 'código inválido o sin acceso')
       console.error('No se puede enviar el formulario: código inválido o sin acceso');
       return;
     }
@@ -148,13 +163,14 @@ export class SubmissionFormPage implements OnInit {
       // Aquí llamamos al servicio para guardar.
       // Reutilizando la lógica de public-form o una nueva en formFacade
       await this.publicFormService
-        .submitForm(this.codeForm, payload, { submittedBy: this.currentUser()?.user.id })
+        .submitForm(this.codeForm, payload, { submittedBy: this.currentUser.getUserId() })
         .subscribe({
           next: (response) => {
             console.log('Formulario enviado con éxito', response);
             this.success.set(true);
             this.scrollToTop();
             this.dynamicForm?.resetForm();
+            this.toast.success("Exito!", "Formulario envíado y almacenado correctamente")
           },
           error: (err) => {
             console.error('Error enviando formulario', err);

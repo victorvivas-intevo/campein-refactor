@@ -11,7 +11,6 @@ export class LoginUseCase {
   ) {}
 
   execute(credentials: LoginCredentialsDTO): Observable<Session> {
-    console.log("login.service.ts execute method called")
     return this.gateway.login(credentials).pipe(
       tap(session => this.store.save(session))
     );

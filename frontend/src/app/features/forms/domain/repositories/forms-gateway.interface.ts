@@ -10,7 +10,7 @@ export interface FormsGatewayInterface {
 
   // Get submissions
   getFormSchema(versionId: string): Observable<GetFormVersionDTO>;
-  getFormSubmissionById(formId: string, submissionId: string): Observable<GetFormSubmissionDTO>;
+  getFormSubmissions(formId: string): Observable<GetFormSubmissionDTO[]>;
   // Create Forms
   createForm(formData: any): Observable<any>;
   // Update Forms

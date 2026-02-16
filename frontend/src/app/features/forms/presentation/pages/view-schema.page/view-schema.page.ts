@@ -1,5 +1,5 @@
 import { FormFacade } from '@/features/forms/application/fecades/form.fecade';
-import { GetFormDTO, GetFormVersionDTO } from '@/features/forms/domain/dtos/form-list.dto';
+import { GetFormDTO, GetFormSubmissionDTO, GetFormVersionDTO } from '@/features/forms/domain/dtos/form-list.dto';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Card } from '@/shared/ui/components/card/card';
@@ -27,12 +27,14 @@ export class ViewSchemaPage implements OnInit {
 
   // form?: GetFormDTO
   form$ = this.fecade.current;
+  submissions$ = this.fecade.submissions;
   form?: GetFormDTO;
+  submissions?: GetFormSubmissionDTO[]
   loadForm: boolean = true;
   versionForm?: GetFormVersionDTO;
   schema?: any;
 
-  idForm?: string;
+  idForm!: string;
   idVersion?: string;
 
   formTabs: TabItem[] = [];
@@ -76,16 +78,18 @@ export class ViewSchemaPage implements OnInit {
   async ngOnInit() {
     this.idForm = this.route.snapshot.paramMap.get('codeForm')!;
     this.idVersion = this.route.snapshot.paramMap.get('codeVersion')!;
+    this.loadForm = true;
 
     this.role = this.session.getRoleId();
     this.buildTaps(this.role);
 
-    this.loadForm = true;
     this.fecade.loadOne({ id: this.idForm }).then((e) => {
       this.form = this.fecade.current() || undefined;
       this.versionForm = this.form?.versions?.find((v) => v.id === this.idVersion) || undefined;
+      this.fecade.loadSubmissions(this.idForm)
       this.updateTabsData();
     });
+
     this.loadForm = false;
     // await this.fecade.loadOne({id: this.idForm}).then(e =>{
     //   this.form = this.fecade.current() || undefined
@@ -116,9 +120,10 @@ export class ViewSchemaPage implements OnInit {
         return { ...tab, inputs: { schema: schemaData } };
       }
       if (tab.id === 'log') {
+        
         return {
           ...tab,
-          inputs: { submissions: this.form?.submissions, formId: this.idForm, schema: schemaData },
+          inputs: { submissions: this.submissions$(), formId: this.idForm, schema: schemaData },
         };
       }
       // TODO: add rules to update inputs for other tabs

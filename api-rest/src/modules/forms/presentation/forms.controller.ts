@@ -11,6 +11,7 @@ import {
 import { GetFormsService } from '../application/use-case/get-form.service';
 import type { UserPayload } from 'src/modules/auth/domain/interfaces/user-payload.interface';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
+import { SubmissionDTO } from '../application/dtos/forms.dto';
 
 @Controller('forms')
 export class FormsController {
@@ -33,8 +34,11 @@ export class FormsController {
   }
 
   @Get('byCode/:formCode')
-  async getFormsByCode(@Param('formCode') formCode: string): Promise<any> {
-    return this.getFormsService.getFormByCode(formCode);
+  async getFormsByCode(
+    @CurrentUser() currentUser: UserPayload,
+    @Param('formCode') formCode: string,
+  ): Promise<any> {
+    return this.getFormsService.getFormByCode(currentUser, formCode);
   }
 
   @Get('getUsersbyFormId/:formId')
@@ -47,11 +51,13 @@ export class FormsController {
     return this.getFormsService.getFormSchemaById(schemaId);
   }
 
-  @Get('getSubmissions/:schemaId')
-  async getSubmissionBySchemaId(
-    @Param('schemaId') schemaId: string,
-  ): Promise<any> {
-    return this.getFormsService.getSubmissionBySchemaId(schemaId);
+  @Get('getSubmissions/:formId')
+  async getSubmissionByFormId(
+    @CurrentUser() currentUser: UserPayload,
+    @Param('formId') formId: string,
+  ): Promise<SubmissionDTO[]> {
+    return this.getFormsService.getSubmissions(currentUser, formId);
+    // return this.getFormsService.getSubmissionBySchemaId(schemaId);
   }
 
   @Get('getFormsAssigmentUser/:idUser')

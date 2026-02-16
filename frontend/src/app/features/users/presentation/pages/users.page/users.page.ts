@@ -13,10 +13,11 @@ import {
   TableRowAction,
 } from '@/shared/interfaces/table';
 import { SESSION_STORE_TOKEN } from '@/features/auth/application/interfaces/session-store.interface';
+import { Button } from "@/shared/ui/components/button/button";
 
 @Component({
   selector: 'app-users.page',
-  imports: [Card, Skeleton, Table, FormsModule],
+  imports: [Card, Skeleton, Table, FormsModule, Button],
   templateUrl: './users.page.html',
   styles: ``,
 })
@@ -216,5 +217,9 @@ export class UsersPage implements OnInit {
 
   editForm(row: UserResponseDto): void {
     console.log('editForm, ', row);
+  }
+
+  createUser(): void {
+    console.log("asd")
   }
 }

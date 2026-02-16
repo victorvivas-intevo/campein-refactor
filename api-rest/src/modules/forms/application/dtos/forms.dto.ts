@@ -46,12 +46,15 @@ export interface SubmissionsRequestDTO {
   submittedBy?: string | null;
   formVersionId?: string;
   formId?: string;
+  userSubmited?: {
+    leaderId: string;
+  };
 }
 
 export interface UserDTO {
   id?: string;
   email?: string;
-  fullName?: string;
+  fullName?: string | null;
   role?: string;
 }
 

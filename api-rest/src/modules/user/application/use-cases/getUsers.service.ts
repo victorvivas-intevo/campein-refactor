@@ -93,6 +93,11 @@ export class GetUserService {
     if (!users) {
       throw new NotFoundException(`Error al traer los usuarios`);
     }
+    if (session.role !== 'ADMIN_SISTEMA') {
+      return users?.filter((e) => {
+        if (e.role !== 'ADMIN_SISTEMA') return e;
+      });
+    }
 
     return users;
   }
