@@ -32,7 +32,7 @@ export class AuthFacade {
 
   login(dto: LoginCredentialsDTO): Observable<Session> {
     this._loading.set(true);
-    console.log("auth.fecade.ts login method called")
+    // console.log("auth.fecade.ts login method called")
     return this.loginUC.execute(dto).pipe(
       tap(session => this._session.set(session)),
       finalize(() => this._loading.set(false))

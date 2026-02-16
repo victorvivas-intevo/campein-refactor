@@ -249,4 +249,21 @@ export class UserRepository implements UserQueryService, UserManagementService {
       throw e;
     }
   }
+
+  /**
+   * Cambiar estado de usuario (activo/inactivo)
+   */
+  async changeUserStatus(userId: string, status: boolean): Promise<void> {
+    try {
+      await this.prisma.user.update({
+        where: { id: userId },
+        data: { isActive: status },
+      });
+    } catch (e) {
+      if (e instanceof PrismaClientKnownRequestError && e.code === 'P2025') {
+        throw new NotFoundException('Usuario no encontrado.');
+      }
+      throw e;
+    }
+  }
 }

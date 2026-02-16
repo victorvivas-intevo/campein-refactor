@@ -9,6 +9,7 @@ import { GetUserService } from './application/use-cases/getUsers.service';
 import { CreateUserService } from './application/use-cases/createUser.service';
 import { UpdateUserService } from './application/use-cases/updateUser.service';
 import { DeleteUserService } from './application/use-cases/deleteUser.service';
+import { ChangeUserStatusService } from './application/use-cases/changeUser.service';
 
 @Module({
   controllers: [UserController],
@@ -17,11 +18,13 @@ import { DeleteUserService } from './application/use-cases/deleteUser.service';
     CreateUserService,
     UpdateUserService,
     DeleteUserService,
+    ChangeUserStatusService,
     UserRepository,
     { provide: USER_QUERY_REPOSITORY, useExisting: UserRepository },
     { provide: USER_COMMAND_REPOSITORY, useExisting: UserRepository },
   ],
   exports: [
+    ChangeUserStatusService,
     GetUserService,
     CreateUserService,
     UpdateUserService,

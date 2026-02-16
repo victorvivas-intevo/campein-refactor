@@ -6,8 +6,9 @@ import { provideAuth } from './features/auth/infrastructure/di/auth.providers';
 import { provideForms } from './features/forms/infrastructure/di/form.provider';
 import { authInterceptor } from './features/auth/infrastructure/security/auth.interceptor';
 import { environment } from '../environments/environment';
+import { provideUsers } from './features/users/infrastructure/di/user.provider';
 
-const API_URL = environment.apiUrl;
+const API_URL = environment.production ? environment.apiUrlProd : environment.apiUrl;
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideAuth(API_URL),
     provideForms(API_URL),
+    provideUsers(API_URL),
     provideRouter(routes)
   ]
 };

@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-type ButtonVariant = 'primary';
+type ButtonVariant = 'primary' | 'ghost';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 @Component({
@@ -11,13 +11,16 @@ type ButtonSize = 'sm' | 'md' | 'lg';
   templateUrl: './button.html',
   styleUrls: ['./button.css'],
   imports: [CommonModule],
-})
+})  
 export class Button {
   @Input() variant: ButtonVariant = 'primary';
   @Input() size: ButtonSize = 'md';
   @Input() fullWidth = false;
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() disabled = false;
+
+  // Estado de carga
+  @Input() loading = false;
 
   /**
    * Callback opcional desde el padre.
@@ -52,7 +55,7 @@ export class Button {
     const classes: string[] = [];
 
     // Variantes
-    if(this.disabled){
+    if(this.disabled || this.loading){
       classes.push(
         'bg-primary-red-600',
         'hover:bg-primary-red-400',
@@ -106,7 +109,7 @@ export class Button {
       'focus:ring-offset-2',
       'disabled:opacity-60',
       'disabled:pointer-events-none',
-      'hover:cursor-pointer'
+      this.loading ? 'cursor-wait' : 'hover:cursor-pointer'
     );
 
     return classes;

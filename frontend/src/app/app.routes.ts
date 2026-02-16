@@ -10,6 +10,7 @@ import { authGuard } from './features/auth/presentation/guards/auth.guard';
 import { formsRoutes } from './features/forms/presentation/routes/forms.routes';
 import { dashboardRoutes } from './features/dashboard/presentation/routes/dashboard.routes';
 import { notificationRoutes } from './features/notifications/presentation/routes/notifications.routes';
+import { usersRoutes } from './features/users/presentation/routes/users.routes';
 
 export const routes: Routes = [
   {
@@ -42,7 +43,7 @@ export const routes: Routes = [
     path: 'app',
     component: PrivateLayoutComponent,
     canActivate: [authGuard],
-    children: [...formsRoutes, ...dashboardRoutes, ...notificationRoutes, 
+    children: [...formsRoutes, ...dashboardRoutes, ...notificationRoutes, ...usersRoutes, 
       {
         path: '',
         redirectTo: 'dashboard',

@@ -1,4 +1,5 @@
 export const environment = {
-  production: true,
-  apiUrl: 'https://campein-api-408168404729.us-central1.run.app',
+  production: false,
+  apiUrlProd: 'https://campein-api-408168404729.us-central1.run.app',
+  apiUrl: 'http://localhost:3000',
 };

@@ -3,7 +3,7 @@
   <h1 class="font-semibold text-lg text-primary-red-500">Detalles del formulario</h1>
   @if (form) {
     <!-- Page Heading -->
-    <div class="flex flex-wrap justify-between items-center gap-4 py-6 border-b border-gray-100">
+    <div class="flex flex-wrap justify-between items-center gap-4 pb-6 pt-2 border-b border-gray-100">
       <div class="flex flex-col gap-2">
         <div class="flex items-center gap-3">
           <h1 class="text-3xl font-extrabold leading-tight tracking-tight text-black">
@@ -43,19 +43,23 @@
           <i class="fa-solid fa-file-arrow-up"></i>
           Registrar
         </button>
-        <button
-          class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary-green-100 text-gray-700 text-sm font-bold shadow-md hover:bg-primary-green-200 transition-colors gap-1 cursor-pointer"
-          (click)="copyUrl()"
-        >
-          <i class="fa-solid fa-share"></i>
-          Compartir
-        </button>
-        <button
-          class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary-red-400 text-white text-sm font-bold shadow-md hover:bg-primary-red-500 transition-colors gap-1 cursor-pointer"
-        >
-          <i class="fa-solid fa-pen-to-square"></i>
-          Editar
-        </button>
+        @if (form.isPublic) {
+          <button
+            class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary-green-100 text-gray-700 text-sm font-bold shadow-md hover:bg-primary-green-200 transition-colors gap-1 cursor-pointer"
+            (click)="copyUrl()"
+          >
+            <i class="fa-solid fa-share"></i>
+            Compartir
+          </button>
+        }
+        @if(user.getRoleId() === 'ADMIN_SISTEMA' || user.getRoleId() === 'ADMIN_CAMPANA') {
+          <button
+            class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary-red-400 text-white text-sm font-bold shadow-md hover:bg-primary-red-500 transition-colors gap-1 cursor-pointer"
+          >
+            <i class="fa-solid fa-pen-to-square"></i>
+            Editar
+          </button>
+        }
       </div>
     </div>
   }

@@ -342,17 +342,9 @@ async function main() {
   console.log('✅ formSubmission creados.');
 
   // 7. Asignaciones de Formularios (Form Assignments)
+  const assignments = FormAssignmentUser();
   await prisma.formAssignmentUser.createMany({
-    data: [
-      {
-        formId: '3fe84c0d-daa0-4b21-9f85-d046ef554016',
-        userId: '37232eaf-16f9-4227-a0f5-a812912d8279',
-      },
-      {
-        formId: '0a45dbaf-6f98-479d-82aa-6d8e504006e3',
-        userId: '37232eaf-16f9-4227-a0f5-a812912d8279',
-      },
-    ],
+    data: [...assignments],
   });
   console.log('✅ formAssignmentUser creados.');
 
@@ -367,3 +359,35 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+
+function FormAssignmentUser() {
+  const userIds = [
+    '9d792287-b777-4624-92ca-f28d1beaff0e',
+    'b8b431e5-6095-4654-aeb0-8333273e6710',
+    '37232eaf-16f9-4227-a0f5-a812912d8279',
+    '09479208-d453-4130-9a48-bc66f1ecdb34',
+    '6ccb5b8a-30e4-4219-892d-67e242ffab46',
+    'a9778bf3-7c3d-4442-a882-7ed4483b736e',
+    '6acd700d-e23c-4d27-b240-449a1b4d0ee3',
+    '32974df7-cb9b-42c1-9009-8423b4d7547b',
+    '9cbe64e8-3df2-42ed-94d6-4e21eedfb700',
+    'f23064bf-9eed-4180-ac21-279f7ddcefd5',
+    'ac7f1524-803d-4e70-8ae3-267bdf91e177',
+  ];
+
+  const formIds = [
+    '3fe84c0d-daa0-4b21-9f85-d046ef554016',
+    '0a45dbaf-6f98-479d-82aa-6d8e504006e3',
+    'b96e061d-fc7f-4788-b248-2ed2299ccbdc',
+  ];
+
+  // Generamos la combinación de todos con todos
+  const assignments = formIds.flatMap((formId) =>
+    userIds.map((userId) => ({
+      formId: formId,
+      userId: userId,
+    })),
+  );
+
+  return assignments;
+}

@@ -117,7 +117,8 @@ export class LogsSubmissions implements OnChanges {
   tableConfig: TableConfig = {
     sortable: false,
     pagination: {
-      enabled: false,
+      enabled: true,
+      pageSize: 10,
     },
   };
 
