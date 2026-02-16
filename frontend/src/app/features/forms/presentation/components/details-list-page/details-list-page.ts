@@ -12,7 +12,7 @@ import { SESSION_STORE_TOKEN } from '@/features/auth/application/interfaces/sess
   styles: ``,
 })
 export class DetailsListPage {
-
+  // TODO: inyect AuthFecade
   session = inject(SESSION_STORE_TOKEN)
 
   @Input() row?: GetFormDTO;

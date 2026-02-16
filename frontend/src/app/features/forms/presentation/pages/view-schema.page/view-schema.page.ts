@@ -23,6 +23,7 @@ import { Skeleton } from '@/shared/ui/components/skeleton/skeleton';
 })
 export class ViewSchemaPage implements OnInit {
   fecade = inject(FormFacade);
+  // TODO: inyect AuthFecade
   session = inject(SESSION_STORE_TOKEN);
 
   // form?: GetFormDTO

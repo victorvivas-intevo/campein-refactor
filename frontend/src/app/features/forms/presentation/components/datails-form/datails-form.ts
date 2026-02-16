@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DatailsForm {
 
   toast = inject(ToastService)
-
+  // TODO: inyect AuthFecade
   user = inject(SESSION_STORE_TOKEN)
   
   @Input() form?: GetFormDTO;

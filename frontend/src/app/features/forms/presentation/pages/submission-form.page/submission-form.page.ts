@@ -56,7 +56,8 @@ export class SubmissionFormPage implements OnInit {
   formSchema = signal<FormSchema | null>(null);
 
   currentForm = this.formFacade.current;
-  // currentUser = this.authFacade.session;
+  
+  // TODO: inyect AuthFecade
   currentUser = inject(SESSION_STORE_TOKEN);
 
   // versionActive? = computed(() => this.currentForm()?.versions?.map((e) => {return e.isActive}) || null);

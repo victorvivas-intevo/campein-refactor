@@ -17,8 +17,7 @@ const privilegesAll: string[] = ['ADMIN_SISTEMA', 'ADMIN_CAMPANA', 'LIDER_ALFA']
 })
 export class SideBar {
   authFecade = inject(AuthFacade)
-  private sessionStore = inject(SESSION_STORE_TOKEN);
-  private currentRole = this.sessionStore.getRoleId();
+  private currentRole = this.authFecade.session()?.user.role;
 
   // Defines tu menú completo en crudo
   private rawMenu: MenuInterface[] = [
@@ -39,7 +38,7 @@ export class SideBar {
   filteredMenu = computed(() => {
     return this.rawMenu.filter(item => {
       // Si no tiene restricción de roles, pasa. Si tiene, evaluamos el rol actual.
-      return !item.roles || item.roles.includes(this.currentRole);
+      return !item.roles || item.roles.includes(this.currentRole ?? '');
     });
   });
 
