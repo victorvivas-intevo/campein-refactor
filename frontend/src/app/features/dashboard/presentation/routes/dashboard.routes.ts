@@ -1,4 +1,7 @@
+import { roleGuard } from '@/features/auth/presentation/guards/role.guard';
 import { Routes } from '@angular/router';
+
+const priviliges: string[] = ['ADMIN_SISTEMA', 'ADMIN_CAMPANA'];
 
 export const dashboardRoutes: Routes = [
   {
@@ -20,6 +23,15 @@ export const dashboardRoutes: Routes = [
     path: 'duque-volunteers',
     loadComponent: () =>
       import('@/shared/ui/components/heat-map/heat-map').then((m) => m.HeatMap),
+  },
+  {
+    path: 'analytical/paloma-valencia',
+    loadComponent: () =>
+      import('../pages/paloma-valencia.page/paloma-valencia.page').then((m) => m.PalomaValenciaPage),
+      canActivate: [roleGuard],
+      data: {
+        allowedRoles: priviliges,
+      },
   },
   // {
   //   path: '',
