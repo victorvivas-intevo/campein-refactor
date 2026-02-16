@@ -41,10 +41,10 @@ export class AuthHttpGateway implements AuthGatewayInterface {
 
   private mapToSession(res: { accessToken: string; refresh_token?: string }): Session {
     // const user = new User(res.user.id, res.user.email, res.user.name, res.user.roles ?? []);
-    console.log(res.accessToken)
+    // console.log(res.accessToken)
     const claims = this.decoder.decode<JwtClaims>(res.accessToken);
 
-    console.log(claims)
+    // console.log(claims)
     // Define aquí los claim-names reales de tu token:
     const id = (claims?.id as string) ?? (claims?.['id'] as string) ?? '';
     const tenantId = (claims?.tenantId as string) ?? (claims?.['tenantId'] as string) ?? '';

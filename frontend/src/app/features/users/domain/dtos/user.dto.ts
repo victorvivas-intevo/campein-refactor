@@ -7,6 +7,7 @@ export interface UserResponseDto {
   isActive: boolean;
   leaderId?: string | null;
   tenant?: TenantInterface;
+  campain?: string;
   password?: string;
 }
 

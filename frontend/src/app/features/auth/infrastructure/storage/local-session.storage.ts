@@ -3,6 +3,7 @@ import { SessionStoreInterface } from '../../application/interfaces/session-stor
 import { Session } from '../../domain/entities/session.entity';
 import { User } from '../../domain/entities/user.entity';
 import { AuthTokens } from '../../domain/value-objects/auth-tokens.vo';
+import { UserRole } from '@/features/users/domain/entities/objects';
 
 type PersistedSession = {
   user: { id: string; email: string; name?: string; role: string; tenantId: string };
@@ -31,14 +32,14 @@ export class LocalSessionStore implements SessionStoreInterface {
     };
 
     localStorage.setItem(this.key, JSON.stringify(payload));
-    console.log("local-session.storage.ts save method called")
-    console.log("Se creó la sesión en el almacenamiento local:", payload);
+    // console.log("local-session.storage.ts save method called")
+    // console.log("Se creó la sesión en el almacenamiento local:", payload);
   }
 
   load(): Session | null {
     const raw = localStorage.getItem(this.key);
-    console.log("local-session.storage.ts load method called");
-    console.log(raw);
+    // console.log("local-session.storage.ts load method called");
+    // console.log(raw);
     if (!raw) return null;
 
     try {
@@ -56,9 +57,9 @@ export class LocalSessionStore implements SessionStoreInterface {
     localStorage.removeItem(this.key);
   }
 
-  getRoleId(): string {
+  getRoleId(): UserRole {
     const session = this.load();
-    return session?.user.role ?? '';
+    return session?.user.role as UserRole ?? '';
   }
 
   getTenantId(): string {

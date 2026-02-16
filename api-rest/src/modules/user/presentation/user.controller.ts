@@ -33,14 +33,6 @@ export class UserController {
     private readonly deleteUserService: DeleteUserService,
   ) {}
 
-  @Get('byTenant/:tenantId')
-  async getUsersByTenant(
-    @CurrentUser() currentUser: UserPayload,
-    @Param('tenantId', new ParseUUIDPipe()) tenantId: string,
-  ): Promise<UserResponseDto[]> {
-    return this.getUserService.getUsersByTenant(currentUser, tenantId);
-  }
-
   @Get('')
   async getAllUsers(
     @CurrentUser() currentUser: UserPayload,
@@ -68,6 +60,14 @@ export class UserController {
       userId,
     );
     return users;
+  }
+
+  @Get('byTenant/:tenantId')
+  async getUsersByTenant(
+    @CurrentUser() currentUser: UserPayload,
+    @Param('tenantId', new ParseUUIDPipe()) tenantId: string,
+  ): Promise<UserResponseDto[]> {
+    return this.getUserService.getUsersByTenant(currentUser, tenantId);
   }
 
   @Post()

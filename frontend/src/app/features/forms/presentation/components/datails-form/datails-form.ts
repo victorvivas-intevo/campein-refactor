@@ -1,6 +1,8 @@
+import { SESSION_STORE_TOKEN } from '@/features/auth/application/interfaces/session-store.interface';
 import { GetFormDTO, GetFormVersionDTO } from '@/features/forms/domain/dtos/form-list.dto';
+import { ToastService } from '@/shared/services/toast/toast.service';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -10,6 +12,11 @@ import { ActivatedRoute, Router } from '@angular/router';
   styles: ``,
 })
 export class DatailsForm {
+
+  toast = inject(ToastService)
+
+  user = inject(SESSION_STORE_TOKEN)
+  
   @Input() form?: GetFormDTO;
 
   constructor(
@@ -20,8 +27,7 @@ export class DatailsForm {
   copyUrl(): void {
     const url = `${window.location.origin}/${this.form?.isPublic ? 'public-form' : 'app/forms/sendSubmission'}/${this.form?.code}`;
     navigator.clipboard.writeText(url).then(() => {
-      // TODO: mostrar un toast o notificacion
-      // alert('URL copiada al portapapeles');
+      this.toast.success("Link copiado en porta papeles")
     });
   }
 

@@ -2,7 +2,7 @@ import { Injectable, signal, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { GetFormsUseCase } from '../use-cases/get-forms.use-case';
 import { GetFormUseCase } from '../use-cases/get-form.use-case';
-import { GetFormSubmissionUseCase } from '../use-cases/get-form-submission.use-case';
+import { GetFormSubmissionsUseCase } from '../use-cases/get-form-submission.use-case';
 import { GetFormSchemaUseCase } from '../use-cases/get-form-submissions.use-case';
 // import { Form as FormEntity } from '../../domain/entities/form.entity';
 import { GetFormDTO, GetFormSubmissionDTO, GetFormVersionDTO, RequestGetFormDTO } from '../../domain/dtos/form-list.dto';
@@ -14,7 +14,7 @@ export class FormFacade {
 
   private getFormUC = inject(GetFormUseCase);
   private getFormsByTenantUC = inject(GetFormsUseCase);
-  private getFormSubmissionUC = inject(GetFormSubmissionUseCase);
+  private getFormSubmissionUC = inject(GetFormSubmissionsUseCase);
   private getFormSchemaUC = inject(GetFormSchemaUseCase);
   // private getFormByCodeUC = inject(GetFormByCodeUseCase);
 
@@ -22,6 +22,7 @@ export class FormFacade {
   current = signal<GetFormDTO | null>(null);
   currentSchema = signal<GetFormVersionDTO | null>(null);
   currentSubmission = signal<GetFormSubmissionDTO | null>(null);
+  submissions = signal<GetFormSubmissionDTO[] | null>(null);
   loading = signal(false);
 
   async load(tenantId?: string) {
@@ -39,6 +40,8 @@ export class FormFacade {
     try {
       const form = await firstValueFrom(this.getFormUC.execute(dto))
       this.current.set(form);
+      // this.loadSubmissions(form.id);
+      this.submissions.set(form.submissions ?? null)
     } finally {
       this.loading.set(false);
     }
@@ -54,11 +57,11 @@ export class FormFacade {
     }
   }
 
-  async loadSubmission(formId: string, submissionId: string) {
+  async loadSubmissions(formId: string) {
     this.loading.set(true);
     try {
-      const submission = await firstValueFrom(this.getFormSubmissionUC.execute(formId, submissionId))
-      this.currentSubmission.set(submission);
+      const submissions = await firstValueFrom(this.getFormSubmissionUC.execute(formId))
+      this.submissions.set(submissions);
     } finally {
       this.loading.set(false);
     }

@@ -1,8 +1,9 @@
 import { GetFormDTO, GetFormVersionDTO } from '@/features/forms/domain/dtos/form-list.dto';
 import { buttonVariants, TableColumn, TableConfig, TableRowAction } from '@/shared/interfaces/table';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Table } from "@/shared/ui/components/table/table";
+import { SESSION_STORE_TOKEN } from '@/features/auth/application/interfaces/session-store.interface';
 
 @Component({
   selector: 'app-details-list-page',
@@ -11,6 +12,9 @@ import { Table } from "@/shared/ui/components/table/table";
   styles: ``,
 })
 export class DetailsListPage {
+
+  session = inject(SESSION_STORE_TOKEN)
+
   @Input() row?: GetFormDTO;
   // @Input() idForm?: string;
   // @Input() versions?: GetFormVersionDTO[];
@@ -55,6 +59,13 @@ export class DetailsListPage {
       iconClass: 'fa-regular fa-eye',
       variant: buttonVariants.find((e) => e.variant == 'ghost'),
       selectsRow: false,
+      show: (row) => { 
+        const role = this.session.getRoleId()
+        if(role === 'LIDER_BETA' || role === 'LIDER_ALFA') {
+          return row.isActive
+        }
+        return true
+      }
     },
   ];
 
