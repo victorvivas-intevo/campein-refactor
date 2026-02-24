@@ -1,25 +1,30 @@
-<div class="text-placeholder-input-900 min-h-screen font-montserrat">
-  <main class="max-w-7xl mx-auto p-6 lg:p-12 space-y-8">
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-      <div class="space-y-2">
-        <h2 class="font-bold text-3xl">Análisis Comparativo de Candidatos</h2>
-        <p class="text-placeholder-input-600 max-w-2xl text-lg">
+<div class="text-placeholder-input-900 min-h-screen">
+  <main class="p-8 space-y-8">
+    <div class="mb-8 flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-bold text-placeholder-input-950">
+          Análisis Comparativo de Candidatos
+        </h1>
+        <p class="text-placeholder-input-500 text-sm max-w-2xl">
           Análisis de audiencia multiplataforma en tiempo real para el ciclo de elecciones
           generales. Comparando el alcance en X, Facebook y YouTube.
         </p>
       </div>
+    </div>
+    <!-- <div class="flex flex-col md:flex-row md:items-end justify-between gap-6"> -->
+      <!-- <div class="space-y-2"></div> -->
       <!-- <div class="flex items-center gap-3">
         <button class="flex items-center gap-2 bg-primary-red-600 text-white px-5 py-2 rounded-xl text-sm font-bold hover:brightness-110 transition-all shadow-lg shadow-primary-red-600/20 cursor-pointer">
           <span class="material-symbols-outlined text-lg">download</span>
           Exportar PDF
         </button>
       </div> -->
-    </div>
+    <!-- </div> -->
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <app-card [size]="'md'" class="flex items-center justify-between border border-slate-100">
         <div>
-          <p class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">
+          <p class="text-placeholder-input-500 text-sm font-medium mb-1 tracking-wider">
             Líder del Mercado
           </p>
           <h3 class="font-bold text-2xl leading-none">Iván Cepeda</h3>
@@ -37,10 +42,10 @@
 
       <app-card [size]="'md'" class="flex items-center justify-between border border-slate-100">
         <div>
-          <p class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">
+          <p class="text-placeholder-input-500 text-sm font-medium mb-1">
             Alcance Total Agregado
           </p>
-          <h3 class="font-bold text-2xl leading-none">4,410.6K</h3>
+          <h3 class="text-2xl font-bold mb-2 text-placeholder-input-900 leading-none">4,410.6K</h3>
           <p class="text-xs font-bold text-primary-green-700 flex items-center gap-1 mt-2">
             <span class="material-symbols-outlined text-sm">trending_up</span>
             +12.8% vs mes anterior
@@ -55,7 +60,7 @@
 
       <app-card [size]="'md'" class="flex items-center justify-between border border-slate-100">
         <div>
-          <p class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">
+          <p class="text-placeholder-input-500 text-sm font-medium mb-1 tracking-wider">
             Mayor Interacción
           </p>
           <h3 class="font-bold text-2xl leading-none">X (Twitter)</h3>
@@ -223,7 +228,7 @@
             <span class="text-[10px] font-bold text-slate-400">34k</span>
             <div
               class="bg-primary-red-600 w-full rounded-t-lg transition-all duration-500"
-              style="height: 18%;"
+              style="height: 18%"
             ></div>
             <p class="text-[8px] font-black uppercase rotate-45 mt-4 text-slate-500">Paloma</p>
           </div>

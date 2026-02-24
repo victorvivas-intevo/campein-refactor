@@ -1,0 +1,88 @@
+<div class="w-full mx-auto mb-2">
+  <nav aria-label="Progress">
+    <ol 
+      class="flex font-montserrat" 
+      [ngClass]="{
+        'flex-row items-start': orientation() === 'horizontal',
+        'flex-col items-start space-y-8': orientation() === 'vertical'
+      }"
+      role="list"
+    >
+      @for (step of steps(); track $index; let i = $index; let isLast = $last) {
+        <li 
+          class="relative flex-1"
+          [ngClass]="{ 'w-full': orientation() === 'horizontal' }"
+          (click)="selectStep(i)"
+        >
+          <div 
+            class="flex items-center cursor-pointer group"
+            [ngClass]="{
+              'flex-col text-center': orientation() === 'horizontal',
+              'flex-row space-x-4 text-left': orientation() === 'vertical'
+            }"
+          >
+            <div class="relative flex-shrink-0">
+              
+              @if (i === currentStep()) {
+                <span class="absolute inset-0 inline-flex h-full w-full animate-ping rounded-full bg-primary-red-400 opacity-75 scale-75"></span>
+              }
+
+              <span
+                class="relative z-10 flex h-10 w-10 items-center justify-center rounded-full font-bold transition-all duration-300"
+                [ngClass]="{
+                  'bg-primary-red-600 text-white shadow-lg shadow-primary-red-600/30': i <= currentStep(),
+                  'border-2 border-custom-bg-300 bg-white text-zinc-400 group-hover:border-primary-red-400': i > currentStep()
+                }"
+              >
+                <span [class]="i < currentStep() ? 'material-symbols-outlined text-sm' : ''">{{ i < currentStep() ? 'check' : i + 1 }}</span>
+                <!-- <span *ngIf="i < currentStep" class="material-symbols-outlined text-sm">check</span>
+                <span *ngIf="i >= currentStep">{{ i + 1 }}</span> -->
+              </span>
+            </div>
+  
+            <div 
+              class="flex flex-col"
+              [ngClass]="{ 'mt-2': orientation() === 'horizontal' }"
+            >
+              <span 
+                class="text-xs font-bold uppercase tracking-wider transition-colors duration-300"
+                [ngClass]="{
+                  'text-primary-red-600': i <= currentStep(),
+                  'text-zinc-400 font-medium': i > currentStep()
+                }"
+              >
+                {{ step.label }}
+              </span>
+
+              @if (step.description) {
+                <span 
+                  class="text-sm leading-tight transition-colors duration-300"
+                  [ngClass]="{
+                    'text-zinc-500 font-semibold': i <= currentStep(),
+                    'text-zinc-300 font-medium': i > currentStep(),
+                    'italic': step.description.toLowerCase() === 'opcional'
+                  }"
+                >
+                  {{ step.description }}
+                </span>
+              }
+            </div>
+          </div>
+  
+          @if(!isLast) {
+            <div
+              aria-hidden="true"
+              class="absolute transition-colors duration-500 -z-0"
+              [ngClass]="{
+                'bg-primary-red-600': i < currentStep(),
+                'bg-custom-bg-300': i >= currentStep(),
+                'top-5 left-1/2 -ml-px w-full h-0.5': orientation() === 'horizontal',
+                'left-5 top-10 h-full w-0.5 -ml-px': orientation() === 'vertical'
+              }"
+            ></div>
+          }
+        </li>
+      }
+    </ol>
+  </nav>
+</div>

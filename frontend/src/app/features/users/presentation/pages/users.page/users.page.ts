@@ -14,10 +14,11 @@ import {
 } from '@/shared/interfaces/table';
 import { SESSION_STORE_TOKEN } from '@/features/auth/application/interfaces/session-store.interface';
 import { Button } from "@/shared/ui/components/button/button";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-users.page',
-  imports: [Card, Skeleton, Table, FormsModule, Button],
+  imports: [Card, Skeleton, Table, FormsModule, Button, RouterLink],
   templateUrl: './users.page.html',
   styles: ``,
 })
@@ -208,19 +209,15 @@ export class UsersPage implements OnInit {
   }
 
   onRowAction(event: { actionId: string; row: UserResponseDto }): void {
-    if (event.actionId === 'version') this.viewVersions(event.row);
-    if (event.actionId === 'edit') this.editForm(event.row);
+    if (event.actionId === 'edit') this.viewVersions(event.row);
+    if (event.actionId === 'disable') this.showConfirmation(event.row);
   }
 
   viewVersions(row: UserResponseDto): void {
     console.log('viewVersions, ', row);
   }
 
-  editForm(row: UserResponseDto): void {
-    console.log('editForm, ', row);
-  }
-
-  createUser(): void {
-    console.log("asd")
+  showConfirmation(row: UserResponseDto): void {
+    console.log('showConfirmation, ', row);
   }
 }

@@ -1,1 +1,34 @@
-<p>create-user.page works!</p>
+<div class="text-placeholder-input-900 min-h-screen">
+  <main class="p-8 space-y-8">
+    <div class="mb-8 flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-bold text-placeholder-input-950">Creación de usuario</h1>
+        <p class="text-placeholder-input-500 text-sm max-w-2xl">
+          Continua el proceso de creación del usuario, asignando los formularios correspondientes y
+          definiendo su posición en la jerarquía organizacional.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex gap-2">
+      <app-card class="flex flex-col gap-4 w-3/10">
+        <app-step-by-step
+          orientation="vertical"
+          [steps]="steps()"
+          [currentStep]="currentStep()"
+        ></app-step-by-step>
+      </app-card>
+      <app-card class="flex flex-col w-full" style="view-transition-name: wizard-content">
+        @if (currentStep() === 0) {
+          <app-create-form></app-create-form>
+        }
+        @if (currentStep() === 1) {
+          <app-form-assignment></app-form-assignment>
+        }
+        @if (currentStep() === 2) {
+          <app-user-assignment></app-user-assignment>
+        }
+      </app-card>
+    </div>
+  </main>
+</div>

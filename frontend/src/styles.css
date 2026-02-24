@@ -97,7 +97,6 @@
   /* Custom fonts */
   --font-montserrat: 'Montserrat', sans-serif;
 
-
   --animate-toast-in: toast-in 0.3s ease-in-out forwards;
   --animate-toast-out: toast-out 0.25s ease-in-out forwards;
   /* --animation-toast-out: toast-out 0.25s ease-in-out forwards; */
@@ -124,6 +123,40 @@
       opacity: 0;
     }
   }
+
+  /* Definimos la animación personalizada para el nombre 'wizard-content' */
+
+  /* Keyframes usando Tailwind logic mental (o CSS estándar) */
+  @keyframes fade-out-slide-left {
+    to {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+  }
+
+  @keyframes fade-in-slide-right {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+  }
+}
+
+/* Definimos la animación personalizada para el nombre 'wizard-content' */
+
+::view-transition-old(wizard-content) {
+  /* Salida: Se desvanece y se mueve un poco a la izquierda */
+  animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out-slide-left;
+}
+
+::view-transition-new(wizard-content) {
+  /* Entrada: Aparece desde la derecha */
+  animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both fade-in-slide-right;
+}
+
+/* IMPORTANTE: Esto evita que el contenido salte mientras se anima */
+::view-transition-group(wizard-content) {
+  height: auto; /* Permite animar la altura suavemente */
 }
 
 @layer base {
