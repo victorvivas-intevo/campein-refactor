@@ -33,6 +33,24 @@ export const dashboardRoutes: Routes = [
         allowedRoles: priviliges,
       },
   },
+  {
+    path: 'analytical/social-network-comparative',
+    loadComponent: () =>
+      import('../pages/comparative-social-network.page/comparative-social-network.page').then((m) => m.ComparativeSocialNetworkPage),
+      canActivate: [roleGuard],
+      data: {
+        allowedRoles: priviliges,
+      },
+  },
+  {
+    path: 'analytical/survies-comparative',
+    loadComponent: () =>
+      import('../pages/comparative-survies.page/comparative-survies.page').then((m) => m.ComparativeSurviesPage),
+      canActivate: [roleGuard],
+      data: {
+        allowedRoles: priviliges,
+      },
+  },
   // {
   //   path: '',
   //   redirectTo: 'dashboard',

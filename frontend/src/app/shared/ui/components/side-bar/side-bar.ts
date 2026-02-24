@@ -29,6 +29,7 @@ export class SideBar {
     { publicName: 'Voluntariado Fico', route: '/app/fico-volunteers', icon: 'fa-regular fa-map', roles: privilegesAdmin },
     { publicName: 'Estadisticas electorales', route: '/app/election-statistics', icon: 'fa-regular fa-map', roles: privilegesAdmin },
     { publicName: 'Paloma Valencia', route: '/app/analytical/paloma-valencia', icon: 'fa-regular fa-map', roles: privilegesAdmin },
+    { publicName: 'Redes sociales', route: '/app/analytical/social-network-comparative', icon: 'fa-regular fa-map', roles: privilegesAdmin },
   ];
 
   logoutItem: MenuInterface = { publicName: 'Salir', route: '/auth/login/', icon: 'fa-solid fa-arrow-right-from-bracket' }
