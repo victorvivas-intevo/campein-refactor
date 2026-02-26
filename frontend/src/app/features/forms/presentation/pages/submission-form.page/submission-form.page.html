@@ -36,8 +36,8 @@
       <h2 class="text-2xl font-bold mb-2">¡Envío Exitoso!</h2>
       <p class="text-gray-600 mb-6">La información se ha registrado correctamente en el sistema.</p>
       <div class="flex gap-4 items-center justify-center">
-        <app-button (click)="goBack('back')">Volver a formularios</app-button>
-        <app-button (click)="goBack('new')">Registrar otro formulario</app-button>
+        <app-button (clicked)="goBack('back')">Volver a formularios</app-button>
+        <app-button (clicked)="goBack('new')">Registrar otro formulario</app-button>
       </div>
       <!-- <app-button label="Volver a formularios" (click)="goBack()"></app-button> -->
     </div>
@@ -91,7 +91,7 @@
           No tienes permisos para ver o completar este formulario. Contacta a un administrador si
           crees que esto es un error.
         </p>
-        <app-button variant="primary" (click)="goBack('back')">
+        <app-button variant="primary" (clicked)="goBack('back')">
           Regresar
         </app-button>
       </div>

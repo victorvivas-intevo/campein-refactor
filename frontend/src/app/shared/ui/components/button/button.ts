@@ -72,6 +72,14 @@ export class Button {
             'focus:ring-primary-red-600'
           );
           break;
+          case 'ghost':
+            classes.push(
+              'text-gray-600', 
+              'bg-gray-100', 
+              'hover:bg-gray-200', 
+              'focus:ring-primary-gray-600'
+            );
+            break;
       }
     }
 

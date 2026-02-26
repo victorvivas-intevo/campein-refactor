@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Card } from "@/shared/ui/components/card/card";
-import { StebBySteb } from '@/shared/ui/components/steb-by-steb/steb-by-steb';
+import { StepByStep, StepItem } from '@/shared/ui/components/step-by-step/step-by-step';
 import { Tabs } from "@/shared/ui/components/tabs/tabs";
 import { TabItem } from '@/shared/interfaces/tabs';
 import { StebAudienceUploadFile } from '../../components/steb-audience-upload-file/steb-audience-upload-file';
@@ -8,13 +8,19 @@ import { StebAudienceInternalUserList } from '../../components/steb-audience-int
 
 @Component({
   selector: 'app-notifications-principal-page',
-  imports: [Card, StebBySteb, Tabs],
+  imports: [Card, StepByStep, Tabs],
   templateUrl: './principal.html',
   styles: ``,
 })
 export class Principal {
   pasoActual: number = 0;
 
+  steps: StepItem[] = [
+    { label: 'Audiencia' },
+    { label: 'Mensaje' },
+    { label: 'Publicar' },
+    { label: 'Resumen' }
+  ];
 
   formTabs: TabItem[] = [
       {
