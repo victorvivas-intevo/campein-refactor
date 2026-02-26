@@ -2,14 +2,13 @@ import { Component, inject, signal } from '@angular/core';
 import { Card } from "@/shared/ui/components/card/card";
 import { StepByStep, StepItem } from "@/shared/ui/components/step-by-step/step-by-step";
 import { AuthFacade } from '@/features/auth/application/fecades/auth.fecade';
-import { Button } from "@/shared/ui/components/button/button";
 import { CreateForm } from "../../components/create-form/create-form";
 import { FormAssignment } from "../../components/form-assignment/form-assignment";
 import { UserAssignment } from "../../components/user-assignment/user-assignment";
 
 @Component({
   selector: 'app-create-user.page',
-  imports: [Card, StepByStep, Button, CreateForm, FormAssignment, UserAssignment],
+  imports: [Card, StepByStep, CreateForm, FormAssignment, UserAssignment],
   templateUrl: './create-user.page.html',
 })
 export class CreateUserPage {
@@ -43,7 +42,4 @@ export class CreateUserPage {
       return val;
     });
   }
-
-  
-
 }

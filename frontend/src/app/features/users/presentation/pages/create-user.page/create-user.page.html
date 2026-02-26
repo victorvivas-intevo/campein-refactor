@@ -20,7 +20,11 @@
       </app-card>
       <app-card class="flex flex-col w-full" style="view-transition-name: wizard-content">
         @if (currentStep() === 0) {
-          <app-create-form></app-create-form>
+          @if (authFecade.session()?.user; as currentUser) {
+            <app-create-form [user]="currentUser"></app-create-form>
+          }@else{
+            <p class="text-gray-500">Se requiere una sesión activa</p>
+          }
         }
         @if (currentStep() === 1) {
           <app-form-assignment></app-form-assignment>
