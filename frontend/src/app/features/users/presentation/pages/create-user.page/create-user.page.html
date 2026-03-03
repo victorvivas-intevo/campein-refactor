@@ -19,18 +19,18 @@
         ></app-step-by-step>
       </app-card>
       <app-card class="flex flex-col w-full" style="view-transition-name: wizard-content">
-        @if (currentStep() === 0) {
-          @if (authFecade.session()?.user; as currentUser) {
+        @if (authFecade.session()?.user; as currentUser) {
+          @if (currentStep() === 0) {
             <app-create-form [user]="currentUser"></app-create-form>
-          }@else{
-            <p class="text-gray-500">Se requiere una sesión activa</p>
           }
-        }
-        @if (currentStep() === 1) {
-          <app-form-assignment></app-form-assignment>
-        }
-        @if (currentStep() === 2) {
-          <app-user-assignment></app-user-assignment>
+          @if (currentStep() === 1) {
+            <app-form-assignment></app-form-assignment>
+          }
+          @if (currentStep() === 2) {
+            <app-user-assignment></app-user-assignment>
+          }
+        }@else{
+          <p class="text-gray-500">Se requiere una sesión activa</p>
         }
       </app-card>
     </div>

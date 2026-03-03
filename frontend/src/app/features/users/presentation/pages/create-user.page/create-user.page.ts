@@ -42,4 +42,8 @@ export class CreateUserPage {
       return val;
     });
   }
+
+  createUser() {
+    
+  }
 }
