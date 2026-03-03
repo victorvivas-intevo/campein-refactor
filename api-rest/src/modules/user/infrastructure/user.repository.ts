@@ -176,6 +176,7 @@ export class UserRepository implements UserQueryService, UserManagementService {
           role: userDto.role,
           leaderId: userDto.leaderId,
           password: hashedPassword,
+          isActive: userDto.isActive ?? false,
         },
         select: this.userSelect,
       });

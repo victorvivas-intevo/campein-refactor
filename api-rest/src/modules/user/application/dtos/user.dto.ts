@@ -23,6 +23,7 @@ export interface CreateUserDto {
   role: string;
   leaderId?: string | null;
   password: string;
+  isActive?: boolean;
 }
 
 export interface UpdateUserDto {

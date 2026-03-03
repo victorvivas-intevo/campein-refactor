@@ -5,6 +5,8 @@ import { AuthFacade } from '@/features/auth/application/fecades/auth.fecade';
 import { CreateForm } from "../../components/create-form/create-form";
 import { FormAssignment } from "../../components/form-assignment/form-assignment";
 import { UserAssignment } from "../../components/user-assignment/user-assignment";
+import { CreateUserDto } from '@/features/users/domain/dtos/user.dto';
+import { UsersFacade } from '@/features/users/application/fecades/user.fecade';
 
 @Component({
   selector: 'app-create-user.page',
@@ -13,12 +15,14 @@ import { UserAssignment } from "../../components/user-assignment/user-assignment
 })
 export class CreateUserPage {
 
+  userFecade = inject(UsersFacade)
+
   authFecade = inject(AuthFacade);
 
   steps = signal<StepItem[]>([
     { label: 'Creación' },
-    { label: 'Asignación de formularios', description: 'Opcional' },
     { label: 'Jerarquía', description: 'Opcional' },
+    { label: 'Asignación de formularios', description: 'Opcional' },
   ]);
 
   currentStep = signal<number>(0);
@@ -43,7 +47,20 @@ export class CreateUserPage {
     });
   }
 
-  createUser() {
-    
+  createUser(formData: CreateUserDto): void {
+    this.userFecade.createUser(formData).then((success) => {
+        if (success) {
+          this.nextStep();
+        }
+      }
+    );
+  }
+
+  assingmentForm(event: any): void {
+    console.log("assingmentForm ", event)
+  }
+
+  assingmentUser(event: any): void {
+    console.log("assingmentUser ", event)
   }
 }

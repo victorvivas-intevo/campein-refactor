@@ -24,6 +24,7 @@ export interface CreateUserDto {
   role: UserRole;
   leaderId?: string | null;
   password?: string;
+  isActive?: boolean;
 }
 
 export interface UpdateUserDto {

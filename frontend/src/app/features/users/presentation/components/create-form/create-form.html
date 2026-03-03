@@ -4,7 +4,7 @@
       <h2 class="text-xl font-semibold text-primary-red-500">Información básica</h2>
       <p class="text-gray-900 text-base font-normal">Datos generales del usuario</p>
     </div>
-    <app-button variant="ghost" (clicked)="resetForm()">Limpiar formulario</app-button>
+    <app-button variant="ghost" (clicked)="resetForm()" [disabled]="isLoading()">Limpiar formulario</app-button>
   </div>
 
   <form [formGroup]="form" (ngSubmit)="createUser()" class="space-y-8">
@@ -93,7 +93,7 @@
             <input checked 
               id="isActive" 
               formControlName="isActive" 
-              name="status" type="checkbox" class="sr-only peer" />
+              name="isActive" type="checkbox" class="sr-only peer" />
             <div
               class="w-12 h-6 bg-gray-300 rounded-full peer peer-checked:bg-primary-red-600 after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-white after:rounded-full after:h-[18px] after:w-[18px] after:transition-all peer-checked:after:translate-x-[24px] transition-colors duration-300"
             ></div>
@@ -105,11 +105,16 @@
     </div>
 
     <div class="pt-8 border-t border-gray-100 flex justify-end">
-      <app-button variant="primary" type="submit">
-        <div class="flex items-center gap-2">
-          Siguiente
-          <i class="fa-solid fa-arrow-right"></i>
-        </div>
+      <app-button variant="primary" type="submit" [disabled]="form.invalid || isLoading()" 
+        [loading]="isLoading()">
+        @if(!isLoading()){
+          <div class="flex items-center gap-2">
+            Siguiente
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        }@else {
+          Procesando...
+        }
       </app-button>
     </div>
   </form>

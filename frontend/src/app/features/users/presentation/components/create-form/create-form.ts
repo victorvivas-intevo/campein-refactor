@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, effect, input, OnInit, output } from '@angular/core';
 import { Button } from "@/shared/ui/components/button/button";
 import { User } from '@/features/auth/domain/entities/user.entity';
 import { CreateUserDto, UserRole } from '@/features/users/domain/dtos/user.dto';
@@ -10,10 +10,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './create-form.html',
   styles: ``,
 })
-export class CreateForm {
+export class CreateForm implements OnInit {
   user = input.required<User>();
 
   submitForm = output<CreateUserDto>();
+
+  isLoading = input<boolean>(false);
 
   form = new FormGroup({
     fullName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
@@ -22,6 +24,31 @@ export class CreateForm {
     tenantId: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
     isActive: new FormControl(true, { nonNullable: true }) // true por defecto (Activo)
   });
+
+  constructor() {
+    effect(() => {
+      if (this.isLoading()) {
+        this.form.disable();
+      } else {
+        this.form.enable();
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    const currentUser = this.user();
+
+    if (currentUser.role === 'LIDER_ALFA') {
+      this.form.patchValue({
+        role: 'LIDER_BETA',
+        tenantId: currentUser.tenantId
+      });
+    } else if (currentUser.role === 'ADMIN_CAMPANA') {
+      this.form.patchValue({
+        tenantId: currentUser.tenantId
+      });
+    }
+  }
 
   createUser(): void {
 
@@ -51,10 +78,14 @@ export class CreateForm {
       email: formValues.email,
       role: role,
       tenantId: tenantId,
-      leaderId: leaderId,
-      password: 'defaultPassword123'
+      password: 'defaultPassword123',
+      isActive: formValues.isActive
     };
 
+    if(this.user().role === 'LIDER_ALFA') {
+      formData.leaderId = this.user().id;
+    }
+    
     this.submitForm.emit(formData);
   }
 
@@ -63,6 +94,7 @@ export class CreateForm {
     this.form.reset({
       isActive: true // Para que el switch vuelva a estar en 'Activo'
     });
+    this.ngOnInit();
   }
 
 }
