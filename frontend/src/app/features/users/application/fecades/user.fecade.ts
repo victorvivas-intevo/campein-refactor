@@ -7,6 +7,7 @@ import { ToastService } from '@/shared/services/toast/toast.service';
 import { CreateUserUseCase } from '../use-cases/create-user.use-case';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { GetUserUseCase } from '../use-cases/get-user.use-case';
 // import { User } from '@/features/auth/domain/entities/user.entity';
 // import { GetFormDTO, GetFormSubmissionDTO, GetFormVersionDTO } from '../../domain/dtos/form-list.dto';
 
@@ -14,6 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class UsersFacade {
   private getUsersUC = inject(GetUsersUseCase);
   private createUserUC = inject(CreateUserUseCase);
+  private getUserUC = inject(GetUserUseCase);
   private router = inject(Router);
 
   items = signal<UserResponseDto[]>([]);
@@ -52,7 +54,7 @@ export class UsersFacade {
     this.loading.set(true);
     try {
       const result = await firstValueFrom(this.createUserUC.execute(userData));
-      this.createdUser.set(result)
+      this.createdUser.set(result);
 
       this.toast.success('Éxito', 'Usuario creado correctamente');
       return true;
@@ -74,6 +76,31 @@ export class UsersFacade {
         console.error(error);
       }
       return false;
+    } finally {
+      this.loading.set(false);
+    }
+  }
+
+  async loadOne(id: string) {
+    this.loading.set(true);
+    try {
+      const result = await firstValueFrom(this.getUserUC.execute(id));
+      // TODO: cambiar por current.set(result)
+      this.createdUser.set(result);
+    } catch (error) {
+      if (error instanceof UnauthorizedRoleError) {
+        this.toast.error('Acceso Denegado', error.message);
+      } else if (error instanceof HttpErrorResponse) {
+        if (error.status === 400) {
+          const backendMessage = error.error.message || 'El tenantId no existe o es inválido.';
+          this.toast.error('Datos Inválidos', backendMessage);
+        } else {
+          this.toast.error('Error del servidor', 'No se logró crear el usuario');
+        }
+      } else {
+        this.toast.error('Error', 'Ocurrió un error inesperado en la aplicación');
+        console.error(error);
+      }
     } finally {
       this.loading.set(false);
     }

@@ -18,12 +18,16 @@
           [currentStep]="currentStep()"
         ></app-step-by-step>
       </app-card>
-      <app-card class="flex flex-col w-full" style="view-transition-name: wizard-content">
+      <app-card class="flex flex-col w-full gap-4" style="view-transition-name: wizard-content">
         @if (authFecade.session()?.user; as currentUser) {
-          @if (currentStep() === 0) {
-            <app-create-form [user]="currentUser" (submitForm)="createUser($event)" [isLoading]="userFecade.loading()"></app-create-form>
+          @if (currentStep() === 0 && !userFecade.loading()) {
+            <!-- TODO: eliminar, solo para desarrollo -->
+            <!-- <app-create-form [user]="currentUser" (submitForm)="createUser($event)" [isLoading]="userFecade.loading()"></app-create-form> -->
+            <app-user-info [user]="userFecade.createdUser()!"></app-user-info>
+            <app-user-assignment [userSession]="currentUser" [user]="userFecade.createdUser()!" (submit)="assingmentUser($event)" [isLoading]="userFecade.loading()" (skip)="nextStep()"></app-user-assignment>
           }
           @if (currentStep() === 1) {
+            <app-create-form [user]="currentUser" (submitForm)="createUser($event)" [isLoading]="userFecade.loading()"></app-create-form>
             <app-user-assignment [userSession]="currentUser" [user]="userFecade.createdUser()!" (submit)="assingmentUser($event)" [isLoading]="userFecade.loading()"></app-user-assignment>
           }
           @if (currentStep() === 2) {

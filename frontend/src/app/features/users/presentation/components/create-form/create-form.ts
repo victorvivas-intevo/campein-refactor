@@ -22,7 +22,8 @@ export class CreateForm implements OnInit {
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
     role: new FormControl<UserRole | null>(null, [Validators.required]),
     tenantId: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
-    isActive: new FormControl(true, { nonNullable: true }) // true por defecto (Activo)
+    isActive: new FormControl(true, { nonNullable: true }), // true por defecto (Activo)
+    forcePassword: new FormControl(true, { nonNullable: true }) // true por defecto (Activo)
   });
 
   constructor() {
@@ -41,7 +42,8 @@ export class CreateForm implements OnInit {
     if (currentUser.role === 'LIDER_ALFA') {
       this.form.patchValue({
         role: 'LIDER_BETA',
-        tenantId: currentUser.tenantId
+        tenantId: currentUser.tenantId,
+        forcePassword: true,
       });
     } else if (currentUser.role === 'ADMIN_CAMPANA') {
       this.form.patchValue({
@@ -91,8 +93,10 @@ export class CreateForm implements OnInit {
 
 
   resetForm() {
+    // Para que el switch vuelva a estar en 'Activo'
     this.form.reset({
-      isActive: true // Para que el switch vuelva a estar en 'Activo'
+      isActive: true,
+      forcePassword: true 
     });
     this.ngOnInit();
   }

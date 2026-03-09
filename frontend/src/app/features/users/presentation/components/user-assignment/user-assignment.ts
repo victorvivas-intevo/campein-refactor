@@ -14,11 +14,17 @@ export class UserAssignment {
   userSession = input.required<User>();
   user = input.required<UserResponseDto>();
   submit = output<any>();
+  skip = output();
   isLoading = input<boolean>(false);
 
   ngOnInit(): void {
     console.log("currentUser, ", this.userSession())
     console.log("userData, ", this.user())
   }
+
+  skipStep(): void {
+    this.skip.emit();
+  }
+
 
 }

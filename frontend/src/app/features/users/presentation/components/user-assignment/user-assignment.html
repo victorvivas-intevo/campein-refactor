@@ -5,5 +5,10 @@
       Definición de la posición del usuario en la jerarquía organizacional
     </p>
   </div>
-  <app-button variant="ghost">Limpiar</app-button>
+  @if(user().role === 'LIDER_ALFA') {
+    
+  }
+  @if(user().role === 'LIDER_BETA') {
+    Asignar a un lider alfa
+  }
 </div>

@@ -12,23 +12,25 @@ export class TopBar {
 
   readonly session = this.authFacade.session;
 
-  private readonly roleDictionary: Record<string, string> = {
-    'ADMIN_SISTEMA': 'Adm. sistema',
-    'ADMIN_CAMPAÑA': 'Adm. campaña', // Añade los tuyos
-    'VOLUNTARIO': 'Voluntario',
-    'LIDER': 'Líder de zona'
-  };
-  
-  // Accedemos a la sesión actual como una señal (o un observable, según la implementación)
+  readonly displayRole = this.authFacade.currentDisplayRole;
 
-  readonly displayRole = computed(() => {
-    // Asegúrate de que la ruta 'user.role' coincida con tu entidad User real
-    const currentRole = this.session()?.user?.role; 
+  // private readonly roleDictionary: Record<string, string> = {
+  //   'ADMIN_SISTEMA': 'Adm. sistema',
+  //   'ADMIN_CAMPANA': 'Adm. campaña', // Añade los tuyos
+  //   'LIDER_ALFA': 'Voluntario',
+  //   'LIDER_BETA': 'Líder de zona'
+  // };
+  
+  // // Accedemos a la sesión actual como una señal (o un observable, según la implementación)
+
+  // readonly displayRole = computed(() => {
+  //   // Asegúrate de que la ruta 'user.role' coincida con tu entidad User real
+  //   const currentRole = this.session()?.user?.role; 
     
-    if (!currentRole) return 'Cargando...';
+  //   if (!currentRole) return 'Cargando...';
     
-    // Devuelve el rol traducido, o el rol original si no está en el diccionario
-    return this.roleDictionary[currentRole] || currentRole; 
-  });
+  //   // Devuelve el rol traducido, o el rol original si no está en el diccionario
+  //   return this.roleDictionary[currentRole] || currentRole; 
+  // });
 
 }
