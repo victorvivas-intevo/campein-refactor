@@ -105,4 +105,14 @@ export class UsersFacade {
       this.loading.set(false);
     }
   }
+
+  async loadUsersToAssign(caseType: string) {
+    this.loading.set(true);
+    try {
+
+    } catch (error) {
+      console.error(error);
+      
+    }
+  }
 }

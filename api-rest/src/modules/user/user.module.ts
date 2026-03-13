@@ -10,6 +10,7 @@ import { CreateUserService } from './application/use-cases/createUser.service';
 import { UpdateUserService } from './application/use-cases/updateUser.service';
 import { DeleteUserService } from './application/use-cases/deleteUser.service';
 import { ChangeUserStatusService } from './application/use-cases/changeUser.service';
+import { GetUsersAvailableForAssignment } from './application/use-cases/getUsersAvailableForAssignment.service';
 
 @Module({
   controllers: [UserController],
@@ -19,6 +20,7 @@ import { ChangeUserStatusService } from './application/use-cases/changeUser.serv
     UpdateUserService,
     DeleteUserService,
     ChangeUserStatusService,
+    GetUsersAvailableForAssignment,
     UserRepository,
     { provide: USER_QUERY_REPOSITORY, useExisting: UserRepository },
     { provide: USER_COMMAND_REPOSITORY, useExisting: UserRepository },
@@ -29,6 +31,7 @@ import { ChangeUserStatusService } from './application/use-cases/changeUser.serv
     CreateUserService,
     UpdateUserService,
     DeleteUserService,
+    GetUsersAvailableForAssignment,
   ],
 })
 export class UsersModule {}

@@ -140,6 +140,8 @@ export class UserRepository implements UserQueryService, UserManagementService {
     const whereCondition: Prisma.UserWhereInput = {
       tenantId: options.tenantId,
       leaderId: options.leaderId,
+      isActive: options.isActive,
+      role: options.role,
     };
 
     return this.prisma.user.findMany({

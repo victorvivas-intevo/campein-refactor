@@ -1,14 +1,39 @@
 <div class="flex justify-between">
   <div class="flex flex-col">
-    <h2 class="text-xl font-semibold text-primary-red-500">Jerarquía</h2>
+    <h2 class="text-xl font-semibold text-primary-red-500">
+      <i class="fa-solid fa-sitemap"></i> Jerarquía
+    </h2>
     <p class="text-gray-900 text-base font-normal">
       Definición de la posición del usuario en la jerarquía organizacional
     </p>
+    @if (user().role === 'LIDER_ALFA') {
+      <app-table
+        [headers]="[...]"
+        [rows]="..."></app-table>
+    }
+    @if (user().role === 'LIDER_BETA') {
+      <label
+        class="flex items-start p-4 rounded-xl border-2 border-primary bg-primary/5 cursor-pointer transition-all hover:bg-primary/10"
+      >
+        <div class="flex items-center h-5 mr-4 mt-0.5">
+          <input
+            checked=""
+            class="w-4 h-4 text-primary bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 focus:ring-primary focus:ring-2"
+            name="alpha_leader"
+            type="radio"
+            value="unassigned"
+          />
+        </div>
+        <div class="flex-1">
+          <span class="block text-slate-900 dark:text-white font-medium text-sm mb-1"
+            >Leave Unassigned</span
+          >
+          <span class="block text-slate-500 dark:text-slate-400 text-xs"
+            >Beta Leader will not be subordinated to any Alpha Leader currently.</span
+          >
+        </div>
+        <span class="material-symbols-outlined text-primary ml-2">check_circle</span>
+      </label>
+    }
   </div>
-  @if(user().role === 'LIDER_ALFA') {
-    
-  }
-  @if(user().role === 'LIDER_BETA') {
-    Asignar a un lider alfa
-  }
 </div>

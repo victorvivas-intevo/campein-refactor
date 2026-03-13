@@ -37,6 +37,7 @@ export interface UpdateUserDto {
 
 export interface FindUsersOptions {
   tenantId?: string;
-  leaderId?: string;
+  leaderId?: string | null;
   isActive?: boolean;
+  role?: string;
 }
