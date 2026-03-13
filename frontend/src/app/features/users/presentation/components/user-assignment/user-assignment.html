@@ -6,12 +6,12 @@
     <p class="text-gray-900 text-base font-normal">
       Definición de la posición del usuario en la jerarquía organizacional
     </p>
-    @if (user().role === 'LIDER_ALFA') {
-      <app-table
+    @if (roleCase() === 'grid') {
+      <!-- <app-table
         [headers]="[...]"
-        [rows]="..."></app-table>
+        [rows]="..."></app-table> -->
     }
-    @if (user().role === 'LIDER_BETA') {
+    @if (roleCase() === 'table') {
       <label
         class="flex items-start p-4 rounded-xl border-2 border-primary bg-primary/5 cursor-pointer transition-all hover:bg-primary/10"
       >
