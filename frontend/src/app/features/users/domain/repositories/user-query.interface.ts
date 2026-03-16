@@ -7,4 +7,5 @@ export abstract class UserQueryInterface {
   abstract getUsersByTenant(tenantId: string): Observable<UserResponseDto[]>;
   abstract getUser(userId: string): Observable<UserResponseDto>;
   abstract getSubordinates(userId: string): Observable<UserResponseDto[]>;
+  abstract getUsersToAssignment(caseType: string, tenantId: string): Observable<UserResponseDto[]>;
 }

@@ -6,11 +6,11 @@ import { UnauthorizedRoleError } from '../../domain/errors/unauthorized-role.err
 import { AuthFacade } from '@/features/auth/application/fecades/auth.fecade';
 
 @Injectable()
-export class GetUsersUseCase {
+export class GetUsersToAssignmentUseCase {
   private authFecade = inject(AuthFacade);
   constructor(private readonly gateway: UserQueryInterface) {}
 
-  execute(): Observable<UserResponseDto[]> {
+  execute(caseType: string, tenantId?: string): Observable<UserResponseDto[]> {
     const currentRole = this.authFecade.session()?.user.role;
     if (!currentRole || currentRole === '') {
       this.authFecade.logout();
@@ -18,12 +18,23 @@ export class GetUsersUseCase {
         () => new UnauthorizedRoleError('Debe existir un rol válido.'),
       );
     }
+
     if (currentRole === 'LIDER_BETA') {
       return throwError(
         () => new UnauthorizedRoleError('Los líderes Beta no tienen acceso a esta vista.'),
       );
     }
-    return this.gateway.getUsers().pipe(
+
+    if(currentRole !== 'ADMIN_SISTEMA') {
+      tenantId = this.authFecade.session()?.user.tenantId;
+    }
+
+    if(tenantId === undefined){
+      tenantId = this.authFecade.session()?.user.tenantId;
+    }
+    tenantId = this.authFecade.session()?.user.tenantId ?? '';
+
+    return this.gateway.getUsersToAssignment(caseType, tenantId).pipe(
       map((users: UserResponseDto[]) => {
         return users.map((user) => ({
           ...user,

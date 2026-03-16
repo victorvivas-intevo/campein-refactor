@@ -29,9 +29,6 @@ export class CreateUserPage implements OnInit {
 
   currentStep = signal<number>(0);
 
-  // TODO: eliminar, solo para desarrollo
-  // createdUser = signal<UserResponseDto | null>(null);
-
   ngOnInit(): void {
     // TODO: eliminar, solo para desarrollo
     this.userFecade.loadOne('ac7f1524-803d-4e70-8ae3-267bdf91e177')

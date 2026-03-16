@@ -24,7 +24,7 @@
             <!-- TODO: eliminar, solo para desarrollo -->
             <!-- <app-create-form [user]="currentUser" (submitForm)="createUser($event)" [isLoading]="userFecade.loading()"></app-create-form> -->
             <app-user-info [user]="userFecade.createdUser()!"></app-user-info>
-            <!-- <app-user-assignment [users]="userFecade.users()" (submit)="assingmentUser($event)" [isLoading]="userFecade.loading()" (skip)="nextStep()"></app-user-assignment> -->
+            <!-- <app-user-assignment (submit)="assingmentUser($event)" [isLoading]="userFecade.loading()" (skip)="nextStep()"></app-user-assignment> -->
           }
           @if (currentStep() === 1) {
             <app-create-form [user]="currentUser" (submitForm)="createUser($event)" [isLoading]="userFecade.loading()"></app-create-form>
