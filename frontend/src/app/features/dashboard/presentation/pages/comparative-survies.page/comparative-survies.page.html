@@ -12,7 +12,7 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <app-card [size]="'md'" class="overflow-hidden">
+          <app-card [size]="'md'">
             <h4 class="text-lg font-semibold mb-4 text-placeholder-input-900">
               Datos Comparativos
             </h4>
@@ -109,7 +109,7 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <app-card [size]="'md'" class="overflow-hidden">
+          <app-card [size]="'md'">
             <h4 class="text-lg font-semibold mb-4 text-placeholder-input-900">
               Datos Comparativos
             </h4>
@@ -208,7 +208,7 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <app-card [size]="'md'" class="overflow-hidden">
+          <app-card>
             <h4 class="text-lg font-semibold mb-4 text-placeholder-input-900">
               Datos Comparativos
             </h4>
@@ -221,7 +221,7 @@
             </app-table>
           </app-card>
 
-          <app-card [size]="'md'" class="flex flex-col justify-between">
+          <app-card class="flex flex-col justify-between">
             <h4 class="text-lg font-semibold mb-6 text-placeholder-input-900">
               Votos: Invamer 25 de Febrero
             </h4>
@@ -295,8 +295,19 @@
           </app-card>
         </div>
 
-        <div>
-          
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-h-">
+          <app-card class="flex flex-col">
+            <h4 class="text-lg font-semibold mb-6 text-placeholder-input-900">
+              Partido más votado en <b>Senado</b> por departamento
+            </h4>
+            <img src="assets/images/analitics/partidos por departamento.png" alt="" class="max-h-150 w-full h-full rounded-card-0 shadow-card-0">
+          </app-card>
+          <app-card class="flex flex-col">
+            <h4 class="text-lg font-semibold mb-6 text-placeholder-input-900">
+              Proyección de curules para <b>Cámara</b>
+            </h4>
+            <img src="assets/images/analitics/curules por partido.png" alt="" class="max-h-150 w-full h-full rounded-card-0 shadow-card-0">
+          </app-card>
         </div>
       </section>
     </div>
