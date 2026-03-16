@@ -40,6 +40,9 @@ export class CreateUserService {
     if (dto.role !== 'ADMIN_SISTEMA') {
       dto.tenantId = session.tenantId;
     }
+    if (dto.forcePassword === undefined) {
+      dto.forcePassword = true;
+    }
     const user = await this.userManagementService.createUser(dto);
     return user;
   }

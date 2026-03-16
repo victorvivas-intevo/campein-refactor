@@ -1,8 +1,156 @@
-<div class="flex justify-between">
-  <div class="flex flex-col">
-    <h2 class="text-xl font-semibold text-primary-red-500">Información básica</h2>
-    <p class="text-gray-900 text-base font-normal">Datos generales del usuario</p>
+<div class="flex flex-col gap-6">
+  <div class="flex justify-between">
+    <div class="flex flex-col">
+      <h2 class="text-xl font-semibold text-primary-red-500">Información básica</h2>
+      <p class="text-gray-900 text-base font-normal">Datos generales del usuario</p>
+    </div>
+    <app-button variant="ghost" (clicked)="resetForm()" [disabled]="isLoading()"
+      >Limpiar formulario</app-button
+    >
   </div>
-  <app-button variant="ghost">Limpiar formulario</app-button>
-  <!-- <app-button variant="primary" (clicked)="nextStep()">next</app-button> -->
+
+  <form [formGroup]="form" (ngSubmit)="createUser()" class="space-y-8">
+    <div class="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
+      <div class="flex flex-col gap-3">
+        <label for="fullname" class="text-placeholder-input-900 font-semibold text-base ml-2"
+          >Nombre Completo</label
+        >
+        <input
+          id="fullName"
+          formControlName="fullName"
+          name="fullname"
+          placeholder="Ej. Juan Pérez"
+          required
+          type="text"
+          class="w-full text-placeholder-input-900 text-base font-medium bg-white px-5 py-3.5 border border-border-input shadow-inset-input rounded-xl focus:outline-none focus:border-purple-heart-800 focus:ring-2 focus:ring-purple-heart-800 transition-all duration-200"
+        />
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <label for="email" class="text-placeholder-input-900 font-semibold text-base ml-2"
+          >Correo Electrónico</label
+        >
+        <input
+          id="email"
+          formControlName="email"
+          name="email"
+          placeholder="juan.perez@empresa.com"
+          required
+          type="email"
+          class="w-full text-placeholder-input-900 text-base font-medium bg-white px-5 py-3.5 border border-border-input shadow-inset-input rounded-xl focus:outline-none focus:border-purple-heart-800 focus:ring-2 focus:ring-purple-heart-800 transition-all duration-200"
+        />
+      </div>
+
+      @if (user().role === 'ADMIN_SISTEMA' || user().role === 'ADMIN_CAMPANA') {
+        <div class="flex flex-col gap-3">
+          <label for="role" class="text-placeholder-input-900 font-semibold text-base ml-2"
+            >Rol</label
+          >
+          <select
+            id="role"
+            formControlName="role"
+            name="role"
+            required
+            class="w-full text-placeholder-input-900 text-base font-normal bg-white px-5 py-3.5 border border-border-input shadow-inset-input rounded-xl focus:outline-none focus:border-purple-heart-800 focus:ring-2 focus:ring-purple-heart-800 transition-all duration-200 appearance-none"
+          >
+            <option disabled selected value="">Selecciona un rol</option>
+            @if (user().role === 'ADMIN_SISTEMA') {
+              <option value="ADMIN_SISTEMA">Admin. Sistema</option>
+              <option value="ADMIN_CAMPANA">Admin. Campaña</option>
+            }
+            <option value="LIDER_ALFA">Líder Alfa</option>
+            <option value="LIDER_BETA">Líder Beta</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col justify-center gap-3">
+          <label for="isActive" class="text-placeholder-input-900 font-semibold text-base ml-2"
+            >Forzar cambio de contraseña</label
+          >
+          <div class="flex items-center space-x-4 ml-2">
+            <span class="text-sm font-medium text-gray-500">Inactivo</span>
+
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input
+                checked
+                id="forcePassword"
+                formControlName="forcePassword"
+                name="forcePassword"
+                type="checkbox"
+                class="sr-only peer"
+              />
+              <div
+                class="w-12 h-6 bg-gray-300 rounded-full peer peer-checked:bg-primary-red-600 after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-white after:rounded-full after:h-[18px] after:w-[18px] after:transition-all peer-checked:after:translate-x-[24px] transition-colors duration-300"
+              ></div>
+            </label>
+
+            <span class="text-sm font-medium text-gray-900">Activo</span>
+          </div>
+        </div>
+      }
+
+      @if (user().role === 'ADMIN_SISTEMA') {
+        <div class="flex flex-col gap-3">
+          <label for="tenantId" class="text-placeholder-input-900 font-semibold text-base ml-2"
+            >Campaña / Cliente</label
+          >
+          <select
+            id="tenantId"
+            formControlName="tenantId"
+            name="tenantId"
+            required
+            class="w-full text-placeholder-input-900 text-base font-normal bg-white px-5 py-3.5 border border-border-input shadow-inset-input rounded-xl focus:outline-none focus:border-purple-heart-800 focus:ring-2 focus:ring-purple-heart-800 transition-all duration-200 appearance-none"
+          >
+            <option disabled selected value="">Selecciona una campaña</option>
+            <option value="campaign_a">Campaña Retail A</option>
+            <option value="campaign_b">Campaña Tech B</option>
+            <option value="campaign_c">Campaña Bancaria C</option>
+          </select>
+        </div>
+      }
+
+      <div class="flex flex-col justify-center gap-3">
+        <label for="isActive" class="text-placeholder-input-900 font-semibold text-base ml-2"
+          >Estado</label
+        >
+        <div class="flex items-center space-x-4 ml-2">
+          <span class="text-sm font-medium text-gray-500">Inactivo</span>
+
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input
+              checked
+              id="isActive"
+              formControlName="isActive"
+              name="isActive"
+              type="checkbox"
+              class="sr-only peer"
+            />
+            <div
+              class="w-12 h-6 bg-gray-300 rounded-full peer peer-checked:bg-primary-red-600 after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-white after:rounded-full after:h-[18px] after:w-[18px] after:transition-all peer-checked:after:translate-x-[24px] transition-colors duration-300"
+            ></div>
+          </label>
+
+          <span class="text-sm font-medium text-gray-900">Activo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-gray-100 flex justify-end">
+      <app-button
+        variant="primary"
+        type="submit"
+        [disabled]="form.invalid || isLoading()"
+        [loading]="isLoading()"
+      >
+        @if (!isLoading()) {
+          <div class="flex items-center gap-2">
+            Siguiente
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        } @else {
+          Procesando...
+        }
+      </app-button>
+    </div>
+  </form>
 </div>

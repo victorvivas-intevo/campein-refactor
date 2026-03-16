@@ -22,12 +22,14 @@ import { DeleteUserService } from '../application/use-cases/deleteUser.service';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import type { UserPayload } from 'src/modules/auth/domain/interfaces/user-payload.interface';
 import { ChangeUserStatusService } from '../application/use-cases/changeUser.service';
+import { GetUsersAvailableForAssignment } from '../application/use-cases/getUsersAvailableForAssignment.service';
 
 @Controller('users')
 export class UserController {
   constructor(
     private readonly changeUserStatusService: ChangeUserStatusService,
     private readonly getUserService: GetUserService,
+    private readonly getUsersAvailableForAssignmentService: GetUsersAvailableForAssignment,
     private readonly createUserService: CreateUserService,
     private readonly updateUserService: UpdateUserService,
     private readonly deleteUserService: DeleteUserService,
@@ -70,6 +72,7 @@ export class UserController {
     return this.getUserService.getUsersByTenant(currentUser, tenantId);
   }
 
+  // Creación de usuario
   @Post()
   create(
     @CurrentUser() currentUser: UserPayload,
@@ -78,6 +81,7 @@ export class UserController {
     return this.createUserService.execute(currentUser, dto);
   }
 
+  // Actualización de usuario
   @Put(':userId')
   update(
     @CurrentUser() currentUser: UserPayload,
@@ -87,6 +91,7 @@ export class UserController {
     return this.updateUserService.execute(currentUser, userId, dto);
   }
 
+  // Eliminación de usuario
   @Delete(':userId')
   remove(
     @CurrentUser() currentUser: UserPayload,
@@ -95,6 +100,7 @@ export class UserController {
     return this.deleteUserService.execute(currentUser, userId);
   }
 
+  // Cambio de estado de usuario (activar)
   @Get(':userId/activate')
   activateUser(
     @CurrentUser() currentUser: UserPayload,
@@ -102,12 +108,24 @@ export class UserController {
   ): Promise<void> {
     return this.changeUserStatusService.execute(currentUser, userId, true);
   }
-
+  
+  // Cambio de estado de usuario (desactivar)
   @Get(':userId/deactivate')
   deactivateUser(
     @CurrentUser() currentUser: UserPayload,
     @Param('userId', new ParseUUIDPipe()) userId: string,
   ): Promise<void> {
     return this.changeUserStatusService.execute(currentUser, userId, false);
+  }
+
+  @Get('users-available-for-assignment/:tenantId/:caseId')
+  async getUsersAvailableForAssignment(
+    @CurrentUser() currentUser: UserPayload,
+    @Param('tenantId', new ParseUUIDPipe()) tenantId: string,
+    @Param('caseId') caseId: string
+  ): Promise<UserResponseDto[]> {
+    console.log("Llego al controllador")
+    return this.getUsersAvailableForAssignmentService.execute(currentUser, tenantId, caseId);
+    // return this.getUsersAvailableForAssignmentService.execute(currentUser, tenantId, caseId);
   }
 }
