@@ -57,7 +57,7 @@ export class UserApiClient implements UserQueryInterface, UserManagementInterfac
   }
 
   getUsersToAssignment(caseType: string, tenantId: string): Observable<UserResponseDto[]> {
-    return this.http.get<UserResponseDto[]>(`${this.baseUrl}/users/to-assignment/${tenantId}/${caseType}`);
+    return this.http.get<UserResponseDto[]>(`${this.baseUrl}/users/users-available-for-assignment/${tenantId}/${caseType}`);
   }
 
 }

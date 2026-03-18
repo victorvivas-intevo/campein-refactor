@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
 import { CreateUserDto, UpdateUserDto, UserResponseDto } from '../dtos/user.dto';
+import { URLCase } from '../types/user.types';
 // import { GetFormDTO, GetFormSubmissionDTO, GetFormVersionDTO } from '../dtos/form-list.dto';
 
 export abstract class UserQueryInterface {
@@ -7,5 +8,5 @@ export abstract class UserQueryInterface {
   abstract getUsersByTenant(tenantId: string): Observable<UserResponseDto[]>;
   abstract getUser(userId: string): Observable<UserResponseDto>;
   abstract getSubordinates(userId: string): Observable<UserResponseDto[]>;
-  abstract getUsersToAssignment(caseType: string, tenantId: string): Observable<UserResponseDto[]>;
+  abstract getUsersToAssignment(caseType: URLCase, tenantId: string): Observable<UserResponseDto[]>;
 }

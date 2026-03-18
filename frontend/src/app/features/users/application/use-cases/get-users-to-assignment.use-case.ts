@@ -34,7 +34,7 @@ export class GetUsersToAssignmentUseCase {
     }
     tenantId = this.authFecade.session()?.user.tenantId ?? '';
 
-    return this.gateway.getUsersToAssignment(caseType, tenantId).pipe(
+    return this.gateway.getUsersToAssignment(caseType === 'grid' ? 'assignmentAlfa' : 'assignmentBeta', tenantId).pipe(
       map((users: UserResponseDto[]) => {
         return users.map((user) => ({
           ...user,

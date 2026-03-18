@@ -3,8 +3,7 @@ import { Button } from "@/shared/ui/components/button/button";
 import { User } from '@/features/auth/domain/entities/user.entity';
 import { UserResponseDto } from '@/features/users/domain/dtos/user.dto';
 import { Table } from "@/shared/ui/components/table/table";
-
-type UICase = 'grid' | 'table';
+import { UICase } from '@/features/users/domain/types/user.types';
 
 @Component({
   selector: 'app-user-assignment',
