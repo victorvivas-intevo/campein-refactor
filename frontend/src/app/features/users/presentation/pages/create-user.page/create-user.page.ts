@@ -1,14 +1,15 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Card } from "@/shared/ui/components/card/card";
-import { StepByStep, StepItem } from "@/shared/ui/components/step-by-step/step-by-step";
+import { Card } from '@/shared/ui/components/card/card';
+import { StepByStep, StepItem } from '@/shared/ui/components/step-by-step/step-by-step';
 import { AuthFacade } from '@/features/auth/application/fecades/auth.fecade';
-import { CreateForm } from "../../components/create-form/create-form";
-import { FormAssignment } from "../../components/form-assignment/form-assignment";
-import { UserAssignment } from "../../components/user-assignment/user-assignment";
+import { CreateForm } from '../../components/create-form/create-form';
+import { FormAssignment } from '../../components/form-assignment/form-assignment';
+import { UserAssignment } from '../../components/user-assignment/user-assignment';
 import { CreateUserDto, UserResponseDto } from '@/features/users/domain/dtos/user.dto';
 import { UsersFacade } from '@/features/users/application/fecades/user.fecade';
 import { ResponseCreateFormDTO } from '@/features/forms/domain/dtos/form-magement.dto';
-import { UserInfo } from "../../components/user-info/user-info";
+import { UserInfo } from '../../components/user-info/user-info';
+import { UICase } from '@/features/users/domain/types/user.types';
 
 @Component({
   selector: 'app-create-user.page',
@@ -16,8 +17,7 @@ import { UserInfo } from "../../components/user-info/user-info";
   templateUrl: './create-user.page.html',
 })
 export class CreateUserPage implements OnInit {
-
-  userFecade = inject(UsersFacade)
+  userFecade = inject(UsersFacade);
 
   authFecade = inject(AuthFacade);
 
@@ -29,12 +29,14 @@ export class CreateUserPage implements OnInit {
 
   currentStep = signal<number>(0);
 
-  // TODO: eliminar, solo para desarrollo
-  // createdUser = signal<UserResponseDto | null>(null);
+  roleCase = signal<UICase>('table');
 
   ngOnInit(): void {
     // TODO: eliminar, solo para desarrollo
-    this.userFecade.loadOne('ac7f1524-803d-4e70-8ae3-267bdf91e177')
+    this.userFecade.loadOne('ac7f1524-803d-4e70-8ae3-267bdf91e177');
+    
+    // TODO: eliminar, solo para desarrollo
+    this.userFecade.loadUsersToAssign(this.roleCase());
   }
 
   nextStep() {
@@ -51,7 +53,7 @@ export class CreateUserPage implements OnInit {
   }
 
   private updateStep() {
-    this.currentStep.update(val => {
+    this.currentStep.update((val) => {
       if (val < this.steps().length - 1) return val + 1;
       return val;
     });
@@ -59,18 +61,19 @@ export class CreateUserPage implements OnInit {
 
   createUser(formData: CreateUserDto): void {
     this.userFecade.createUser(formData).then((success) => {
-        if (success) {
-          this.nextStep();
-        }
+      if (success) {
+        this.nextStep();
+        this.roleCase.set(this.userFecade.createdUser()?.role === 'LIDER_BETA' ? 'grid' : 'table');
+        this.userFecade.loadUsersToAssign(this.roleCase());
       }
-    );
+    });
   }
 
   assingmentForm(event: any): void {
-    console.log("assingmentForm ", event)
+    console.log('assingmentForm ', event);
   }
 
   assingmentUser(event: any): void {
-    console.log("assingmentUser ", event)
+    console.log('assingmentUser ', event);
   }
 }

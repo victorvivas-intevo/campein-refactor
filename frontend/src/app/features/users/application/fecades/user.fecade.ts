@@ -8,6 +8,8 @@ import { CreateUserUseCase } from '../use-cases/create-user.use-case';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { GetUserUseCase } from '../use-cases/get-user.use-case';
+import { GetUsersToAssignmentUseCase } from '../use-cases/get-users-to-assignment.use-case';
+import { UICase } from '../../domain/types/user.types';
 // import { User } from '@/features/auth/domain/entities/user.entity';
 // import { GetFormDTO, GetFormSubmissionDTO, GetFormVersionDTO } from '../../domain/dtos/form-list.dto';
 
@@ -16,6 +18,7 @@ export class UsersFacade {
   private getUsersUC = inject(GetUsersUseCase);
   private createUserUC = inject(CreateUserUseCase);
   private getUserUC = inject(GetUserUseCase);
+  private getUsersToAssigmentUC = inject(GetUsersToAssignmentUseCase);
   private router = inject(Router);
 
   items = signal<UserResponseDto[]>([]);
@@ -106,13 +109,16 @@ export class UsersFacade {
     }
   }
 
-  async loadUsersToAssign(caseType: string) {
+  async loadUsersToAssign(caseType: UICase) {
     this.loading.set(true);
     try {
-
+      const result = await firstValueFrom(this.getUsersToAssigmentUC.execute(caseType));
+      this.items.set(result);
     } catch (error) {
       console.error(error);
       
+    } finally {
+      this.loading.set(false);
     }
   }
 }

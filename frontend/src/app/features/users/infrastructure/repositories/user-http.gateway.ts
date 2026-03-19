@@ -56,4 +56,8 @@ export class UserApiClient implements UserQueryInterface, UserManagementInterfac
     return this.http.delete<void>(`${this.baseUrl}/users/${id}`);
   }
 
+  getUsersToAssignment(caseType: string, tenantId: string): Observable<UserResponseDto[]> {
+    return this.http.get<UserResponseDto[]>(`${this.baseUrl}/users/users-available-for-assignment/${tenantId}/${caseType}`);
+  }
+
 }
