@@ -32,7 +32,7 @@ jobs:
       - name: Deploy API
         run: |
           gcloud run deploy prod-api-service \
-            --image us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/prod-repo/prod-api:${{ github.event.inputs.image_tag }} \
+            --image us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/prod-campein/prod-api:${{ github.event.inputs.image_tag }} \
             --region us-east1 \
             --platform managed
 
@@ -40,6 +40,6 @@ jobs:
       - name: Deploy Front
         run: |
           gcloud run deploy prod-front-campein \
-            --image us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/prod-repo/prod-front:${{ github.event.inputs.image_tag }} \
+            --image us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/prod-campein/prod-front:${{ github.event.inputs.image_tag }} \
             --region us-east1 \
             --platform managed
