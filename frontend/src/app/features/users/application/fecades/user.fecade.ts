@@ -109,14 +109,13 @@ export class UsersFacade {
     }
   }
 
-  async loadUsersToAssign(caseType: UICase) {
+  async loadUsersToAssign(caseType: UICase, tenantId?: string) {
     this.loading.set(true);
     try {
-      const result = await firstValueFrom(this.getUsersToAssigmentUC.execute(caseType));
+      const result = await firstValueFrom(this.getUsersToAssigmentUC.execute(caseType, tenantId));
       this.items.set(result);
     } catch (error) {
       console.error(error);
-      
     } finally {
       this.loading.set(false);
     }
