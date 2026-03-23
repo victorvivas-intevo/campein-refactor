@@ -33,18 +33,18 @@ jobs:
       - name: Build & Push API
         run: |
           docker build \
-            -t us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/prod-repo/prod-api:${{ github.sha }} \
+            -t us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/prod-campein/prod-api:${{ github.sha }} \
             ./api-rest
 
           docker push \
-            us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/prod-repo/prod-api:${{ github.sha }}
+            us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/prod-campein/prod-api:${{ github.sha }}
 
       # 🔷 FRONT
       - name: Build & Push Front
         run: |
           docker build \
-            -t us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/prod-repo/prod-front:${{ github.sha }} \
+            -t us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/prod-campein/prod-front:${{ github.sha }} \
             ./frontend
 
           docker push \
-            us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/prod-repo/prod-front:${{ github.sha }}
+            us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/prod-campein/prod-front:${{ github.sha }}
