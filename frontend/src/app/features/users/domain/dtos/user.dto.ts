@@ -21,10 +21,9 @@ export interface CreateUserDto {
   tenantId: string;
   email: string;
   fullName: string | null;
-  role: UserRole;
+  role: string;
   leaderId?: string | null;
-  password?: string;
-  isActive?: boolean;
+  password: string;
 }
 
 export interface UpdateUserDto {
@@ -33,5 +32,3 @@ export interface UpdateUserDto {
   role: string;
   password?: string;
 }
-
-export type UserRole = 'ADMIN_SISTEMA' | 'ADMIN_CAMPANA' | 'LIDER_ALFA' | 'LIDER_BETA';

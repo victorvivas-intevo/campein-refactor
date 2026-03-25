@@ -15,7 +15,7 @@ export class ComparativeSurviesPage {
 
   // Configuración general para ambas tablas
   tableConfig: TableConfig = {
-    sortable: false,
+    sortable: true,
     pagination: {
       enabled: false // Desactivado por ser pocos datos
     }
@@ -80,34 +80,6 @@ export class ComparativeSurviesPage {
       header: 'Blanco (%)', 
       type: 'number',
       cellClass: () => 'text-placeholder-input-700' 
-    },
-  ];
-
-  // --- DATOS Y COLUMNAS: ESCENARIO 3 ---
-  scenario3Data = [
-    { encuestadora: 'Invamer', labelChart: 'invamer', fecha: '25 Feb', abelardo: 18.9, paloma: 10, cepeda: 37.1 }
-  ];
-
-  scenario3Columns: TableColumn[] = [
-    { id: 'encuestadora', header: 'Encuestadora', type: 'text' },
-    { id: 'fecha', header: 'Fecha', type: 'text', cellClass: () => 'text-placeholder-input-600' },
-    { 
-      id: 'abelardo', 
-      header: 'Abelardo (%)', 
-      type: 'number',
-      cellClass: () => 'font-bold text-purple-heart-800' 
-    },
-    { 
-      id: 'paloma', 
-      header: 'Paloma (%)', 
-      type: 'number',
-      cellClass: () => 'font-bold text-primary-red-600' 
-    },
-    { 
-      id: 'cepeda', 
-      header: 'Cepeda (%)', 
-      type: 'number',
-      cellClass: () => 'font-bold text-primary-green-700' 
     },
   ];
 }

@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from "@angular/router";
 import { MenuInterface } from '@/shared/interfaces/menu';
 
@@ -10,11 +10,5 @@ import { MenuInterface } from '@/shared/interfaces/menu';
 })
 export class ItemMenu {
   @Input() item!: MenuInterface;
-  
-  // Estado para controlar si el dropdown está abierto o cerrado
-  isOpen = signal<boolean>(false);
 
-  toggleDropdown() {
-    this.isOpen.update(val => !val);
-  }
 }

@@ -1,6 +1,7 @@
-<div class="text-placeholder-input-900 min-h-screen font-montserrat">
+<div class=" text-placeholder-input-900 min-h-screen font-montserrat">
   <main class="flex-1 overflow-y-auto">
-    <div class="p-8 mx-auto space-y-12">
+    <div class="p-8 max-w-7xl mx-auto space-y-12">
+      
       <section class="space-y-6">
         <div class="border-l-4 border-primary-green-700 pl-4">
           <h3 class="text-xl font-bold text-placeholder-input-950">
@@ -10,68 +11,41 @@
             Análisis comparativo basado en encuestas de Atlas Intel, CNC, Guarumo y GAD3.
           </p>
         </div>
-
+        
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <app-card [size]="'md'">
-            <h4 class="text-lg font-semibold mb-4 text-placeholder-input-900">
-              Datos Comparativos
-            </h4>
-            <app-table
-              [columns]="scenario1Columns"
-              [data]="scenario1Data"
+          <app-card [size]="'md'" class="overflow-hidden">
+            <h4 class="text-lg font-semibold mb-4 text-placeholder-input-900">Datos Comparativos</h4>
+            <app-table 
+              [columns]="scenario1Columns" 
+              [data]="scenario1Data" 
               [config]="tableConfig"
-              [selectable]="false"
-            >
+              [selectable]="false">
             </app-table>
           </app-card>
-
+          
           <app-card [size]="'md'" class="flex flex-col justify-between">
-            <h4 class="text-lg font-semibold mb-6 text-placeholder-input-900">
-              Distribución por Encuesta
-            </h4>
-
+            <h4 class="text-lg font-semibold mb-6 text-placeholder-input-900">Distribución por Encuesta</h4>
+            
             <div class="flex items-end justify-around h-[250px] w-full gap-2 lg:gap-4 mt-auto pt-6">
               @for (item of scenario1Data; track item.encuestadora) {
                 <div class="flex flex-col items-center h-full w-full justify-end gap-3">
-                  <div
-                    class="flex items-end justify-center gap-1 w-full h-full border-b border-slate-100 pb-1"
-                  >
-                    <div
-                      class="w-full max-w-[1.5rem] bg-primary-green-700 rounded-t-sm relative group transition-all duration-500 hover:brightness-110"
-                      [style.height.%]="item.cepeda"
-                    >
-                      <span
-                        class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-primary-green-700 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap"
-                        >{{ item.cepeda }} %</span
-                      >
-                    </div>
+                  <div class="flex items-end justify-center gap-1 w-full h-full border-b border-slate-100 pb-1">
+                     
+                     <div class="w-full max-w-[1.5rem] bg-primary-green-700 rounded-t-sm relative group transition-all duration-500 hover:brightness-110" [style.height.%]="item.cepeda">
+                        <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-primary-green-700 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap">{{item.cepeda}} %</span>
+                     </div>
+                     
+                     <div class="w-full max-w-[1.5rem] bg-primary-red-600 rounded-t-sm relative group transition-all duration-500 hover:brightness-110" [style.height.%]="item.paloma">
+                        <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-primary-red-600 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap">{{item.paloma}} %</span>
+                     </div>
 
-                    <div
-                      class="w-full max-w-[1.5rem] bg-primary-red-600 rounded-t-sm relative group transition-all duration-500 hover:brightness-110"
-                      [style.height.%]="item.paloma"
-                    >
-                      <span
-                        class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-primary-red-600 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap"
-                        >{{ item.paloma }} %</span
-                      >
-                    </div>
-
-                    @if (item.blanco) {
-                      <div
-                        class="w-full max-w-[1.5rem] bg-placeholder-input-400 rounded-t-sm relative group transition-all duration-500 hover:brightness-110"
-                        [style.height.%]="item.blanco"
-                      >
-                        <span
-                          class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-placeholder-input-600 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap"
-                          >{{ item.blanco }} %</span
-                        >
-                      </div>
-                    }
+                     @if (item.blanco) {
+                       <div class="w-full max-w-[1.5rem] bg-placeholder-input-400 rounded-t-sm relative group transition-all duration-500 hover:brightness-110" [style.height.%]="item.blanco">
+                          <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-placeholder-input-600 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap">{{item.blanco}} %</span>
+                       </div>
+                     }
                   </div>
-                  <span
-                    class="text-[9px] lg:text-[10px] font-bold uppercase text-placeholder-input-500 text-center leading-tight"
-                    >{{ item.labelChart }}</span
-                  >
+                  <span class="text-[9px] lg:text-[10px] font-bold uppercase text-placeholder-input-500 text-center leading-tight">{{item.labelChart}}</span>
                 </div>
               }
             </div>
@@ -83,15 +57,11 @@
               </div>
               <div class="flex items-center gap-2">
                 <div class="w-3 h-3 bg-primary-red-600 rounded-sm"></div>
-                <span class="text-xs font-semibold text-placeholder-input-600"
-                  >Paloma Valencia</span
-                >
+                <span class="text-xs font-semibold text-placeholder-input-600">Paloma Valencia</span>
               </div>
               <div class="flex items-center gap-2">
                 <div class="w-3 h-3 bg-placeholder-input-400 rounded-sm"></div>
-                <span class="text-xs font-semibold text-placeholder-input-600"
-                  >Blanco / Ninguno</span
-                >
+                <span class="text-xs font-semibold text-placeholder-input-600">Blanco / Ninguno</span>
               </div>
             </div>
           </app-card>
@@ -107,68 +77,41 @@
             Análisis basado en la encuesta de Guarumo/EcoAnalítica.
           </p>
         </div>
-
+        
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <app-card [size]="'md'">
-            <h4 class="text-lg font-semibold mb-4 text-placeholder-input-900">
-              Datos Comparativos
-            </h4>
-            <app-table
-              [columns]="scenario2Columns"
-              [data]="scenario2Data"
+          <app-card [size]="'md'" class="overflow-hidden">
+            <h4 class="text-lg font-semibold mb-4 text-placeholder-input-900">Datos Comparativos</h4>
+            <app-table 
+              [columns]="scenario2Columns" 
+              [data]="scenario2Data" 
               [config]="tableConfig"
-              [selectable]="false"
-            >
+              [selectable]="false">
             </app-table>
           </app-card>
-
+          
           <app-card [size]="'md'" class="flex flex-col justify-between">
-            <h4 class="text-lg font-semibold mb-6 text-placeholder-input-900">
-              Votos: Guarumo (Ene)
-            </h4>
-
+            <h4 class="text-lg font-semibold mb-6 text-placeholder-input-900">Votos: Guarumo (Ene)</h4>
+            
             <div class="flex items-end justify-center h-[250px] w-full gap-8 mt-auto pt-6">
               @for (item of scenario2Data; track item.encuestadora) {
                 <div class="flex flex-col items-center h-full w-2/3 justify-end gap-3">
-                  <div
-                    class="flex items-end justify-center gap-4 w-full h-full border-b border-slate-100 pb-1"
-                  >
-                    <div
-                      class="w-full max-w-[3rem] bg-purple-heart-800 rounded-t-sm relative group transition-all duration-500 hover:brightness-110"
-                      [style.height.%]="item.abelardo"
-                    >
-                      <span
-                        class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-purple-heart-800 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap"
-                        >{{ item.abelardo }} %</span
-                      >
-                    </div>
+                  <div class="flex items-end justify-center gap-4 w-full h-full border-b border-slate-100 pb-1">
+                     
+                     <div class="w-full max-w-[3rem] bg-purple-heart-800 rounded-t-sm relative group transition-all duration-500 hover:brightness-110" [style.height.%]="item.abelardo">
+                        <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-purple-heart-800 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap">{{item.abelardo}} %</span>
+                     </div>
+                     
+                     <div class="w-full max-w-[3rem] bg-primary-red-600 rounded-t-sm relative group transition-all duration-500 hover:brightness-110" [style.height.%]="item.paloma">
+                        <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-primary-red-600 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap">{{item.paloma}} %</span>
+                     </div>
 
-                    <div
-                      class="w-full max-w-[3rem] bg-primary-red-600 rounded-t-sm relative group transition-all duration-500 hover:brightness-110"
-                      [style.height.%]="item.paloma"
-                    >
-                      <span
-                        class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-primary-red-600 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap"
-                        >{{ item.paloma }} %</span
-                      >
-                    </div>
-
-                    @if (item.blanco) {
-                      <div
-                        class="w-full max-w-[3rem] bg-placeholder-input-400 rounded-t-sm relative group transition-all duration-500 hover:brightness-110"
-                        [style.height.%]="item.blanco"
-                      >
-                        <span
-                          class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-placeholder-input-600 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap"
-                          >{{ item.blanco }} %</span
-                        >
-                      </div>
-                    }
+                     @if (item.blanco) {
+                       <div class="w-full max-w-[3rem] bg-placeholder-input-400 rounded-t-sm relative group transition-all duration-500 hover:brightness-110" [style.height.%]="item.blanco">
+                          <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-placeholder-input-600 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap">{{item.blanco}} %</span>
+                       </div>
+                     }
                   </div>
-                  <span
-                    class="text-[10px] font-bold uppercase text-placeholder-input-500 text-center"
-                    >{{ item.labelChart }}</span
-                  >
+                  <span class="text-[10px] font-bold uppercase text-placeholder-input-500 text-center">{{item.labelChart}}</span>
                 </div>
               }
             </div>
@@ -176,140 +119,21 @@
             <div class="flex flex-wrap justify-center gap-4 mt-6 pt-4">
               <div class="flex items-center gap-2">
                 <div class="w-3 h-3 bg-purple-heart-800 rounded-sm"></div>
-                <span class="text-xs font-semibold text-placeholder-input-600"
-                  >Abelardo de la Espriella</span
-                >
+                <span class="text-xs font-semibold text-placeholder-input-600">Abelardo de la Espriella</span>
               </div>
               <div class="flex items-center gap-2">
                 <div class="w-3 h-3 bg-primary-red-600 rounded-sm"></div>
-                <span class="text-xs font-semibold text-placeholder-input-600"
-                  >Paloma Valencia</span
-                >
+                <span class="text-xs font-semibold text-placeholder-input-600">Paloma Valencia</span>
               </div>
               <div class="flex items-center gap-2">
                 <div class="w-3 h-3 bg-placeholder-input-400 rounded-sm"></div>
-                <span class="text-xs font-semibold text-placeholder-input-600"
-                  >Blanco / Ninguno</span
-                >
+                <span class="text-xs font-semibold text-placeholder-input-600">Blanco / Ninguno</span>
               </div>
             </div>
           </app-card>
         </div>
       </section>
 
-      <section class="space-y-6">
-        <div class="border-l-4 border-purple-heart-800 pl-4">
-          <h3 class="text-xl font-bold text-placeholder-input-950">Escenario: Primera vuelta</h3>
-          <p class="text-placeholder-input-600 mt-1">
-            Asumiendo que los ganadores de las consultas sean Paloma Valencia, Roy Barreras y
-            Claudia López y que habrá otros candidatos que irán directamente a la primera vuelta
-            presidencial, ¿por cuál candidato votaría usted?
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <app-card>
-            <h4 class="text-lg font-semibold mb-4 text-placeholder-input-900">
-              Datos Comparativos
-            </h4>
-            <app-table
-              [columns]="scenario3Columns"
-              [data]="scenario3Data"
-              [config]="tableConfig"
-              [selectable]="false"
-            >
-            </app-table>
-          </app-card>
-
-          <app-card class="flex flex-col justify-between">
-            <h4 class="text-lg font-semibold mb-6 text-placeholder-input-900">
-              Votos: Invamer 25 de Febrero
-            </h4>
-
-            <div class="flex items-end justify-center h-[250px] w-full gap-8 mt-auto pt-6">
-              @for (item of scenario3Data; track item.encuestadora) {
-                <div class="flex flex-col items-center h-full w-2/3 justify-end gap-3">
-                  <div
-                    class="flex items-end justify-center gap-4 w-full h-full border-b border-slate-100 pb-1"
-                  >
-                    <div
-                      class="w-full max-w-[3rem] bg-purple-heart-800 rounded-t-sm relative group transition-all duration-500 hover:brightness-110"
-                      [style.height.%]="item.abelardo"
-                    >
-                      <span
-                        class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-purple-heart-800 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap"
-                        >{{ item.abelardo }} %</span
-                      >
-                    </div>
-
-                    <div
-                      class="w-full max-w-[3rem] bg-primary-red-600 rounded-t-sm relative group transition-all duration-500 hover:brightness-110"
-                      [style.height.%]="item.paloma"
-                    >
-                      <span
-                        class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-primary-red-600 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap"
-                        >{{ item.paloma }} %</span
-                      >
-                    </div>
-
-                    @if (item.cepeda) {
-                      <div
-                        class="w-full max-w-[3rem] bg-primary-green-700 rounded-t-sm relative group transition-all duration-500 hover:brightness-110"
-                        [style.height.%]="item.cepeda"
-                      >
-                        <span
-                          class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-primary-green-700 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-1 rounded shadow-sm text-nowrap"
-                          >{{ item.cepeda }} %</span
-                        >
-                      </div>
-                    }
-                  </div>
-                  <span
-                    class="text-[10px] font-bold uppercase text-placeholder-input-500 text-center"
-                    >{{ item.labelChart }}</span
-                  >
-                </div>
-              }
-            </div>
-
-            <div class="flex flex-wrap justify-center gap-4 mt-6 pt-4">
-              <div class="flex items-center gap-2">
-                <div class="w-3 h-3 bg-purple-heart-800 rounded-sm"></div>
-                <span class="text-xs font-semibold text-placeholder-input-600"
-                  >Abelardo de la Espriella</span
-                >
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="w-3 h-3 bg-primary-red-600 rounded-sm"></div>
-                <span class="text-xs font-semibold text-placeholder-input-600"
-                  >Paloma Valencia</span
-                >
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="w-3 h-3 bg-primary-green-700 rounded-sm"></div>
-                <span class="text-xs font-semibold text-placeholder-input-600"
-                  >Ivan Cepeda</span
-                >
-              </div>
-            </div>
-          </app-card>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-h-">
-          <app-card class="flex flex-col">
-            <h4 class="text-lg font-semibold mb-6 text-placeholder-input-900">
-              Partido más votado en <b>Senado</b> por departamento
-            </h4>
-            <img src="assets/images/analitics/partidos por departamento.png" alt="" class="max-h-150 w-full h-full rounded-card-0 shadow-card-0">
-          </app-card>
-          <app-card class="flex flex-col">
-            <h4 class="text-lg font-semibold mb-6 text-placeholder-input-900">
-              Proyección de curules para <b>Cámara</b>
-            </h4>
-            <img src="assets/images/analitics/curules por partido.png" alt="" class="max-h-150 w-full h-full rounded-card-0 shadow-card-0">
-          </app-card>
-        </div>
-      </section>
     </div>
   </main>
 </div>

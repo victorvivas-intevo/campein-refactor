@@ -18,23 +18,19 @@
           [currentStep]="currentStep()"
         ></app-step-by-step>
       </app-card>
-      <app-card class="flex flex-col w-full gap-4" style="view-transition-name: wizard-content">
-        @if (authFecade.session()?.user; as currentUser) {
-          @if (currentStep() === 0 && !userFecade.loading()) {
-            <!-- TODO: eliminar, solo para desarrollo -->
-            <!-- <app-create-form [user]="currentUser" (submitForm)="createUser($event)" [isLoading]="userFecade.loading()"></app-create-form> -->
-            <app-user-info [user]="userFecade.createdUser()!"></app-user-info>
-            <!-- <app-user-assignment [users]="userFecade.users()" (submit)="assingmentUser($event)" [isLoading]="userFecade.loading()" (skip)="nextStep()"></app-user-assignment> -->
+      <app-card class="flex flex-col w-full" style="view-transition-name: wizard-content">
+        @if (currentStep() === 0) {
+          @if (authFecade.session()?.user; as currentUser) {
+            <app-create-form [user]="currentUser"></app-create-form>
+          }@else{
+            <p class="text-gray-500">Se requiere una sesión activa</p>
           }
-          @if (currentStep() === 1) {
-            <app-create-form [user]="currentUser" (submitForm)="createUser($event)" [isLoading]="userFecade.loading()"></app-create-form>
-            <!-- <app-user-assignment [userSession]="currentUser" [user]="userFecade.createdUser()!" (submit)="assingmentUser($event)" [isLoading]="userFecade.loading()"></app-user-assignment> -->
-          }
-          @if (currentStep() === 2) {
-            <app-form-assignment [userSession]="currentUser" [user]="userFecade.createdUser()!" (submit)="assingmentForm($event)" [isLoading]="userFecade.loading()"></app-form-assignment>
-          }
-        }@else{
-          <p class="text-gray-500">Se requiere una sesión activa</p>
+        }
+        @if (currentStep() === 1) {
+          <app-form-assignment></app-form-assignment>
+        }
+        @if (currentStep() === 2) {
+          <app-user-assignment></app-user-assignment>
         }
       </app-card>
     </div>
