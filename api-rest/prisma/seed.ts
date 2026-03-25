@@ -5,12 +5,16 @@ import * as dotenv from 'dotenv';
 import { join } from 'path';
 import * as fs from 'fs';
 
+
+console.log('--- Iniciando file ---');
+
 // 1. Cargar variables de entorno explícitamente desde la raíz del proyecto
 dotenv.config({ path: join(__dirname, '../.env') });
 
 // 2. Configurar la conexión igual que en tu PrismaService
 const connectionString =
-  process.env.DIRECT_DATABASE_URL || process.env.DATABASE_URL;
+process.env.DIRECT_DATABASE_URL || process.env.DATABASE_URL;
+console.log('connectionString', connectionString);
 
 if (!connectionString) {
   throw new Error(
