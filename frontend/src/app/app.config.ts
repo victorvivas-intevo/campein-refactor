@@ -9,6 +9,7 @@ import { environment } from '../environments/environment';
 import { provideUsers } from './features/users/infrastructure/di/user.provider';
 
 const API_URL = environment.production ? environment.apiUrlProd : environment.apiUrl;
+// const API_URL = environment.apiUrlProd;
 
 export const appConfig: ApplicationConfig = {
   providers: [

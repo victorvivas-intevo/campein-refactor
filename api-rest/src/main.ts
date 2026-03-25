@@ -7,8 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
   app.enableCors({
-    // origin: ['https://campein-frontend-408168404729.us-central1.run.app'], // o un array de orígenes si necesitas más
-    origin: ['http://localhost:4200'], // o un array de orígenes si necesitas más
+    // origin: ['http://localhost:8080'],
+    origin: ['https://campein-frontend-408168404729.us-east1.run.app', 'https://campein.com', 'www.campein.com'], 
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });

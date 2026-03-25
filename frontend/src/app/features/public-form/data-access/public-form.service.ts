@@ -11,7 +11,7 @@ import {
   providedIn: 'root',
 })
 export class PublicFormApiService {
-  private readonly baseUrl = `${environment.apiUrl}/public-forms`;
+  private readonly baseUrl = `${environment.production ? environment.apiUrlProd : environment.apiUrl}/public-forms`;
 
   constructor(private readonly http: HttpClient) {}
 
