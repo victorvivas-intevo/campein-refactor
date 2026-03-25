@@ -1,4 +1,4 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, finalize, tap } from 'rxjs';
 import { LoginCredentialsDTO } from '../dtos/login.dto';
 import { LoginUseCase } from '../use-cases/login.service';
@@ -7,15 +7,26 @@ import { LoadSessionUseCase } from '../use-cases/load-session.service';
 import { RefreshTokenUseCase } from '../use-cases/refresh-token.service';
 import { Session } from '../../domain/entities/session.entity';
 import { Router } from '@angular/router';
+import { ToastService } from '@/shared/services/toast/toast.service';
+import { getRoleDisplayName } from '../../domain/value-objects/role.dictionary';
 
 @Injectable()
 export class AuthFacade {
   private readonly _session = signal<Session | null>(null);
   private readonly _loading = signal(false);
 
+  private toast = inject(ToastService);
+
   readonly session = this._session.asReadonly();
   readonly loading = this._loading.asReadonly();
   readonly isAuthenticated = computed(() => !!this._session()?.tokens?.accessToken);
+
+  readonly currentDisplayRole = computed(() => {
+    const currentRole = this.session()?.user?.role;
+    if (!currentRole) return 'Cargando...'; // O 'Sin rol'
+    
+    return getRoleDisplayName(currentRole);
+  });
 
   constructor(
     private readonly loginUC: LoginUseCase,

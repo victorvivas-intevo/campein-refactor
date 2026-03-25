@@ -6,29 +6,29 @@ import { UnauthorizedRoleError } from '../../domain/errors/unauthorized-role.err
 import { AuthFacade } from '@/features/auth/application/fecades/auth.fecade';
 
 @Injectable()
-export class GetUsersUseCase {
+export class GetUserUseCase {
   private authFecade = inject(AuthFacade);
   constructor(private readonly gateway: UserQueryInterface) {}
 
-  execute(): Observable<UserResponseDto[]> {
+  execute(id: string): Observable<UserResponseDto> {
     const currentRole = this.authFecade.session()?.user.role;
     if (!currentRole || currentRole === '') {
       this.authFecade.logout();
       throwError(
-        () => new UnauthorizedRoleError('Debe existir un rol válido.'),
+        () => new UnauthorizedRoleError('Se requiere sesión activa.'),
       );
     }
     if (currentRole === 'LIDER_BETA') {
       return throwError(
-        () => new UnauthorizedRoleError('Los líderes Beta no tienen acceso a esta vista.'),
+        () => new UnauthorizedRoleError('Los líderes Beta no tienen acceso a esta información.'),
       );
     }
-    return this.gateway.getUsers().pipe(
-      map((users: UserResponseDto[]) => {
-        return users.map((user) => ({
+    return this.gateway.getUser(id).pipe(
+      map((user: UserResponseDto) => {
+        return {
           ...user,
           campain: user.tenant?.name || 'Sin campaña asignada',
-        }));
+        };
       }),
     );
   }

@@ -20,11 +20,10 @@ COPY . .
 
 # ### FIX: Definir variables dummy para que el build no falle al leer prisma.config.ts
 # Prisma generate no se conecta a la DB, solo necesita que la variable exista.
-ENV DATABASE_URL="postgresql://postgres:C4mp31N2026#2027@10.18.48.3:5432/campein_refactor?host=/cloudsql/campein:us-east1:campein-refactor&schema=public"
-ENV DIRECT_DATABASE_URL="postgresql://postgres:C4mp31N2026#2027@10.18.48.3:5432/campein_refactor?host=/cloudsql/campein:us-east1:campein-refactor&schema=public"
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
+ENV DIRECT_DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
 
 # Generar el cliente de Prisma
-# ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
 RUN npx prisma generate
 
 # Construir la aplicación de NestJS
@@ -49,58 +48,7 @@ COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/prisma ./prisma
 
 # Exponer el puerto
-ENV AUTORIZE_HOSTS="https://prod-front-campein-408168404729.us-east1.run.app,https://campein.com,www.campein.com"
 EXPOSE 3000
 
 # Comando de inicio
 CMD ["node", "dist/src/main"]
-# CMD ["node", "dist/main.js"]
-# CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/main"]
-
-# ===== Builder =====
-# FROM node:20-alpine AS builder
-
-# RUN apk add --no-cache openssl libc6-compat
-
-# WORKDIR /app
-
-# COPY package*.json ./
-# COPY prisma ./prisma/
-
-# # Instalar todas las dependencias
-# RUN npm install
-
-# # Copiar el resto del código fuente
-# COPY . .
-
-# # COPY package*.json ./
-# # RUN npm install
-
-# ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
-# ENV DIRECT_DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
-
-# ENV PORT=3000
-
-# RUN npx prisma generate
-# RUN npm run build
-
-# # ===== Production =====
-# # FROM node:20-alpine
-
-# # WORKDIR /app
-
-# # COPY package*.json ./
-
-
-# # COPY --from=builder /app/dist ./dist
-# # COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-# # COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
-# # COPY --from=builder /app/prisma ./prisma
-# COPY --from=builder /app/dist ./dist
-# COPY --from=builder /app/node_modules ./node_modules
-# COPY --from=builder /app/package*.json ./
-# COPY --from=builder /app/prisma ./prisma
-
-# EXPOSE 3000
-
-# CMD ["node", "dist/src/main.js"]

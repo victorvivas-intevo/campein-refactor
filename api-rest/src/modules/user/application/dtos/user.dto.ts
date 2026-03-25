@@ -23,6 +23,8 @@ export interface CreateUserDto {
   role: string;
   leaderId?: string | null;
   password: string;
+  isActive?: boolean;
+  forcePassword?: boolean;
 }
 
 export interface UpdateUserDto {
@@ -30,10 +32,12 @@ export interface UpdateUserDto {
   fullName: string | null;
   role: string;
   password?: string;
+  // forcePassword?: boolean;
 }
 
 export interface FindUsersOptions {
   tenantId?: string;
-  leaderId?: string;
+  leaderId?: string | null;
   isActive?: boolean;
+  role?: string;
 }

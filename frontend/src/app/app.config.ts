@@ -8,8 +8,8 @@ import { authInterceptor } from './features/auth/infrastructure/security/auth.in
 import { environment } from '../environments/environment';
 import { provideUsers } from './features/users/infrastructure/di/user.provider';
 
-// const API_URL = environment.production ? environment.apiUrlProd : environment.apiUrl;
-const API_URL = environment.apiUrlProd;
+const API_URL = environment.production ? environment.apiUrlProd : environment.apiUrl;
+// const API_URL = environment.apiUrlProd;
 
 export const appConfig: ApplicationConfig = {
   providers: [
