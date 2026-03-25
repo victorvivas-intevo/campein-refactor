@@ -1,6 +1,6 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient, withInterceptors} from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
 import { provideAuth } from './features/auth/infrastructure/di/auth.providers';
 import { provideForms } from './features/forms/infrastructure/di/form.provider';
@@ -8,7 +8,8 @@ import { authInterceptor } from './features/auth/infrastructure/security/auth.in
 import { environment } from '../environments/environment';
 import { provideUsers } from './features/users/infrastructure/di/user.provider';
 
-const API_URL = environment.production ? environment.apiUrlProd : environment.apiUrl;
+// const API_URL = environment.production ? environment.apiUrlProd : environment.apiUrl;
+const API_URL = environment.apiUrlProd;
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +20,6 @@ export const appConfig: ApplicationConfig = {
     provideAuth(API_URL),
     provideForms(API_URL),
     provideUsers(API_URL),
-    provideRouter(routes)
-  ]
+    provideRouter(routes),
+  ],
 };

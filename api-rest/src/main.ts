@@ -8,10 +8,15 @@ async function bootstrap() {
   app.use(cookieParser());
   app.enableCors({
     // origin: ['https://campein-frontend-408168404729.us-central1.run.app'], // o un array de orígenes si necesitas más
-    origin: ['https://prod-front-campein-408168404729.us-east1.run.app'], // o un array de orígenes si necesitas más
+    origin: [
+      'https://prod-front-campein-408168404729.us-east1.run.app',
+      'https://campein.com',
+      'www.campein.com',
+    ], // o un array de orígenes si necesitas más
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
+    // allowedHeaders: 'Content-Type, Accept, Authorization',
   });
-  await app.listen(process.env.PORT ?? 8080, '0.0.0.0');
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
