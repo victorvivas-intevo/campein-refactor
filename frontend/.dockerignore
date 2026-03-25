@@ -1,5 +1,4 @@
 node_modules
-dist
 npm-debug.log
 npm-debug.log*
 yarn-debug.log*
@@ -13,7 +12,6 @@ yarn-error.log*
 Dockerfile
 .dockerignore
 coverage/
-.nyc_output/
 *.log
 .DS_Store
 *.swp
@@ -21,9 +19,10 @@ coverage/
 .vscode/
 .idea/
 README.md
-test/
-e2e/
+docs/
 *.tgz
 *.tar.gz
 .cache/
 .tmp/
+dist/
+build/

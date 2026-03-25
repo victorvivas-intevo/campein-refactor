@@ -1,0 +1,35 @@
+services:
+  api-rest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - DIRECT_DATABASE_URL=postgresql://user:password@postgres:5432/dbname
+      - JWT_SECRET=mi_clave_secreta_para_jwt
+      - JWT_EXPIRES_IN=1h
+      - PORT=3000
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+  postgres:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=dbname
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
