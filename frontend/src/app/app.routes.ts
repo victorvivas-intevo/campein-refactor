@@ -11,26 +11,19 @@ import { formsRoutes } from './features/forms/presentation/routes/forms.routes';
 import { dashboardRoutes } from './features/dashboard/presentation/routes/dashboard.routes';
 import { notificationRoutes } from './features/notifications/presentation/routes/notifications.routes';
 import { usersRoutes } from './features/users/presentation/routes/users.routes';
+import { PublicFormsRoutes } from '@/features/public-forms/presentation/routes/public-forms.routes';
 
 export const routes: Routes = [
   {
     // Layout público por defecto
-    path: '',
+    path: 'public',
     component: PublicLayoutComponent,
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'public-form/voluntario-publico',
-      },
-      {
-        path: 'public-form/:code',
-        loadComponent: () =>
-          import('@/features/public-form/ui/public-form.page/public-form.page').then(
-            (m) => m.PublicFormPage,
-          ),
-      },
-    ],
+    children: PublicFormsRoutes
+  },
+  {
+    path: 'auth',
+    component: AuthLayoutComponent,
+    children: authRoutes
   },
   {
     // Layout de autenticación
@@ -57,8 +50,8 @@ export const routes: Routes = [
     ],
     pathMatch: 'prefix',
   },
-  {
-    path: '**',
-    redirectTo: 'public-form/voluntario-publico',
-  },
+  // {
+  //   path: '**',
+  //   redirectTo: 'public-form/voluntario-publico',
+  // },
 ];

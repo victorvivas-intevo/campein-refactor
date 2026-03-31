@@ -5,15 +5,12 @@ import * as dotenv from 'dotenv';
 import { join } from 'path';
 import * as fs from 'fs';
 
-
-console.log('--- Iniciando file ---');
-
 // 1. Cargar variables de entorno explícitamente desde la raíz del proyecto
 dotenv.config({ path: join(__dirname, '../.env') });
 
 // 2. Configurar la conexión igual que en tu PrismaService
 const connectionString =
-process.env.DIRECT_DATABASE_URL || process.env.DATABASE_URL;
+  process.env.DIRECT_DATABASE_URL || process.env.DATABASE_URL;
 console.log('connectionString', connectionString);
 
 if (!connectionString) {
@@ -61,16 +58,19 @@ async function main() {
       {
         id: 'b17c1160-adfd-4995-b218-f033124f13df',
         name: 'Intevo S.A.S',
+        shortcode: 'intevo',
         createdAt: new Date('2025-12-16T08:19:07Z'),
       },
       {
         id: 'fe5336fa-ad6b-4c98-8a3f-e769f88a228a',
         name: 'Bongo Analitics',
+        shortcode: 'bongo',
         createdAt: new Date('2025-12-16T08:19:07Z'),
       },
       {
         id: '29bc37c6-0932-4f1c-9b29-d46f79edc767',
         name: 'Paloma Valencia',
+        shortcode: 'paloma-valencia',
         createdAt: new Date('2026-01-15T16:57:12Z'),
       },
     ],
