@@ -7,3 +7,8 @@ export class PublicFormSchemaResponseDto {
   isActive?: boolean;
   isPublic?: boolean;
 }
+
+export class PublicFormsDto {
+  code: string;
+  name: string;
+}

@@ -21,11 +21,6 @@ export const routes: Routes = [
     children: PublicFormsRoutes
   },
   {
-    path: 'auth',
-    component: AuthLayoutComponent,
-    children: authRoutes
-  },
-  {
     // Layout de autenticación
     path: 'auth',
     component: AuthLayoutComponent,

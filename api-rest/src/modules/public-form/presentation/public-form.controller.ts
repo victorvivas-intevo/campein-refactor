@@ -1,7 +1,10 @@
 // src/modules/public-form/presentation/public-form.controller.ts
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PublicFormService } from '../application/public-form.service';
-import { PublicFormSchemaResponseDto } from '../application/dtos/public-form-schema-response.dto';
+import {
+  PublicFormSchemaResponseDto,
+  PublicFormsDto,
+} from '../application/dtos/public-form-schema-response.dto';
 import { PublicFormSubmissionRequestDto } from '../application/dtos/public-form-submission-request.dto';
 import { PublicFormSubmissionResponseDto } from '../application/dtos/public-form-submission-response.dto';
 import { Public } from 'src/common/decorators/public.decorator';
@@ -11,7 +14,15 @@ export class PublicFormController {
   constructor(private readonly publicFormService: PublicFormService) {}
 
   @Public()
-  @Get(':code')
+  @Get('getFormsByTenant/:code')
+  async getPublicFormsByTenant(
+    @Param('code') code: string,
+  ): Promise<PublicFormsDto[]> {
+    return this.publicFormService.getFormsByTenant(code);
+  }
+
+  @Public()
+  @Get('getFormSchema/:code')
   async getSchema(
     @Param('code') code: string,
   ): Promise<PublicFormSchemaResponseDto> {

@@ -1,7 +1,10 @@
 // src/modules/public-form/application/public-form.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PublicFormRepository } from '../infrastructure/public-form.repository';
-import { PublicFormSchemaResponseDto } from './dtos/public-form-schema-response.dto';
+import {
+  PublicFormSchemaResponseDto,
+  PublicFormsDto,
+} from './dtos/public-form-schema-response.dto';
 import { PublicFormSubmissionRequestDto } from './dtos/public-form-submission-request.dto';
 import { PublicFormSubmissionResponseDto } from './dtos/public-form-submission-response.dto';
 
@@ -9,9 +12,22 @@ import { PublicFormSubmissionResponseDto } from './dtos/public-form-submission-r
 export class PublicFormService {
   constructor(private readonly publicFormRepository: PublicFormRepository) {}
 
+  async getFormsByTenant(code: string): Promise<PublicFormsDto[]> {
+    const forms = await this.publicFormRepository.getFormsByTenant(code);
+
+    if (!forms || forms.length === 0) {
+      throw new NotFoundException(
+        `No se encontraron formularios públicos para la campana con código "${code}"`,
+      );
+    }
+    return forms;
+  }
+
   /**
    * Devuelve el schema activo de un formulario público a partir de su código.
    * Este DTO es el que consumirá el frontend Angular para construir el formulario.
+   * @param code El código del formulario público que se quiere obtener.
+   * @returns El schema del formulario público con su información básica (id, código, nombre, versión)
    */
   async getPublicFormSchemaByCode(
     code: string,
@@ -36,6 +52,12 @@ export class PublicFormService {
     };
   }
 
+  /**
+   * Servicio para recibir las respuestas de los formularios públicos. Valida que el formulario exista y esté activo, y luego guarda la respuesta.
+   * @param code El código del formulario público al que se le está enviando la respuesta
+   * @param dto Los datos de la respuesta del formulario
+   * @returns La respuesta del formulario guardada
+   */
   async submitPublicForm(
     code: string,
     dto: PublicFormSubmissionRequestDto,

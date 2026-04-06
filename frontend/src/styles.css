@@ -81,6 +81,51 @@
   --color-placeholder-input-900: #43425d; /* base */
   --color-placeholder-input-950: #2e2d3e;
 
+  /* ********* COLORES PALOMA VALENCIA ********* */
+
+  /**
+    * Codigo de variciones "pv-*valor*-*variacion*" ejemplo: "pv-primary-900" (base)
+    * @author Paloma Valencia
+    */
+
+  --color-pv-primary-50: #ebf7ff;
+  --color-pv-primary-100: #d1ecff;
+  --color-pv-primary-200: #aedfff;
+  --color-pv-primary-300: #76ccff;
+  --color-pv-primary-400: #35afff;
+  --color-pv-primary-500: #078cff;
+  --color-pv-primary-600: #0078ff;
+  --color-pv-primary-700: #006bff;
+  --color-pv-primary-800: #0054d7;
+  --color-pv-primary-900: #0047ab; /* base */
+  --color-pv-primary-950: #062b65;
+
+  --color-pv-secondary-50: #fff1f3;
+  --color-pv-secondary-100: #ffe0e3;
+  --color-pv-secondary-200: #ffc6cc;
+  --color-pv-secondary-300: #ff9ea9;
+  --color-pv-secondary-400: #ff6778;
+  --color-pv-secondary-500: #fc374d;
+  --color-pv-secondary-600: #ea182f;
+  --color-pv-secondary-700: #ce1126; /* base */
+  --color-pv-secondary-800: #a21222;
+  --color-pv-secondary-900: #861622;
+  --color-pv-secondary-950: #49060d;
+
+  --color-pv-tertiary-50: #fefce8;
+  --color-pv-tertiary-100: #fffbc2;
+  --color-pv-tertiary-200: #fff289;
+  --color-pv-tertiary-300: #ffe445;
+  --color-pv-tertiary-400: #fcd116; /* base */
+  --color-pv-tertiary-500: #ecb706;
+  --color-pv-tertiary-600: #cc8e02;
+  --color-pv-tertiary-700: #a26406;
+  --color-pv-tertiary-800: #864f0d;
+  --color-pv-tertiary-900: #724011;
+  --color-pv-tertiary-950: #432105;
+
+  /* ********* FIN COLORES PALOMA VALENCIA ********* */
+
   --color-border-input: #e2e2e2;
 
   --color-head-table-bg: #f0f0f7;

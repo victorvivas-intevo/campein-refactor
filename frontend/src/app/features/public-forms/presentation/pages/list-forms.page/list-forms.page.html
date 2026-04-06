@@ -1,1 +1,9 @@
-<p>{{ codeTenant }}</p>
+<div class="grid grid-cols-4 gap-4">
+    @for(item of facade.formsCurrentTenant(); track item.code; let i = $index; let count = $count) {
+        <app-card [class]="">
+            <p>{{ item.name }} || {{ item.code }}</p>
+        </app-card>
+    } @empty {
+        <p>No hay formularios disponibles</p>
+    }
+</div>
