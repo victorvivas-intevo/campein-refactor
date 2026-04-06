@@ -1,9 +1,57 @@
-<div class="grid grid-cols-4 gap-4">
-    @for(item of facade.formsCurrentTenant(); track item.code; let i = $index; let count = $count) {
-        <app-card [class]="">
-            <p>{{ item.name }} || {{ item.code }}</p>
-        </app-card>
-    } @empty {
-        <p>No hay formularios disponibles</p>
-    }
+<div class="grid grid-cols-4 gap-4 w-full">
+  @for (
+    item of facade.formsCurrentTenant();
+    track item.code;
+    let i = $index;
+    let count = $count;
+    let isFirst = $first;
+    let isEven = $even
+  ) {
+    <app-card
+      [ngClass]="{
+        'md:col-span-4 bg-blue-50/50 border-2 border-blue-200': count === 1,
+        'md:col-span-2': count === 2,
+        'md:col-span-2 bg-gradient-to-br from-gray-50 to-white shadow-md': count >= 3 && isFirst,
+        'md:col-span-1': count >= 3 && !isFirst,
+        'border-l-4 border-l-emerald-500': isEven && (!isFirst || count > 2),
+        'border-l-4 border-l-rose-500': !isEven && (!isFirst || count > 2),
+      }"
+      class="rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-col h-full p-5"
+    >
+      <div class="flex flex-col h-full justify-between">
+        <div>
+          <h3
+            class="font-bold text-gray-800 tracking-tight"
+            [ngClass]="count === 1 || isFirst ? 'text-2xl mb-2' : 'text-lg mb-1'"
+          >
+            {{ item.name }}
+          </h3>
+
+          <div class="flex items-center gap-2 text-sm text-gray-500 font-mono">
+            <span class="bg-gray-100 px-2 py-1 rounded-md">{{ item.code }}</span>
+          </div>
+
+          @if (count === 1 || isFirst) {
+            <p class="mt-4 text-gray-600 text-sm leading-relaxed">
+              {{ item.description || 'Sin descripción disponible' }}
+            </p>
+          }
+        </div>
+
+        <div class="mt-6 flex gap-3">
+          <button
+            class="px-4 py-2 rounded-lg font-medium text-sm transition-colors w-full md:w-auto"
+            [ngClass]="{
+              'bg-blue-600 text-white hover:bg-blue-700': count === 1 || isFirst,
+              'bg-gray-100 text-gray-700 hover:bg-gray-200': count > 1 && !isFirst,
+            }"
+          >
+            Gestionar Formulario
+          </button>
+        </div>
+      </div>
+    </app-card>
+  } @empty {
+    <p>No hay formularios disponibles</p>
+  }
 </div>

@@ -2,10 +2,11 @@ import { PublicFormsFacade } from '@/features/public-forms/application/facades/P
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Card } from "@/shared/ui/components/card/card";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-list-forms.page',
-  imports: [Card],
+  imports: [Card, CommonModule],
   templateUrl: './list-forms.page.html',
 })
 export class ListFormsPage implements OnInit {

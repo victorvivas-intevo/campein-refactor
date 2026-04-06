@@ -256,26 +256,28 @@ async function main() {
       {
         id: '84b9071e-171c-4d64-9777-46dfc105ae8e',
         tenantId: '29bc37c6-0932-4f1c-9b29-d46f79edc767',
-        code: 'paloma-valencia',
-        name: 'Prospectos Paloma Valencia',
-        description: null,
+        code: 'testigos-electorales',
+        name: 'Testigos electorales',
+        description:
+          'Formulario para registro de testigos electorales de la campaña de la candidata presidencial Paloma Valencia',
         createdAt: new Date('2026-01-15T17:13:27.832Z'),
         isActive: true,
         isPublic: true,
       },
       {
         id: '0a45dbaf-6f98-479d-82aa-6d8e504006e3',
-        tenantId: 'b17c1160-adfd-4995-b218-f033124f13df',
-        code: 'formulario-contacto',
-        name: 'Formulario de contacto',
-        description: 'Formulario para recolección de contactos',
+        tenantId: '29bc37c6-0932-4f1c-9b29-d46f79edc767',
+        code: 'voluntarios',
+        name: 'Formulario de voluntarios',
+        description:
+          'Formulario para registro de voluntarios en la campaña electoral a favor de la candidata presidencial Paloma Valencia',
         createdAt: new Date('2026-01-12T18:09:36.737Z'),
         isActive: true,
         isPublic: false,
       },
       {
         id: 'b96e061d-fc7f-4788-b248-2ed2299ccbdc',
-        tenantId: 'b17c1160-adfd-4995-b218-f033124f13df',
+        tenantId: '29bc37c6-0932-4f1c-9b29-d46f79edc767',
         code: 'formulario-propuestas',
         name: 'Formulario propuestas',
         description:
