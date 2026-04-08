@@ -1,55 +1,58 @@
-<div class="grid grid-cols-4 gap-4 w-full">
+<div class="flex flex-col md:grid md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
   @for (
     item of facade.formsCurrentTenant();
     track item.code;
     let i = $index;
     let count = $count;
-    let isFirst = $first;
-    let isOdd = $odd;
-    let isEven = $even;
-    let isLast = $last;
+    let isEven = $even
   ) {
     <app-card
       [clickable]="true"
-      [ngClass]="{
-        'md:col-span-4': count === 1,
-        'md:col-span-2': count === 2 || (count >= 3 && isFirst),
-        'md:col-span-1': count >= 3 && !isFirst,
-        'border-t-4': count >= 1,
-        'border-t-pv-primary-500': isEven,
-        'border-t-pv-secondary-700': !isEven,
-      }"
+      [ngClass]="cardsConditions(count, i, isEven)"
       class="rounded-xl overflow-hidden transition-all duration-300 shadow-md hover:shadow-lg flex flex-col h-full"
       (click)="goToForm(item)"
+      size="sm"
     >
-      <div class="flex flex-col h-full justify-between">
-        <div>
-          <h3
-            class="font-bold text-gray-800 tracking-tight"
-            [ngClass]="count === 1 || isFirst ? 'text-2xl mb-2' : 'text-lg mb-1'"
-          >
-            {{ item.name }}
-          </h3>
+      <div class="flex h-full" [ngClass]="getCardLayoutClasses(count, i)">
+        <div class="flex flex-col h-full justify-between flex-1 p-5">
+          <div>
+            <h3
+              class="font-bold text-gray-800 tracking-tight transition-all duration-300"
+              [ngClass]="getTitleClasses(count, i)"
+            >
+              {{ item.name }}
+            </h3>
 
-          <div class="flex items-center gap-2 text-sm text-gray-500 font-mono">
-            <span class="bg-pv-tertiary-400 px-2 py-1 rounded-md">{{ item.code }}</span>
-          </div>
+            <div class="flex items-center gap-2 text-sm text-gray-500 font-mono">
+              <span class="bg-pv-tertiary-400 px-2 py-1 rounded-md">{{ item.code }}</span>
+            </div>
 
-          <!-- @if (count === 1 || isFirst) { -->
             <p class="mt-4 text-gray-600 text-sm leading-relaxed">
               {{ item.description || 'Sin descripción disponible' }}
             </p>
-          <!-- } -->
+          </div>
+
+          <div class="mt-6 flex gap-3">
+            <button
+              (click)="goToForm(item)"
+              class="px-4 py-2 rounded-lg font-medium text-sm transition-colors w-full md:w-auto text-white bg-pv-primary-500 hover:bg-pv-primary-700 cursor-pointer"
+            >
+              Participar
+            </button>
+          </div>
         </div>
 
-        <div class="mt-6 flex gap-3">
-          <button
-          (click)="goToForm(item)"
-            class="px-4 py-2 rounded-lg font-medium text-sm transition-colors w-full md:w-auto text-white bg-pv-primary-500 hover:bg-pv-primary-700 cursor-pointer"
-          >
-            Participar
-          </button>
-        </div>
+        @if (item.imageUrl) {
+          <div [ngClass]="getImageClasses(count, i)">
+            <img
+              [ngSrc]="item.imageUrl"
+              [alt]="'Imagen descriptiva del formulario ' + item.name"
+              fill
+              class="object-cover transition-transform duration-500 group-hover:scale-105 rounded-2xl"
+              [priority]="i < 2"
+            />
+          </div>
+        }
       </div>
     </app-card>
   } @empty {
