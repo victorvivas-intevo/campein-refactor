@@ -85,7 +85,6 @@
 
   /**
     * Codigo de variciones "pv-*valor*-*variacion*" ejemplo: "pv-primary-900" (base)
-    * @author Paloma Valencia
     */
 
   --color-pv-primary-50: #ebf7ff;
@@ -185,6 +184,10 @@
       transform: translateX(20px);
     }
   }
+
+  --color-tenant-primary: var(--tenant-primary);
+  --color-tenant-secondary: var(--tenant-secondary);
+  --color-tenant-tertiary: var(--tenant-tertiary);
 }
 
 /* Definimos la animación personalizada para el nombre 'wizard-content' */
@@ -370,4 +373,12 @@
   } */
 
   /* end fields forms private layout and auth layout */
+}
+
+:root {
+  /* Valores por defecto (puedes dejar los genéricos de tu SaaS 
+     o los de Paloma Valencia como fallback de seguridad) */
+  --tenant-primary: #E63946;    /* Rojo primario */
+  --tenant-secondary: #1D3557;  /* Azul secundario */
+  --tenant-tertiary: #F1FAEE;   /* Tono claro */
 }

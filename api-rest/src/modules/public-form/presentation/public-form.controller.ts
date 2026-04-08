@@ -22,11 +22,15 @@ export class PublicFormController {
   }
 
   @Public()
-  @Get('getFormSchema/:code')
+  @Get('getFormSchema/:tenantCode/:formCode')
   async getSchema(
-    @Param('code') code: string,
+    @Param('tenantCode') tenantCode: string,
+    @Param('formCode') formCode: string,
   ): Promise<PublicFormSchemaResponseDto> {
-    return this.publicFormService.getPublicFormSchemaByCode(code);
+    return this.publicFormService.getPublicFormSchemaByCode(
+      tenantCode,
+      formCode,
+    );
   }
 
   /**
@@ -40,11 +44,12 @@ export class PublicFormController {
    * }
    */
   @Public()
-  @Post(':code/submissions')
+  @Post('submissions/:tenantCode/:formCode')
   async submit(
-    @Param('code') code: string,
+    @Param('tenantCode') tenantCode: string,
+    @Param('formCode') formCode: string,
     @Body() body: PublicFormSubmissionRequestDto,
   ): Promise<PublicFormSubmissionResponseDto> {
-    return this.publicFormService.submitPublicForm(code, body);
+    return this.publicFormService.submitPublicForm(tenantCode, formCode, body);
   }
 }

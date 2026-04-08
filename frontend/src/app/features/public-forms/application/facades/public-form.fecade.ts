@@ -1,7 +1,7 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { PublicFormsDto } from '../../domain/dtos/query.dtos';
-import { GetFormsByTenantUseCase } from '../use-cases/getFormsByTenant.use-case';
+import { GetFormsByTenantUseCase } from '../use-cases/get-forms-by-tenant.use-case';
 import { ToastService } from '@/shared/services/toast/toast.service';
 
 @Injectable({ providedIn: 'root' })

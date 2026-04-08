@@ -26,18 +26,23 @@ export class PublicFormService {
   /**
    * Devuelve el schema activo de un formulario público a partir de su código.
    * Este DTO es el que consumirá el frontend Angular para construir el formulario.
-   * @param code El código del formulario público que se quiere obtener.
+   * @param tenantCode El código del inquilino al que pertenece el formulario.
+   * @param formCode El código del formulario público que se quiere obtener.
    * @returns El schema del formulario público con su información básica (id, código, nombre, versión)
    */
   async getPublicFormSchemaByCode(
-    code: string,
+    tenantCode: string,
+    formCode: string,
   ): Promise<PublicFormSchemaResponseDto> {
     const formVersion =
-      await this.publicFormRepository.findActiveFormVersionByCode(code);
+      await this.publicFormRepository.findActiveFormVersionByCode(
+        tenantCode,
+        formCode,
+      );
 
     if (!formVersion) {
       throw new NotFoundException(
-        `No se encontró un formulario público activo con el código "${code}"`,
+        `No se encontró un formulario público activo con el código "${formCode}" del inquilino "${tenantCode}"`,
       );
     }
 
@@ -54,20 +59,25 @@ export class PublicFormService {
 
   /**
    * Servicio para recibir las respuestas de los formularios públicos. Valida que el formulario exista y esté activo, y luego guarda la respuesta.
-   * @param code El código del formulario público al que se le está enviando la respuesta
+   * @param tenantCode El código del inquilino al que pertenece el formulario
+   * @param formCode El código del formulario público al que se le está enviando la respuesta
    * @param dto Los datos de la respuesta del formulario
    * @returns La respuesta del formulario guardada
    */
   async submitPublicForm(
-    code: string,
+    tenantCode: string,
+    formCode: string,
     dto: PublicFormSubmissionRequestDto,
   ): Promise<PublicFormSubmissionResponseDto> {
     const formVersion =
-      await this.publicFormRepository.findActiveFormVersionByCode(code);
+      await this.publicFormRepository.findActiveFormVersionByCode(
+        tenantCode,
+        formCode,
+      );
 
     if (!formVersion) {
       throw new NotFoundException(
-        `No se encontró un formulario público activo con el código "${code}"`,
+        `No se encontró un formulario público activo con el código "${formCode}" del inquilino "${tenantCode}"`,
       );
     }
 

@@ -1,3 +1,68 @@
-<p>public-form.page works!</p>
-<p>{{ codeTenant }}</p>
-<p>{{ codeForm }}</p>
+<div class="w-full mx-auto py-8 px-4">
+  <div class="mb-6">
+    <button
+      (click)="goBack()"
+      class="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-tenant-primary transition-colors cursor-pointer group w-fit outline-none"
+    >
+      <svg
+        class="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"
+        />
+      </svg>
+      Volver a la lista
+    </button>
+  </div>
+
+  @if (facade.loading()) {
+    <app-skeleton type="card" [count]="1" class="w-full h-96"></app-skeleton>
+  } @else if (facade.success()) {
+    <div
+      class="text-center p-12 bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center animate-fade-in"
+    >
+      <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-5">
+        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+      </div>
+      <h2 class="text-2xl font-bold text-tenant-primary mb-2">¡Formulario Completado!</h2>
+      <p class="text-gray-600">Hemos recibido tus respuestas correctamente.</p>
+    </div>
+  } @else if (facade.schemaResponse()) {
+    <div class="bg-white rounded-2xl shadow-md p-6 md:p-8 border-t-4 border-tenant-primary">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 tracking-tight mb-2">
+          {{ facade.schemaResponse()?.name }}
+        </h1>
+        <p class="text-gray-600 leading-relaxed">{{ facade.schemaResponse()?.schema?.title }}</p>
+      </div>
+
+      <app-dynamic-form
+        [schema]="facade.schemaResponse()!.schema"
+        (submitted)="onSubmit($event)"
+      ></app-dynamic-form>
+    </div>
+  } @else {
+    <div class="text-center p-10 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+      <p class="text-gray-500">No se pudo cargar el formulario. Verifica la URL.</p>
+      <button
+        (click)="facade.loadSchema(codeTenant!, codeForm!)"
+        class="mt-4 text-tenant-primary font-medium hover:underline"
+      >
+        Reintentar
+      </button>
+    </div>
+  }
+</div>

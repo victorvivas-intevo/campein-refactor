@@ -25,13 +25,17 @@ export class PublicFormRepository implements PublicFormQueryRepository {
    * Busca la versión activa más reciente de un formulario público por código.
    */
   async findActiveFormVersionByCode(
-    code: string,
+    tenantCode: string,
+    formCode: string,
   ): Promise<(FormVersion & { form: Form }) | null> {
     return this.prisma.formVersion.findFirst({
       where: {
         isActive: true,
         form: {
-          code,
+          code: formCode,
+          tenant: {
+            shortcode: tenantCode,
+          },
         },
       },
       include: {

@@ -46,5 +46,6 @@ export interface FormFieldConfig {
 export interface FormSchema {
   formId: string;
   title?: string;
+  description?: string;
   fields: FormFieldConfig[];
 }
