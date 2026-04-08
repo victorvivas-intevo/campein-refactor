@@ -1,6 +1,6 @@
 import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 import { PUBLIC_FORMS_API_URL, PublicFormsGateway } from '../repositories/public-form.gateway';
-import { PublicFormsFacade } from '../../application/facades/PublicForm.fecade';
+import { PublicFormsFacade } from '../../application/facades/public-form.fecade';
 import { GetFormsByTenantUseCase } from '../../application/use-cases/getFormsByTenant.use-case';
 
 export function providePublicForms(publicFormsApiUrl: string): EnvironmentProviders {

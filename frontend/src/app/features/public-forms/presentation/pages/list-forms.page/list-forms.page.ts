@@ -1,8 +1,9 @@
-import { PublicFormsFacade } from '@/features/public-forms/application/facades/PublicForm.fecade';
+import { PublicFormsFacade } from '@/features/public-forms/application/facades/public-form.fecade';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Card } from "@/shared/ui/components/card/card";
 import { CommonModule } from '@angular/common';
+import { PublicFormsDto } from '@/features/public-forms/domain/dtos/query.dtos';
 
 @Component({
   selector: 'app-list-forms.page',
@@ -30,5 +31,10 @@ export class ListFormsPage implements OnInit {
     }
 
     this.facade.loadFormsByTenant(this.codeTenant);
+  }
+
+  goToForm(item: PublicFormsDto){
+    // TODO: redireccionar a la pagina del formulario
+    console.log("navegar a la pagina del formulario");
   }
 }

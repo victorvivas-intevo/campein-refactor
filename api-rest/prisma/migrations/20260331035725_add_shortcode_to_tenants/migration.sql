@@ -6,13 +6,13 @@
 
 */
 -- AlterTable
-ALTER TABLE "tenants" ADD COLUMN "shortcode" TEXT SET;
+ALTER TABLE "tenants" ADD COLUMN "shortcode" TEXT NOT NULL;
 
 -- Update data 
-UPDATE "tenants" SET "shortcode" = 'tmp-' || id;
+-- UPDATE "tenants" SET "shortcode" = 'tmp-' || id;
 
--- Alter table to set NOT NULL
-ALTER TABLE "tenants" ALTER COLUMN "shortcode" SET NOT NULL;
+-- -- Alter table to set NOT NULL
+-- ALTER TABLE "tenants" ALTER COLUMN "shortcode" SET NOT NULL;
 
--- CreateIndex
-CREATE UNIQUE INDEX "tenants_shortcode_key" ON "tenants"("shortcode");
+-- -- CreateIndex
+-- CREATE UNIQUE INDEX "tenants_shortcode_key" ON "tenants"("shortcode");

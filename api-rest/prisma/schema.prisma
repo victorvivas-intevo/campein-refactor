@@ -14,7 +14,7 @@ generator client {
 model Tenant {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name      String   @db.Text
-  shortcode String?   @db.Text @unique
+  shortcode String   @db.Text @unique
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
 
   forms Form[]
@@ -44,6 +44,8 @@ model Form {
   versions    FormVersion[]    @relation("FormToFormVersions")
   submissions FormSubmission[] @relation("FormToFormSubmissions")
 
+  // llave compuesta para unicidad de la columna "code" por tenant/cliente
+  @@unique([tenantId, code])
   @@map("forms")
 }
 
