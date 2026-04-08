@@ -1,6 +1,6 @@
 import { PublicFormsFacade } from '@/features/public-forms/application/facades/public-form.fecade';
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Card } from "@/shared/ui/components/card/card";
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { PublicFormsDto } from '@/features/public-forms/domain/dtos/query.dtos';
@@ -14,6 +14,7 @@ export class ListFormsPage implements OnInit {
 
   codeTenant?: string;
   facade = inject(PublicFormsFacade);
+  private router = inject(Router);
 
   constructor(private readonly route: ActivatedRoute) {}
 
@@ -21,6 +22,7 @@ export class ListFormsPage implements OnInit {
     const code = this.route.snapshot.paramMap.get('codeTenant');
     if (code !== null) {
       this.codeTenant = code;
+      this.loadForms();
     } else {
       console.error('No se proporcionó un código de tenant válido en la URL.');
       return;
@@ -28,8 +30,14 @@ export class ListFormsPage implements OnInit {
     this.facade.loadFormsByTenant(this.codeTenant);
   }
 
+  loadForms() {
+    if(this.codeTenant) {
+      this.facade.loadFormsByTenant(this.codeTenant);
+    }
+  }
+
   goToForm(item: PublicFormsDto){
-    console.log("navegar a la pagina del formulario");
+    this.router.navigate([item.code], { relativeTo: this.route });
   }
 
   /* --- MÉTODOS PARA CONTROLAR LA GRILLA --- */

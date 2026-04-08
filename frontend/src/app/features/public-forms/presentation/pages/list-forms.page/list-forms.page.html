@@ -1,61 +1,137 @@
-<div class="flex flex-col md:grid md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
-  @for (
-    item of facade.formsCurrentTenant();
-    track item.code;
-    let i = $index;
-    let count = $count;
-    let isEven = $even
-  ) {
-    <app-card
-      [clickable]="true"
-      [ngClass]="cardsConditions(count, i, isEven)"
-      class="rounded-xl overflow-hidden transition-all duration-300 shadow-md hover:shadow-lg flex flex-col h-full"
-      (click)="goToForm(item)"
-      size="sm"
-    >
-      <div class="flex h-full" [ngClass]="getCardLayoutClasses(count, i)">
-        <div class="flex flex-col h-full justify-between flex-1 p-5">
-          <div>
-            <h3
-              class="font-bold text-gray-800 tracking-tight transition-all duration-300"
-              [ngClass]="getTitleClasses(count, i)"
-            >
-              {{ item.name }}
-            </h3>
+<div class="w-full">
+  @if (facade.loading()) {
+    <div class="flex flex-col md:grid md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+      @for (item of [1, 2, 3, 4]; track $index; let isEven = $even) {
+        <app-card
+          [clickable]="false"
+          [ngClass]="cardsConditions(4, $index, isEven)"
+          class="rounded-xl overflow-hidden transition-all duration-300 shadow-md flex flex-col h-full bg-white"
+          size="sm"
+        >
+          <div class="flex h-full animate-pulse" [ngClass]="getCardLayoutClasses(4, $index)">
+            <div class="flex flex-col h-full justify-between flex-1 p-5">
+              <div>
+                <div
+                  class="h-6 bg-gray-200 rounded-md w-2/3 mb-3"
+                  [ngClass]="getTitleClasses(4, $index)"
+                ></div>
+                <div class="h-6 bg-gray-200 rounded-md w-24 mb-5"></div>
+                <div class="space-y-3 mt-4">
+                  <div class="h-3 bg-gray-200 rounded w-full"></div>
+                  <div class="h-3 bg-gray-200 rounded w-5/6"></div>
+                  <div class="h-3 bg-gray-200 rounded w-4/6"></div>
+                </div>
+              </div>
 
-            <div class="flex items-center gap-2 text-sm text-gray-500 font-mono">
-              <span class="bg-pv-tertiary-400 px-2 py-1 rounded-md">{{ item.code }}</span>
+              <div class="mt-6 flex gap-3">
+                <div class="h-9 bg-gray-200 rounded-lg w-full md:w-28"></div>
+              </div>
             </div>
 
-            <p class="mt-4 text-gray-600 text-sm leading-relaxed">
-              {{ item.description || 'Sin descripción disponible' }}
-            </p>
+            <div [ngClass]="getImageClasses(4, $index)" class="bg-gray-200"></div>
           </div>
+        </app-card>
+      }
+    </div>
+  } @else {
+    <div class="flex flex-col md:grid md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+      @for (
+        item of facade.formsCurrentTenant();
+        track item.code;
+        let i = $index;
+        let count = $count;
+        let isEven = $even
+      ) {
+        <app-card
+          [clickable]="true"
+          [ngClass]="cardsConditions(count, i, isEven)"
+          class="rounded-xl overflow-hidden transition-all duration-300 shadow-md hover:shadow-lg flex flex-col h-full"
+          (click)="goToForm(item)"
+          size="sm"
+        >
+          <div class="flex h-full" [ngClass]="getCardLayoutClasses(count, i)">
+            <div class="flex flex-col h-full justify-between flex-1 p-5">
+              <div>
+                <h3
+                  class="font-bold text-gray-800 tracking-tight transition-all duration-300"
+                  [ngClass]="getTitleClasses(count, i)"
+                >
+                  {{ item.name }}
+                </h3>
+                <div class="flex items-center gap-2 text-sm text-gray-500 font-mono">
+                  <span class="bg-pv-tertiary-400 px-2 py-1 rounded-md">{{ item.code }}</span>
+                </div>
+                <p class="mt-4 text-gray-600 text-sm leading-relaxed">
+                  {{ item.description || 'Sin descripción disponible' }}
+                </p>
+              </div>
+              <div class="mt-6 flex gap-3">
+                <button
+                  (click)="goToForm(item)"
+                  class="px-4 py-2 rounded-lg font-medium text-sm transition-colors w-full md:w-auto text-white bg-pv-primary-500 hover:bg-pv-primary-700 cursor-pointer"
+                >
+                  Participar
+                </button>
+              </div>
+            </div>
 
-          <div class="mt-6 flex gap-3">
-            <button
-              (click)="goToForm(item)"
-              class="px-4 py-2 rounded-lg font-medium text-sm transition-colors w-full md:w-auto text-white bg-pv-primary-500 hover:bg-pv-primary-700 cursor-pointer"
+            @if (item.imageUrl) {
+              <div [ngClass]="getImageClasses(count, i)">
+                <img
+                  [ngSrc]="item.imageUrl"
+                  [alt]="'Imagen ' + item.name"
+                  fill
+                  class="object-cover transition-transform duration-500 group-hover:scale-105 rounded-2xl"
+                  [priority]="i < 2"
+                />
+              </div>
+            }
+          </div>
+        </app-card>
+      } @empty {
+        <div
+          class="md:col-span-3 lg:col-span-4 flex flex-col items-center justify-center py-20 px-6 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200"
+        >
+          <div
+            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-5 shadow-sm border border-gray-100"
+          >
+            <svg
+              class="w-8 h-8 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              Participar
-            </button>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
           </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2 tracking-tight">
+            No encontramos formularios
+          </h3>
+          <p class="text-sm text-gray-500 max-w-md mb-8 leading-relaxed">
+            Actualmente no hay formularios activos para esta campaña o tuvimos un problema al
+            cargarlos.
+          </p>
+          <button
+            (click)="loadForms()"
+            class="px-5 py-2.5 rounded-lg font-medium text-sm transition-colors text-pv-primary-700 bg-pv-primary-100 hover:bg-pv-primary-200 cursor-pointer flex items-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+            Actualizar página
+          </button>
         </div>
-
-        @if (item.imageUrl) {
-          <div [ngClass]="getImageClasses(count, i)">
-            <img
-              [ngSrc]="item.imageUrl"
-              [alt]="'Imagen descriptiva del formulario ' + item.name"
-              fill
-              class="object-cover transition-transform duration-500 group-hover:scale-105 rounded-2xl"
-              [priority]="i < 2"
-            />
-          </div>
-        }
-      </div>
-    </app-card>
-  } @empty {
-    <p>No hay formularios disponibles</p>
+      }
+    </div>
   }
 </div>
