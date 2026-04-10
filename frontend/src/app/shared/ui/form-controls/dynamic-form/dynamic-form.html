@@ -54,10 +54,14 @@
       size="lg"
       (clicked)="onSubmit()"
       [fullWidth]="true"
-      [disabled]="isSubmitDisabled"
+      [disabled]="isSubmitDisabled || loading"
       class="max-w-1/2 cursor-pointer"
     >
+    @if(loading){
+      Cargando...
+    } @else {
       Enviar
+    }
     </app-button>
   </div>
 </form>

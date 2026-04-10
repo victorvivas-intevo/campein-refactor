@@ -4,6 +4,7 @@ import { CommonModule, Location } from '@angular/common';
 import { SubmissionFormFacade } from '../../../application/facades/submission-form.facade';
 import { DynamicForm } from '@/shared/ui/form-controls/dynamic-form/dynamic-form';
 import { Skeleton } from '@/shared/ui/components/skeleton/skeleton';
+import { PublicFormsFacade } from '@/features/public-forms/application/facades/public-form.fecade';
 
 @Component({
   selector: 'app-public-form',
@@ -16,15 +17,15 @@ export class PublicFormPage implements OnInit {
   codeTenant?: string;
 
   // Inyectamos nuestro nuevo Facade
-  facade = inject(SubmissionFormFacade);
+  submissionFacade = inject(SubmissionFormFacade);
+  publicFormFacade = inject(PublicFormsFacade);
   private route = inject(ActivatedRoute);
   private location = inject(Location);
 
-  //
   isPolicyModalOpen = signal(false);
 
   schemaWithActions = computed(() => {
-    const response = this.facade.schemaResponse();
+    const response = this.submissionFacade.schemaResponse();
     if (!response) return null;
 
     // Buscamos el campo inyectado por la fachada y le pegamos la función gráfica
@@ -54,7 +55,7 @@ export class PublicFormPage implements OnInit {
     if (formCode && tenantCode) {
       this.codeForm = formCode;
       this.codeTenant = tenantCode;
-      this.facade.loadSchema(this.codeTenant, this.codeForm);
+      this.submissionFacade.loadSchema(this.codeTenant, this.codeForm);
     } else {
       console.error('Faltan parámetros en la URL (tenant o form).');
     }
@@ -62,19 +63,19 @@ export class PublicFormPage implements OnInit {
 
   onSubmit(payload: Record<string, any>) {
     if (this.codeTenant && this.codeForm) {
-      this.facade.submit(this.codeTenant, this.codeForm, payload, {
+      this.submissionFacade.submit(this.codeTenant, this.codeForm, payload, {
         metadata: {
           userAgent: navigator.userAgent,
           source: `/public/${this.codeTenant}/${this.codeForm}`,
         },
       });
-      if(this.facade.success()) {
-        // this.submitSuccess.set(true);
-        // this.dynamicForm?.resetForm();
-      }else{
-        console.error('Error enviando formulario');
-        // this.submitError.set('Ocurrió un error al enviar el formulario. Intenta de nuevo.');
-      }
+      // if(this.submissionFacade.success()) {
+      //   // this.submitSuccess.set(true);
+      //   // this.dynamicForm?.resetForm();
+      // }else{
+      //   // console.error('Error enviando formulario');
+      //   // this.submitError.set('Ocurrió un error al enviar el formulario. Intenta de nuevo.');
+      // }
     }
   }
 

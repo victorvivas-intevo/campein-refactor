@@ -21,9 +21,9 @@
     </button>
   </div>
 
-  @if (facade.loading()) {
+  @if (submissionFacade.loading()) {
     <app-skeleton type="card" [count]="1" class="w-full h-96"></app-skeleton>
-  } @else if (facade.success()) {
+  } @else if (submissionFacade.success()) {
     <div
       class="text-center p-12 bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center animate-fade-in"
     >
@@ -37,28 +37,52 @@
           />
         </svg>
       </div>
-      <h2 class="text-2xl font-bold text-tenant-primary mb-2">¡Formulario Completado!</h2>
+      <h2 class="text-2xl font-bold text-green-600 mb-2">¡Formulario Completado!</h2>
       <p class="text-gray-600">Hemos recibido tus respuestas correctamente.</p>
+      <button
+        (click)="submissionFacade.resetState()"
+        class="mt-8 px-6 py-2.5 bg-tenant-primary text-white font-medium rounded-lg shadow-sm hover:opacity-90 transition-all duration-300 cursor-pointer flex items-center gap-2"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 4v16m8-8H4"
+          />
+        </svg>
+        Enviar otra respuesta
+      </button>
     </div>
-  } @else if (facade.schemaResponse()) {
+  } @else if (submissionFacade.schemaResponse()) {
     <div class="bg-white rounded-2xl shadow-md p-6 md:p-8 border-t-4 border-tenant-primary">
-      <div class="mb-8">
+      <!-- <div class="mb-8">
         <h1 class="text-3xl font-bold text-gray-800 tracking-tight mb-2">
           {{ facade.schemaResponse()?.name }}
         </h1>
         <p class="text-gray-600 leading-relaxed">{{ facade.schemaResponse()?.schema?.title }}</p>
+      </div> -->
+      <div class="w-full flex justify-center items-center">
+        <img
+          [ngSrc]="fecade"
+          [alt]="'Imagen ' + item.name"
+          fill
+          class="object-cover transition-transform duration-500 group-hover:scale-105 rounded-2xl"
+          [priority]="i < 2"
+        />
       </div>
 
       <app-dynamic-form
-        [schema]="facade.schemaResponse()!.schema"
+        [schema]="submissionFacade.schemaResponse()!.schema"
         (submitted)="onSubmit($event)"
+        [loading]="submissionFacade.submitting()"
       ></app-dynamic-form>
     </div>
   } @else {
     <div class="text-center p-10 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
       <p class="text-gray-500">No se pudo cargar el formulario. Verifica la URL.</p>
       <button
-        (click)="facade.loadSchema(codeTenant!, codeForm!)"
+        (click)="submissionFacade.loadSchema(codeTenant!, codeForm!)"
         class="mt-4 text-tenant-primary font-medium hover:underline"
       >
         Reintentar

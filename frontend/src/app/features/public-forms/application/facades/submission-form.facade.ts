@@ -79,4 +79,8 @@ export class SubmissionFormFacade {
       this.submitting.set(false);
     }
   }
+
+  resetState() {
+    this.success.set(false);
+  }
 }

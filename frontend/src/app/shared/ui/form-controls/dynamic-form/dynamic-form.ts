@@ -30,6 +30,7 @@ import { AutocompleteField } from '../fields/autocomplete-field/autocomplete-fie
 })
 export class DynamicForm implements OnChanges {
   @Input() schema!: FormSchema;
+  @Input() loading: boolean = false;
   @Output() submitted = new EventEmitter<Record<string, any>>();
   @Output() fieldLabelAction = new EventEmitter<FieldLabelActionConfig>();
 
