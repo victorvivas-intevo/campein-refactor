@@ -21,7 +21,33 @@ model Tenant {
 
   users User[]
 
+  profile Profile?
+
   @@map("tenants")
+}
+
+/**
+ * Tabla Profile
+ * En esta tabla se almacenara imagenes y estilos de la campana/tenant
+ **/
+model Profile {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String   @unique @map("tenant_id") @db.Uuid
+  
+  logo String? @db.Text @unique
+  bannerOne String? @db.Text @unique
+  imageOne String? @db.Text @unique
+  imageTwo String? @db.Text @unique
+  imageThree String? @db.Text @unique
+  imageFour String? @db.Text @unique
+
+  colorPrimary String? @db.Text
+  colorSecondary String? @db.Text
+  colorTertiary String? @db.Text
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+
+  @@map("profile")
 }
 
 /**
@@ -39,6 +65,8 @@ model Form {
 
   assignments FormAssignmentUser[]
 
+  imageCard String? @db.Text
+
   // relaciones
   tenant      Tenant           @relation(fields: [tenantId], references: [id])
   versions    FormVersion[]    @relation("FormToFormVersions")
@@ -48,6 +76,7 @@ model Form {
   @@unique([tenantId, code])
   @@map("forms")
 }
+
 
 /**
  * Tabla: users

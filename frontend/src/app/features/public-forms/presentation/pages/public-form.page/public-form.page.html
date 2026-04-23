@@ -62,15 +62,15 @@
         </h1>
         <p class="text-gray-600 leading-relaxed">{{ facade.schemaResponse()?.schema?.title }}</p>
       </div> -->
-      <div class="w-full flex justify-center items-center">
+      <!-- <div class="w-full flex justify-center items-center">
         <img
-          [ngSrc]="fecade"
+          [ngSrc]="publicFormFacade.currentTenant()?."
           [alt]="'Imagen ' + item.name"
           fill
           class="object-cover transition-transform duration-500 group-hover:scale-105 rounded-2xl"
           [priority]="i < 2"
         />
-      </div>
+      </div> -->
 
       <app-dynamic-form
         [schema]="submissionFacade.schemaResponse()!.schema"
