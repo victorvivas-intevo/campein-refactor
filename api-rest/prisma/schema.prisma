@@ -186,3 +186,31 @@ model FormAssignmentUser {
   @@id([formId, userId])
   @@map("form_assignments")
 }
+
+/**
+ * Catálogo: Departamentos (Divipola)
+ */
+model Department {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  code      String   @unique @db.VarChar(2) // ej: '05' para Antioquia
+  name      String   @db.Text
+  
+  municipalities Municipality[]
+
+  @@map("departments")
+}
+
+/**
+ * Catálogo: Municipios (Divipola)
+ */
+model Municipality {
+  id            String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  departmentId  String     @map("department_id") @db.Uuid
+  code          String     @unique @db.VarChar(5) // ej: '05001' para Medellín
+  name          String     @db.Text
+  
+  department    Department @relation(fields: [departmentId], references: [id])
+
+  @@index([departmentId])
+  @@map("municipalities")
+}

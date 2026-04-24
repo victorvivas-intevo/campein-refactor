@@ -54,7 +54,7 @@
         Enviar otra respuesta
       </button>
     </div>
-  } @else if (submissionFacade.schemaResponse()?.schema) {
+  } @else if (currentSchema()) {
     <div class="bg-white rounded-2xl shadow-md p-6 md:p-8 border-t-4 border-tenant-primary">
       <!-- <div class="mb-8">
         <h1 class="text-3xl font-bold text-gray-800 tracking-tight mb-2">
@@ -73,11 +73,13 @@
       </div> -->
 
       <app-dynamic-form
-        [schema]="submissionFacade.schemaResponse()?.schema!"
+        [schema]="currentSchema()!"
         (submitted)="onSubmit($event)"
-        [loading]="submissionFacade.submitting()"
+        (loadOptions)="onLoadOptions($event)"
         (fieldLabelAction)="onFieldLabelAction($event)"
-      ></app-dynamic-form>
+      >
+        ></app-dynamic-form
+      >
     </div>
   } @else {
     <div class="text-center p-10 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">

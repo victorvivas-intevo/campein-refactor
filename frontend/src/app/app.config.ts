@@ -8,6 +8,7 @@ import { authInterceptor } from './features/auth/infrastructure/security/auth.in
 import { environment } from '../environments/environment';
 import { provideUsers } from './features/users/infrastructure/di/user.provider';
 import { providePublicForms } from './features/public-forms/infrastructure/di/public-forms.provider';
+import { provideLocations } from './features/locations/infrastructure/di/locations.provider';
 
 const API_URL = environment.production ? environment.apiUrlProd : environment.apiUrl;
 // const API_URL = environment.apiUrlProd;
@@ -22,6 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideForms(API_URL),
     providePublicForms(API_URL),
     provideUsers(API_URL),
+    provideLocations(API_URL),
     provideRouter(routes),
   ],
 };

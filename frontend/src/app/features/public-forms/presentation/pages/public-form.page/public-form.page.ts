@@ -1,11 +1,17 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, untracked } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
+import { Observable, of } from 'rxjs';
+
 import { SubmissionFormFacade } from '../../../application/facades/submission-form.facade';
 import { DynamicForm } from '@/shared/ui/form-controls/dynamic-form/dynamic-form';
 import { Skeleton } from '@/shared/ui/components/skeleton/skeleton';
 import { PublicFormsFacade } from '@/features/public-forms/application/facades/public-form.fecade';
-import { FieldLabelActionConfig } from '@/shared/ui/form-controls/form-control.types';
+import { FieldLabelActionConfig, FormSchema } from '@/shared/ui/form-controls/form-control.types';
+import { LocationsFacade } from '@/features/locations/application/facades/locations.facade';
+
+// 1. IMPORTAMOS EL SERVICIO DE GEOLOCALIZACIÓN
+import { GeolocalizationService } from '@/core/services/geolocalization.service';
 
 @Component({
   selector: 'app-public-form',
@@ -17,39 +23,39 @@ export class PublicFormPage implements OnInit {
   codeForm?: string;
   codeTenant?: string;
 
-  // Inyectamos nuestro nuevo Facade
   submissionFacade = inject(SubmissionFormFacade);
   publicFormFacade = inject(PublicFormsFacade);
+  private locationsFacade = inject(LocationsFacade); 
+  
+  // 2. INYECTAMOS EL SERVICIO
+  private geoService = inject(GeolocalizationService);
+  
   private route = inject(ActivatedRoute);
   private location = inject(Location);
 
   isPolicyModalOpen = signal(false);
+  currentSchema = signal<FormSchema | null>(null);
 
-  // schemaWithActions = computed(() => {
-  //   const response = this.submissionFacade.schemaResponse();
-  //   if (!response) return null;
-
-  //   // Buscamos el campo inyectado por la fachada y le pegamos la función gráfica
-  //   const fieldsMapped = response.schema.fields.map(field => {
-  //     // Si la fachada marcó este campo como la política de datos...
-  //     if (field.id === 'dataPolicyConsent') {
-  //       return {
-  //         ...field,
-  //         action: () => this.openPolicyModal() // Le inyectamos la acción UI
-  //       };
-  //     }
-  //     return field;
-  //   });
-
-  //   return {
-  //     ...response.schema,
-  //     fields: fieldsMapped
-  //   };
-  // });
+  constructor() {
+    effect(() => {
+      const response = this.submissionFacade.schemaResponse();
+      
+      if (response && response.schema) {
+        const current = untracked(() => this.currentSchema());
+        
+        if (!current || current.formId !== response.schema.formId) {
+          const newSchema = JSON.parse(JSON.stringify(response.schema));
+          
+          untracked(() => {
+            this.currentSchema.set(newSchema);
+            this.loadInitialOptions(newSchema);
+          });
+        }
+      }
+    }, { allowSignalWrites: true }); 
+  }
 
   ngOnInit(): void {
-    // IMPORTANTE: Asegúrate de extraer ambos códigos.
-    // Si tenantCode está en una ruta padre, usa this.route.parent?.snapshot.paramMap
     const formCode = this.route.snapshot.paramMap.get('codeForm');
     const tenantCode =
       this.route.snapshot.paramMap.get('codeTenant') ||
@@ -64,32 +70,86 @@ export class PublicFormPage implements OnInit {
     }
   }
 
-  onSubmit(payload: Record<string, any>) {
-    if (this.codeTenant && this.codeForm) {
-      this.submissionFacade.submit(this.codeTenant, this.codeForm, payload, {
-        metadata: {
-          userAgent: navigator.userAgent,
-          source: `/public/${this.codeTenant}/${this.codeForm}`,
-        },
+  private loadInitialOptions(schema: FormSchema) {
+    if (!schema) return;
+    const rootFields = schema.fields.filter(f => f.dataSource && !f.dependsOn);
+    rootFields.forEach(field => {
+      this.executeAction(field.dataSource!.action as string).subscribe(data => {
+        this.updateFieldOptions(field.id, data, field.dataSource!.valueKey, field.dataSource!.labelKey);
       });
-      // if(this.submissionFacade.success()) {
-      //   // this.submitSuccess.set(true);
-      //   // this.dynamicForm?.resetForm();
-      // }else{
-      //   // console.error('Error enviando formulario');
-      //   // this.submitError.set('Ocurrió un error al enviar el formulario. Intenta de nuevo.');
-      // }
+    });
+  }
+
+  onLoadOptions(event: { fieldId: string; paramValue: string }) {
+    const schema = this.currentSchema();
+    if (!schema) return;
+    const field = schema.fields.find(f => f.id === event.fieldId);
+    if (!field || !field.dataSource) return;
+
+    this.executeAction(field.dataSource.action as string, event.paramValue).subscribe(data => {
+      this.updateFieldOptions(field.id, data, field.dataSource!.valueKey, field.dataSource!.labelKey);
+    });
+  }
+
+  private executeAction(action: string, param?: string): Observable<any[]> {
+    switch (action) {
+      case 'getDepartments': return this.locationsFacade.getDepartments();
+      case 'getMunicipalities': return param ? this.locationsFacade.getMunicipalities(param) : of([]);
+      default: return of([]); 
     }
+  }
+
+  private updateFieldOptions(fieldId: string, data: any[], valueKey: string, labelKey: string) {
+    this.currentSchema.update(schema => {
+      if (!schema) return schema;
+      const fieldIndex = schema.fields.findIndex(f => f.id === fieldId);
+      if (fieldIndex > -1) {
+        const newOptions = data.map(item => ({ value: item[valueKey], label: item[labelKey] }));
+        schema.fields[fieldIndex] = { ...schema.fields[fieldIndex], options: newOptions };
+      }
+      return { ...schema, fields: [...schema.fields] };
+    });
+  }
+
+  // =====================================================================
+  // 3. REFACTORIZAMOS EL ONSUBMIT (Añadiendo Geolocalización)
+  // =====================================================================
+
+  async onSubmit(payload: Record<string, any>) {
+    if (!this.codeTenant || !this.codeForm) return;
+
+    let coords: { latitude: number, longitude: number, accuracy?: number } | null = null;
+
+    try {
+      // NOTA: Ajusta "getPosition()" o "getCurrentPosition()" al nombre real del método 
+      // que tengas definido dentro de tu geolocalization.service.ts
+      const position: any = await this.geoService.getPosition(); // Suponiendo que retorna una Promise con el objeto GeolocationPosition
+
+      // Extraemos solo lo necesario para no enviar un objeto muy pesado
+      coords = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        accuracy: position.coords.accuracy, // Opcional, pero útil para saber qué tan exacto es el GPS
+      };
+    } catch (error) {
+      // Silenciamos el error si el usuario rechaza los permisos o no tiene GPS.
+      // ¡Lo más importante es NO bloquear el envío del formulario!
+      console.warn('Geolocalización no disponible o permiso denegado:', error);
+    }
+
+    // Enviamos el payload al facade, adjuntando las coordenadas en la metadata
+    this.submissionFacade.submit(this.codeTenant, this.codeForm, payload, {
+      metadata: {
+        userAgent: navigator.userAgent,
+        source: `/public/${this.codeTenant}/${this.codeForm}`,
+        location: coords, // <-- Aquí inyectamos el JSON de la ubicación (o null)
+      },
+    });
   }
 
   goBack() {
     this.location.back();
   }
-
-  // openPolicyModal() {
-  //   // this.isPolicyModalOpen.set(true);
-  //   console.log('Abrir modal de política de datos');
-  // }
 
   closePolicyModal() {
     this.isPolicyModalOpen.set(false);
@@ -98,11 +158,7 @@ export class PublicFormPage implements OnInit {
   onFieldLabelAction(action: FieldLabelActionConfig): void {
     if (action.labelId === 'dataPolicyConsentAction') {
       if (action.url) {
-        // '_blank' le indica al navegador que abra una pestaña/ventana nueva
-        // 'noopener,noreferrer' es una buena práctica de seguridad
         window.open(action.url, '_blank', 'noopener,noreferrer');
-      } else {
-        console.warn('No se proporcionó una URL para la política de datos.');
       }
     }
   }

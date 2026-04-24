@@ -11,6 +11,7 @@ import { FormsModule } from './modules/forms/forms.module';
 import { StorageModule } from './modules/cloudStorage/storage.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
+import { LocationsModule } from './modules/locations/locations.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
     AuthModule,
     FormsModule,
     StorageModule,
+    LocationsModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],

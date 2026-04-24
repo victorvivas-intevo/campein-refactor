@@ -31,6 +31,12 @@ export interface FieldLabelConfig {
   actions?: FieldLabelActionConfig[];
 }
 
+export interface FieldDataSource {
+  action: 'getDepartments' | 'getMunicipalities'; // Fuerte tipado en vez de un string suelto
+  valueKey: string; // ej: 'code' (lo que se guarda en el form)
+  labelKey: string; // ej: 'name' (lo que ve el usuario)
+}
+
 export interface FormFieldConfig {
   id: string;
   type: FieldType;
@@ -40,6 +46,11 @@ export interface FormFieldConfig {
   column?: 1 | 2;
   order: number;
   options?: FieldOption[];
+
+  dataSource?: FieldDataSource;
+  dependsOn?: string; // El ID del campo padre (ej: 'departamentoId')
+  dependencyParam?: string; // El query param a enviar al backend (ej: 'departmentCode')
+
   validators?: FieldValidatorConfig[];
   inputType?: string;
   inputMode?: string;

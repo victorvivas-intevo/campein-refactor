@@ -239,6 +239,32 @@
       ],
       "required": true,
       "placeholder": "Seleccione un grupo de interés"
+    },
+    {
+      "id": "departmentCode",
+      "type": "autocomplete",
+      "label": "Departamento",
+      "required": true,
+      "order": 1,
+      "dataSource": {
+        "action": "getDepartments",
+        "valueKey": "code",
+        "labelKey": "name"
+      }
+    },
+    {
+      "id": "municipalityCode",
+      "type": "autocomplete",
+      "label": "Municipio",
+      "required": true,
+      "order": 2,
+      "dependsOn": "departmentCode",
+      "dependencyParam": "departmentCode",
+      "dataSource": {
+        "action": "getMunicipalities",
+        "valueKey": "code",
+        "labelKey": "name"
+      }
     }
   ],
   "formId": "public-contact-form"

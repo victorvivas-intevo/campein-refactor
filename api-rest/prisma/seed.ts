@@ -5,6 +5,8 @@ import * as dotenv from 'dotenv';
 import { join } from 'path';
 import * as fs from 'fs';
 
+import * as readline from 'readline';
+
 // 1. Cargar variables de entorno explícitamente desde la raíz del proyecto
 dotenv.config({ path: join(__dirname, '../.env') });
 
@@ -24,6 +26,72 @@ const adapter = new PrismaPg(pool);
 
 // 3. Inicializar Prisma pasando el adaptador
 const prisma = new PrismaClient({ adapter });
+
+async function seedDivipola() {
+  const fileStream = fs.createReadStream('./assets/divipola.xlsx - Sheet1.csv');
+  const rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity,
+  });
+
+  const departmentsMap = new Map();
+  const municipalitiesMap = new Map();
+
+  let isFirstLine = true;
+  for await (const line of rl) {
+    if (isFirstLine) {
+      isFirstLine = false;
+      continue;
+    } // Saltar cabeceras
+
+    // El formato del CSV es:
+    // Codigo Dep, Codigo Mun, Codigo Centro Pob, Nombre Dep, Nombre Mun...
+    // 05,05001,05001000,ANTIOQUIA,MEDELLIN,MEDELLIN,CM
+    const parts = line.split(',');
+    if (parts.length < 5) continue;
+
+    const depCode = parts[0].trim();
+    const munCode = parts[1].trim();
+    const depName = parts[3].trim();
+    const munName = parts[4].trim();
+
+    // Guardar únicos
+    if (!departmentsMap.has(depCode)) {
+      departmentsMap.set(depCode, { code: depCode, name: depName });
+    }
+    if (!municipalitiesMap.has(munCode)) {
+      municipalitiesMap.set(munCode, {
+        code: munCode,
+        name: munName,
+        departmentCode: depCode,
+      });
+    }
+  }
+
+  console.log('Insertando Departamentos...');
+  for (const dep of departmentsMap.values()) {
+    await prisma.department.upsert({
+      where: { code: dep.code },
+      update: {},
+      create: { code: dep.code, name: dep.name },
+    });
+  }
+
+  console.log('Insertando Municipios...');
+  for (const mun of municipalitiesMap.values()) {
+    // Buscamos el ID del departamento recién creado
+    const dept = await prisma.department.findUnique({
+      where: { code: mun.departmentCode },
+    });
+    if (dept) {
+      await prisma.municipality.upsert({
+        where: { code: mun.code },
+        update: {},
+        create: { code: mun.code, name: mun.name, departmentId: dept.id },
+      });
+    }
+  }
+}
 
 function getJson(fileName: string): any {
   const filePath = join(__dirname, 'form-schemas', fileName + '.schema.json');
@@ -258,7 +326,8 @@ async function main() {
         tenantId: 'b17c1160-adfd-4995-b218-f033124f13df',
         code: 'postular-cv',
         name: 'Postular mi CV',
-        description: 'Registro publico de hoja de vida para participar en los procesos de selección de las empresas asociadas',
+        description:
+          'Registro publico de hoja de vida para participar en los procesos de selección de las empresas asociadas',
         createdAt: new Date('2025-12-16T08:19:35.323Z'),
         isActive: true,
         isPublic: true,
@@ -268,7 +337,8 @@ async function main() {
         tenantId: 'b17c1160-adfd-4995-b218-f033124f13df',
         code: 'califica-tu-jefe',
         name: 'Califica tu jefe',
-        description: 'Con este formulario los empleados pueden calificar a sus jefes y compartir su experiencia laboral de forma anónima',
+        description:
+          'Con este formulario los empleados pueden calificar a sus jefes y compartir su experiencia laboral de forma anónima',
         createdAt: new Date('2025-12-16T08:19:35.323Z'),
         isActive: true,
         isPublic: true,
@@ -278,7 +348,8 @@ async function main() {
         tenantId: 'b17c1160-adfd-4995-b218-f033124f13df',
         code: 'mejor-area',
         name: 'Premio a la mejor área',
-        description: 'En este formulario van a calificar las actividades de cada área de la empresa para elegir a la mejor área del año',
+        description:
+          'En este formulario van a calificar las actividades de cada área de la empresa para elegir a la mejor área del año',
         createdAt: new Date('2025-12-16T08:19:35.323Z'),
         isActive: true,
         isPublic: true,
@@ -417,6 +488,9 @@ async function main() {
     data: [...assignments],
   });
   console.log('✅ formAssignmentUser creados.');
+
+  await seedDivipola();
+  console.log('✅ divipola creados.');
 
   console.log('Seed completado con éxito.');
 }
