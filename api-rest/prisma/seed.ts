@@ -317,6 +317,7 @@ async function main() {
         code: 'satisfaccion-empresarial',
         name: 'Satisfacción empresarial',
         description: 'Registro publico de satisfacción empresarial',
+        imageCard: 'testigos-electorales.png',
         createdAt: new Date('2025-12-16T08:19:35.323Z'),
         isActive: true,
         isPublic: true,
@@ -328,6 +329,7 @@ async function main() {
         name: 'Postular mi CV',
         description:
           'Registro publico de hoja de vida para participar en los procesos de selección de las empresas asociadas',
+        imageCard: 'testigos-electorales.png',
         createdAt: new Date('2025-12-16T08:19:35.323Z'),
         isActive: true,
         isPublic: true,
@@ -339,6 +341,7 @@ async function main() {
         name: 'Califica tu jefe',
         description:
           'Con este formulario los empleados pueden calificar a sus jefes y compartir su experiencia laboral de forma anónima',
+        imageCard: 'testigos-electorales.png',
         createdAt: new Date('2025-12-16T08:19:35.323Z'),
         isActive: true,
         isPublic: true,
@@ -350,6 +353,7 @@ async function main() {
         name: 'Premio a la mejor área',
         description:
           'En este formulario van a calificar las actividades de cada área de la empresa para elegir a la mejor área del año',
+        imageCard: 'testigos-electorales.png',
         createdAt: new Date('2025-12-16T08:19:35.323Z'),
         isActive: true,
         isPublic: true,
@@ -362,6 +366,7 @@ async function main() {
         name: 'Testigos electorales',
         description:
           'Formulario para registro de testigos electorales de la campaña de la candidata presidencial Paloma Valencia',
+        imageCard: 'testigos-electorales.png',
         createdAt: new Date('2026-01-15T17:13:27.832Z'),
         isActive: true,
         isPublic: true,
@@ -373,6 +378,7 @@ async function main() {
         name: 'Voluntarios',
         description:
           'Formulario para registro de voluntarios en la campaña electoral a favor de la candidata presidencial Paloma Valencia',
+        imageCard: 'testigos-electorales.png',
         createdAt: new Date('2026-01-12T18:09:36.737Z'),
         isActive: true,
         isPublic: true,
@@ -384,6 +390,7 @@ async function main() {
         name: 'Propuestas electorales',
         description:
           'Formulario para recolección de data enfocado a los intereses o dolores de la población electoral',
+        imageCard: 'testigos-electorales.png',
         createdAt: new Date('2026-01-12T18:09:36.737Z'),
         isActive: true,
         isPublic: true,
