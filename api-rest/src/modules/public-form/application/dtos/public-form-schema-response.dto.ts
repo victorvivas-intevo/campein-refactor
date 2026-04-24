@@ -4,6 +4,7 @@ export class PublicFormSchemaResponseDto {
   name: string;
   version: number;
   schema: unknown;
+  imageCard?: string;
   isActive?: boolean;
   isPublic?: boolean;
 }
@@ -11,4 +12,5 @@ export class PublicFormSchemaResponseDto {
 export class PublicFormsDto {
   code: string;
   name: string;
+  imageCard?: string | null;
 }

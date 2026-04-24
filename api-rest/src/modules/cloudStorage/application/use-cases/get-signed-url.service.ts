@@ -1,10 +1,14 @@
 import { Injectable, Inject, BadRequestException } from '@nestjs/common';
-import { type IStorageRepository, STORAGE_REPOSITORY } from '../../domain/repositories/imagesStorage.repository.interface';
+import {
+  type IStorageRepository,
+  STORAGE_REPOSITORY,
+} from '../../domain/repositories/imagesStorage.repository.interface';
 
 @Injectable()
 export class GetSignedUrlService {
   constructor(
-    @Inject(STORAGE_REPOSITORY) private readonly storageRepository: IStorageRepository,
+    @Inject(STORAGE_REPOSITORY)
+    private readonly storageRepository: IStorageRepository,
   ) {}
 
   async execute(path: string): Promise<{ url: string }> {
@@ -17,7 +21,7 @@ export class GetSignedUrlService {
       throw new BadRequestException('Ruta de archivo inválida');
     }
 
-    // OPCIONAL: Si es para formularios públicos, podrías validar en la BD que el path 
+    // OPCIONAL: Si es para formularios públicos, podrías validar en la BD que el path
     // realmente pertenezca a un formulario que esté activo (`is_active: true`).
 
     const url = await this.storageRepository.generateSignedUrl(path);

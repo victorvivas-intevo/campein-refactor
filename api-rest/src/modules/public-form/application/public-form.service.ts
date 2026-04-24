@@ -7,10 +7,14 @@ import {
 } from './dtos/public-form-schema-response.dto';
 import { PublicFormSubmissionRequestDto } from './dtos/public-form-submission-request.dto';
 import { PublicFormSubmissionResponseDto } from './dtos/public-form-submission-response.dto';
+import { GetSignedUrlService } from '../../cloudStorage/application/use-cases/get-signed-url.service';
 
 @Injectable()
 export class PublicFormService {
-  constructor(private readonly publicFormRepository: PublicFormRepository) {}
+  constructor(
+    private readonly publicFormRepository: PublicFormRepository,
+    private readonly getSignedUrlService: GetSignedUrlService,
+  ) {}
 
   async getFormsByTenant(code: string): Promise<PublicFormsDto[]> {
     const forms = await this.publicFormRepository.getFormsByTenant(code);
@@ -20,6 +24,20 @@ export class PublicFormService {
         `No se encontraron formularios públicos para la campana con código "${code}"`,
       );
     }
+    console.log('Formularios públicos encontrados:', forms);
+    await Promise.all(
+      forms.map(async (form) => {
+        // if (!form.imageCard) {
+        //   return form; // Si no hay imagen, devolvemos el formulario tal cual
+        // }
+        const signedData = await this.getSignedUrlService.execute(
+          'images-forms/' + form.imageCard,
+        );
+        form.imageCard = signedData.url; // Añadimos la URL firmada al objeto de respuesta
+      }),
+    );
+
+
     return forms;
   }
 

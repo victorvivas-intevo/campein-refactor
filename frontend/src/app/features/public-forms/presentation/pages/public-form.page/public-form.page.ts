@@ -84,7 +84,8 @@ export class PublicFormPage implements OnInit {
   }
 
   openPolicyModal() {
-    this.isPolicyModalOpen.set(true);
+    // this.isPolicyModalOpen.set(true);
+    console.log('Abrir modal de política de datos');
   }
 
   closePolicyModal() {

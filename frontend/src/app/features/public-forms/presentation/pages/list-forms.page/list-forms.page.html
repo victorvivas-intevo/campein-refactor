@@ -75,14 +75,14 @@
               </div>
             </div>
 
-            @if (item.imageUrl) {
+            @if (item.imageCard) {
               <div [ngClass]="getImageClasses(count, i)">
                 <img
-                  [ngSrc]="item.imageUrl"
+                  [ngSrc]="item.imageCard"
                   [alt]="'Imagen ' + item.name"
                   fill
-                  class="object-cover transition-transform duration-500 group-hover:scale-105 rounded-2xl"
-                  [priority]="i < 2"
+                  priority
+                  class="object-cover transition-transform duration-500 group-hover:scale-105 rounded-2xl relative overflow-hidden"
                 />
               </div>
             }

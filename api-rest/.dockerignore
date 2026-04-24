@@ -27,3 +27,6 @@ e2e/
 *.tar.gz
 .cache/
 .tmp/
+
+# GCP Secrets
+secrets/

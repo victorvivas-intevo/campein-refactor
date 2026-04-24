@@ -11,6 +11,11 @@ export class PublicFormRepository implements PublicFormQueryRepository {
 
   async getFormsByTenant(code: string): Promise<PublicFormsDto[]> {
     return this.prisma.form.findMany({
+      select: {
+        name: true,
+        code: true,
+        imageCard: true,
+      },
       where: {
         isActive: true,
         isPublic: true,

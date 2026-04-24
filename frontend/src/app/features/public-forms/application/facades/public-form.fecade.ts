@@ -22,14 +22,14 @@ export class PublicFormsFacade {
     this.loading.set(true);
     try {
       const forms = await firstValueFrom(this.getFormsByTenantUseCase.execute(tenantCode));
-      const formsWithImages = forms.map((form) => ({
-        ...form,
-        // TODO: El backend debería proporcionar la URL de la imagen, pero por ahora se simula con una imagen local.
-        // SIMULACIÓN: Añade una imagen local de tu assets folder
-        // Reemplaza 'assets/images/form-placeholder.webp' por tu ruta real
-        imageUrl: 'assets/images/testigos electorales.png',
-      }));
-      this.formsCurrentTenant.set(formsWithImages);
+      // const formsWithImages = forms.map((form) => ({
+      //   ...form,
+      //   // TODO: El backend debería proporcionar la URL de la imagen, pero por ahora se simula con una imagen local.
+      //   // SIMULACIÓN: Añade una imagen local de tu assets folder
+      //   // Reemplaza 'assets/images/form-placeholder.webp' por tu ruta real
+      //   // imageUrl: 'assets/images/testigos electorales.png',
+      // }));
+      this.formsCurrentTenant.set(forms);
     } catch (error) {
       console.error('Error loading forms by tenant:', error);
       this.toast.error(

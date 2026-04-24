@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 import { PublicFormController } from './presentation/public-form.controller';
 import { PublicFormService } from './application/public-form.service';
 import { PublicFormRepository } from './infrastructure/public-form.repository';
+import { StorageModule } from '../cloudStorage/storage.module';
 
 @Module({
+  imports: [StorageModule],
   controllers: [PublicFormController],
   providers: [PublicFormService, PublicFormRepository],
   exports: [PublicFormService],
