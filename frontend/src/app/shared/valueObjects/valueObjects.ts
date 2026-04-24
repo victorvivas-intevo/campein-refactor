@@ -1,0 +1,1 @@
+export const urlDataPolicyConsent: string = 'https://storage.googleapis.com/campein-public-assets/POL%C3%8DTICA%20DE%20PRIVACIDAD%20Y%20TRATAMIENTO%20DE%20DATOS%20CAMPEIN.pdf'

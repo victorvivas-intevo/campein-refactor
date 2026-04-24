@@ -15,11 +15,13 @@ export interface FieldOption {
 
 export type InputRestriction = 'digits' | 'textNoSpecials';
 
-export type FieldLabelActionType = 'openModal';
+export type FieldLabelActionType = 'openModal' | 'navigate' | 'externalLink';
 
 export interface FieldLabelActionConfig {
   type: FieldLabelActionType;
-  modalId: string;
+  modalId?: string;
+  route?: string;
+  url?: string;
   text: string;
 }
 

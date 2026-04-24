@@ -6,6 +6,7 @@ import { SubmitFormUseCase } from '../use-cases/submission-form.use-case';
 import { PublicFormSchemaResponse } from '../../domain/dtos/public-form.dtos'; 
 import { ToastService } from '@/shared/services/toast/toast.service';
 import { FormFieldConfig, FormSchema } from '@/shared/ui/form-controls/form-control.types';
+import { urlDataPolicyConsent } from '@/shared/valueObjects/valueObjects';
 
 @Injectable({ providedIn: 'root' })
 export class SubmissionFormFacade {
@@ -39,15 +40,15 @@ export class SubmissionFormFacade {
           text: "Autorizo el tratamiento de mis datos personales de acuerdo con la",
           actions: [
             {
-              type: "openModal",
-              modalId: "data-policy",
-              text: "Política de tratamiento de datos"
+              type: "externalLink",
+              url: urlDataPolicyConsent,
+              text: "Política de tratamiento de datos",
             }
           ]
         },
         required: true,
         column: 1,
-        order: 999
+        order: 999,
       }
       data.fields.push(check)
       // this.formSchema.set(data);

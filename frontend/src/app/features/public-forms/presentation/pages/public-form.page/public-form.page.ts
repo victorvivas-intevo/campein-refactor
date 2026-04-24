@@ -31,7 +31,9 @@ export class PublicFormPage implements OnInit {
     // Buscamos el campo inyectado por la fachada y le pegamos la función gráfica
     const fieldsMapped = response.schema.fields.map(field => {
       // Si la fachada marcó este campo como la política de datos...
-      if ((field as any).isPolicyField || field.id === 'dataPolicyConsent') {
+      console.log(field.id);
+      if (field.id === 'dataPolicyConsent') {
+        console.log('Campo de política de datos encontrado, inyectando acción para abrir modal', field.id);
         return { 
           ...field, 
           action: () => this.openPolicyModal() // Le inyectamos la acción UI
