@@ -40,6 +40,7 @@ export class SubmissionFormFacade {
           text: "Autorizo el tratamiento de mis datos personales de acuerdo con la",
           actions: [
             {
+              labelId: "dataPolicyConsentAction",
               type: "externalLink",
               url: urlDataPolicyConsent,
               text: "Política de tratamiento de datos",

@@ -18,6 +18,7 @@ export type InputRestriction = 'digits' | 'textNoSpecials';
 export type FieldLabelActionType = 'openModal' | 'navigate' | 'externalLink';
 
 export interface FieldLabelActionConfig {
+  labelId?: string;
   type: FieldLabelActionType;
   modalId?: string;
   route?: string;

@@ -72,6 +72,7 @@ export class SubmissionFormPage implements OnInit {
         text: 'Autorizo el tratamiento de mis datos personales de acuerdo con la',
         actions: [
           {
+            labelId: "dataPolicyConsentAction",
             type: 'openModal',
             modalId: 'data-policy',
             text: 'Política de tratamiento de datos',
